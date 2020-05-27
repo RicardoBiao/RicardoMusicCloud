@@ -1,0 +1,6 @@
+.title {
+  position: absolute;
+  margin-top: 48%;
+  margin-left: 47%;
+}
+

@@ -4,19 +4,27 @@
 			{{title}}
 		</view>
 		<view class="other-title">
-			
+			<view class="rling-radio-weekly">
+				Rling Radio Weekly
+			</view>
+			<view class="rling-radio-weekly2">
+				Rling Radio Weekly
+			</view>
 		</view>
-		<uni-swiper>
-
-		</uni-swiper>
+		<music-swiper :swiperData="swiperData"></music-swiper>
 		<view class="popular">
 			popular
 		</view>
 		<view class="music-box" v-for="item in popular">
-			<image class="music-image"  :src="item"></image>
+			<image class="music-image" mode="aspectFill" :src="item"></image>
 			<view class="text-box">
-				<text class="text-box-title"></text>
-				<text class="text-box-centent"></text>
+				<text class="text-box-title">
+					Rling Radio Weekly
+				</text>
+				<text class="text-box-centent">
+					Collection of the best Radio stations
+					of RLING, constantly updated weekly.
+				</text>
 			</view>
 		</view>
 	</view>
@@ -27,10 +35,12 @@
 		data() {
 			return {
 				title: 'Radio',
-				popular: ['../../static/logo.png','../../static/logo.png']
+				popular: ['https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png','https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png'],
+				swiperData:['1','2','3']
 			}
 		},
 		onLoad() {
+			console.log("index:"+this.swiperData)
 
 		},
 		methods: {
@@ -57,7 +67,6 @@
 	.other-title {
 		height: 13vw;
 		margin-bottom: 5vw;
-		background-color: #3F536E;
 	}
 	.popular {
 		margin-top: 11vw;
@@ -70,6 +79,7 @@
 		color: #eeeeee;
 	}
 	.music-box {
+		display: inline-flex;
 		width: 100vw;
 		height: 21vw;
 		margin: 5vw 4vw 5vw 6vw;
@@ -79,5 +89,47 @@
 		height: 21vw;
 		background-color: #6d6d6d;
 		border-radius: 1vw;
+	}
+	.rling-radio-weekly {
+		margin-left: 6vw;
+		font-family: Helvetica;
+		font-size: 6vw;
+		font-weight: normal;
+		font-stretch: normal;
+		letter-spacing: 0vw;
+		color: #eeeeee;
+	}
+	.rling-radio-weekly2 {
+		margin-top: 1vw;
+		margin-left: 6vw;
+		font-family: Helvetica;
+		font-size: 4vw;
+		font-weight: normal;
+		font-stretch: normal;
+		line-height: 5vw;
+		letter-spacing: 0vw;
+		color: #817a7a;
+	}
+	.text-box {
+		display: flex;
+		flex-direction: column;
+	}
+	.text-box-title {
+		margin: 3vw 0 0 4vw;
+		font-family: Helvetica;
+		font-size: 4vw;
+		font-weight: normal;
+		font-stretch: normal;
+		letter-spacing: 0vw;
+		color: #eeeeee;
+	}
+	.text-box-centent {
+		margin: 2vw 0 0 4vw;
+		font-family: Helvetica;
+		font-size: 3vw;
+		font-weight: normal;
+		font-stretch: normal;
+		letter-spacing: 0vw;
+		color: #817a7a;
 	}
 </style>

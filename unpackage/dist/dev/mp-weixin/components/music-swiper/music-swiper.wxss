@@ -12,4 +12,9 @@ page {
   border-radius: 2vw;
   background-color: #6d6d6d;
 }
+.swiper-item image {
+  width: 75vw;
+  height: 50vw;
+  border-radius: 2vw;
+}
 
