@@ -1,37 +1,27 @@
 <template>
-	<view>
-		<view class="uni-padding-wrap">
-			<view class="page-section swiper">
-				<view class="page-section-spacing">
-					<swiper class="swiper" 
-				indicator-color="#ffffff"
-				indicator-active-color="#ef01a0"
-				next-margin="50px" 
-				previous-margin="27px" 
-				:circular="circular" 
-				:indicator-dots="indicatorDots" 
-				:autoplay="autoplay" 
-				:interval="interval" 
-				:duration="duration" >
-						<swiper-item>
-							<view class="swiper-item">
-								<image src="https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png" mode="aspectFill"></image>
-							</view>
-						</swiper-item>
-						<swiper-item>
-							<view class="swiper-item">
-								<image src="https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/173018-15818454187775.png" mode="aspectFill"></image>
-							</view>
-						</swiper-item>
-						<swiper-item>
-							<view class="swiper-item">
-								<image src="https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png" mode="aspectFill"></image>
-							</view>
-						</swiper-item>
-					</swiper>
-				</view>
-			</view>
-		</view>
+	<view class="wrap">
+		<swiper class="swiper" 
+		next-margin="50px" 
+		previous-margin="27px" 
+		:circular="circular" 
+		:indicator-dots="indicatorDots" 
+		:autoplay="autoplay" 
+		:interval="interval"
+		:current="currentSwiper"
+		:duration="duration"
+		@change="swiperChange">
+			<block>
+				<swiper-item v-for="item in imgUrls" class="swiper-item" >
+					<image :src="item" mode="aspectFill"></image>
+				</swiper-item>
+			</block>		
+		</swiper>
+		<!-- 重置小圆点的样式 -->
+		<view class="dots"> 
+			<block v-for="(item,index) in imgUrls.length" :index="index" :key="item"> 
+				<view class="dot" :class="index == currentSwiper ? ' active' : '' "></view> 
+			</block> 
+		</view> 
 	</view>
 </template>
 
@@ -39,28 +29,29 @@
 	export default {
 		name:'MusicSwiper',	
 		props: {
-			swiperData: {
-				type: Array,
-				default() {
-					return [];
-				}
-			}
+			imgUrls: []
 		},
 		data() {
 			return {
-				background: ['color1', 'color2', 'color3'],
-				indicatorDots: true,
+				indicatorDots: false,
 				autoplay: true,
 				interval: 2000,
 				duration: 500,
-				circular: true
+				circular: true,
+				currentSwiper: 0,
+				swiperChange: function(e) {
+					console.log(e.detail.current);
+					this.setData({
+					    currentSwiper: e.detail.current
+					});
+				 }
 			};
 		},
 		methods: {
-		
+			
 		},
 		onLoad() {
-			console.log(swiperData);
+			console.log(imgUrls);
 		}
 	}
 </script>
@@ -70,19 +61,45 @@
 		width: 100%;
 		height: 100%;
 	}
+	.wrap {
+		width: 100%;
+		height: auto;
+		position: relative;
+	}
 	.swiper {
-		width: 100vw;
+		width: 100%;
 		height: 50vw;
 	}
 	.swiper-item {
-		width: 75vw;
-		height: 50vw;
-		border-radius: 2vw;
-		background-color: #6d6d6d;
+		// width: 75vw;
+		// height: 50vw;
+		// border-radius: 2vw;
 		image {
 			width: 75vw;
 			height: 50vw;
 			border-radius: 2vw;
 		}
 	}
+	/*用来包裹所有的小圆点 */
+	.dots {
+	 display: flex;
+	 justify-content: center;
+	 flex-direction: row;
+	}
+	/*未选中时的小圆点样式 */
+	.dot {
+	 width: 2vw;
+	 height: 2vw;
+	 margin-top: 2vw;
+	 border-radius: 50%;
+	 margin-right: 2vw;
+	 background-color: #FFFFFF;
+	}
+	/*选中以后的小圆点样式 */
+	.active {
+	 width: 2vw;
+	 height: 2vw;
+	 background-color: #ef01a0;
+	}
+	
 </style>

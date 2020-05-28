@@ -18,7 +18,7 @@
 	margin-bottom: 5vw;
 }
 .popular {
-	margin-top: 11vw;
+	margin-top: 7vw;
 	margin-left: 6vw;
 	font-family: Helvetica;
 	font-size: 6vw;
@@ -38,7 +38,6 @@
 .music-image {
 	width: 21vw;
 	height: 21vw;
-	background-color: #6d6d6d;
 	border-radius: 1vw;
 }
 .rling-radio-weekly {

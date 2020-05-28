@@ -1,6 +1,4 @@
-.title {
-  position: absolute;
-  margin-top: 48%;
-  margin-left: 47%;
+page {
+  background-color: #0e0b1f;
 }
 

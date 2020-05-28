@@ -1,1 +1,1 @@
-<view class="_div"></view>
+<music-swiper vue-id="c3f6e438-1" img-urls="{{imgUrls}}" bind:__l="__l"></music-swiper>

@@ -11,7 +11,7 @@
 				Rling Radio Weekly
 			</view>
 		</view>
-		<music-swiper :swiperData="swiperData"></music-swiper>
+		<music-swiper :img-urls="imgUrls"></music-swiper>
 		<view class="popular">
 			popular
 		</view>
@@ -35,8 +35,15 @@
 		data() {
 			return {
 				title: 'Radio',
-				popular: ['https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png','https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png'],
-				swiperData:['1','2','3']
+				popular: [
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png',
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png'
+				],
+				imgUrls:[
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png',
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png',
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/204941-15776237817d95.png'
+				]
 			}
 		},
 		onLoad() {
@@ -69,7 +76,7 @@
 		margin-bottom: 5vw;
 	}
 	.popular {
-		margin-top: 11vw;
+		margin-top: 7vw;
 		margin-left: 6vw;
 		font-family: Helvetica;
 		font-size: 6vw;
@@ -87,7 +94,6 @@
 	.music-image {
 		width: 21vw;
 		height: 21vw;
-		background-color: #6d6d6d;
 		border-radius: 1vw;
 	}
 	.rling-radio-weekly {
