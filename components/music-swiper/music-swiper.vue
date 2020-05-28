@@ -41,9 +41,7 @@
 				currentSwiper: 0,
 				swiperChange: function(e) {
 					console.log(e.detail.current);
-					this.setData({
-					    currentSwiper: e.detail.current
-					});
+					this.currentSwiper = e.detail.current;
 				 }
 			};
 		},
