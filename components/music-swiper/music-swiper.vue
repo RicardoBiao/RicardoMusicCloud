@@ -40,7 +40,8 @@
 				circular: true,
 				currentSwiper: 0,
 				swiperChange: function(e) {
-					console.log(e.detail.current);
+					// console.log(e.detail.current);
+					// console.log(this);
 					this.currentSwiper = e.detail.current;
 				 }
 			};
