@@ -1,91 +1,89 @@
 <template>
-	<view class="box">
-		<input type="text" placeholder="请输入搜索内容" v-model="keywords"/>
-		<button class="button1"  @click="SearchMusic()">搜索</button>
-		<view class="music-box" v-for="item in songs" @click="getMusicUrl(item.id)">
-			<image class="music-image" mode="aspectFill" :src="item.artists[0].img1v1Url"></image>
+	<view class="content">
+		<view class="title">
+			{{title}}
+		</view>
+		<view class="other-title">
+			<view class="rling-radio-weekly">
+				Rling Radio Weekly
+			</view>
+			<view class="rling-radio-weekly2">
+				Rling Radio Weekly
+			</view>
+		</view>
+		<music-swiper :img-urls="imgUrls"></music-swiper>
+		<view class="popular">
+			popular
+		</view>
+		<view class="music-box" v-for="item in popular">
+			<image class="music-image" mode="aspectFill" :src="item"></image>
 			<view class="text-box">
 				<text class="text-box-title">
-					{{item.artists[0].name}}
+					Rling Radio Weekly
 				</text>
 				<text class="text-box-centent">
-					{{item.id}}
+					Collection of the best Radio stations
+					of RLING, constantly updated weekly.
 				</text>
 			</view>
 		</view>
 	</view>
-	
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
-				musicId:'',
-				keywords:'',
-				songs:[]
+				title: 'Radio',
+				popular: [
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png',
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png'
+				],
+				imgUrls:[
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png',
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png',
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/204941-15776237817d95.png'
+				]
 			}
 		},
+		onLoad() {
+			console.log("index:"+this.swiperData)
+
+		},
 		methods: {
-			getMusicUrl(itemId) {
-				this.$api.getMusicUrl({
-					id: itemId
-				}).then(res => {
-					if (res.data.code === 200) {
-						// var urlArr = [];
-						console.log(res.data);
-						console.log(res.data.data[0].url);
-						let musicUrl = res.data.data[0].url;
-						
-						const innerAudioContext = uni.createInnerAudioContext();
-						innerAudioContext.autoplay = true;
-						innerAudioContext.src = 'musicUrl';
-						innerAudioContext.onPlay(() => {
-						  console.log('开始播放');
-						});
-						innerAudioContext.onError((res) => {
-						  console.log(res.errMsg);
-						  console.log(res.errCode);
-						});
-						// for (var i=0,len=res.data.data.length; i<len; i++) {
-						// 	urlArr.push(res.data.data[i].url);
-						// }
-					}
-				});
-			},
-			SearchMusic() {
-				this.$api.getSearch({
-					keywords: this.keywords
-				}).then(res => {
-					if (res.data.code === 200) {
-						console.log(res.data);
-						console.log(res.data.result);
-						console.log(res.data.result.songs);
-						this.songs = res.data.result.songs;
-						// console.log(res.data.data[0].url);
-						// for (var i=0,len=res.data.data.length; i<len; i++) {
-						// 	urlArr.push(res.data.data[i].url);
-						// }
-					}
-				});
-			}
-		}
+			
+		}	
 	}
 </script>
 
-<style lang="less">
-	page {
-		width: 100%;
-		height: 100%;
+<style>
+	.content {
 		background-color: #0e0b1f;
+		height: 100%;
 	}
-	input {
-		color: #FFFFFF;
+	.title {
+		height: 15vw;
+		margin: 0 0 8vw 6vw;
+		font-family: Helvetica;
+		font-size: 13vw;
+		font-weight: normal;
+		font-stretch: normal;
+		letter-spacing: 0vw;
+		color: #eeeeee;
 	}
-	.button1 {
-		width: 90px;
-		height: 40px;
-		line-height: 40px;
+	.other-title {
+		height: 13vw;
+		margin-bottom: 5vw;
+	}
+	.popular {
+		margin-top: 7vw;
+		margin-left: 6vw;
+		font-family: Helvetica;
+		font-size: 6vw;
+		font-weight: normal;
+		font-stretch: normal;
+		letter-spacing: 0vw;
+		color: #eeeeee;
 	}
 	.music-box {
 		display: inline-flex;
@@ -97,6 +95,26 @@
 		width: 21vw;
 		height: 21vw;
 		border-radius: 1vw;
+	}
+	.rling-radio-weekly {
+		margin-left: 6vw;
+		font-family: Helvetica;
+		font-size: 6vw;
+		font-weight: normal;
+		font-stretch: normal;
+		letter-spacing: 0vw;
+		color: #eeeeee;
+	}
+	.rling-radio-weekly2 {
+		margin-top: 1vw;
+		margin-left: 6vw;
+		font-family: Helvetica;
+		font-size: 4vw;
+		font-weight: normal;
+		font-stretch: normal;
+		line-height: 5vw;
+		letter-spacing: 0vw;
+		color: #817a7a;
 	}
 	.text-box {
 		display: flex;

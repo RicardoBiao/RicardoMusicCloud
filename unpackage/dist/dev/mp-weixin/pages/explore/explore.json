@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "explore",
-  "usingComponents": {}
+  "usingComponents": {
+    "audio-mini": "/components/audio-mini/audio-mini"
+  }
 }

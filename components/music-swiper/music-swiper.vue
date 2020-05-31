@@ -29,7 +29,12 @@
 	export default {
 		name:'MusicSwiper',	
 		props: {
-			imgUrls: []
+			imgUrls: {
+				type: Array,
+				default: function () {
+					return [];
+				}
+			}	
 		},
 		data() {
 			return {
@@ -100,5 +105,6 @@
 	 height: 2vw;
 	 background-color: #ef01a0;
 	}
+	
 	
 </style>

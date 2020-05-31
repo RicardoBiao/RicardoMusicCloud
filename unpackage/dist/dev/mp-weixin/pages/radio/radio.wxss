@@ -1,54 +1,90 @@
-page {
-  width: 100%;
-  height: 100%;
-  background-color: #0e0b1f;
+
+.content {
+	background-color: #0e0b1f;
+	height: 100%;
 }
-input {
-  color: #FFFFFF;
+.title {
+	height: 15vw;
+	margin: 0 0 8vw 6vw;
+	font-family: Helvetica;
+	font-size: 13vw;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0vw;
+	color: #eeeeee;
 }
-.button1 {
-  width: 90px;
-  height: 40px;
-  line-height: 40px;
+.other-title {
+	height: 13vw;
+	margin-bottom: 5vw;
+}
+.popular {
+	margin-top: 7vw;
+	margin-left: 6vw;
+	font-family: Helvetica;
+	font-size: 6vw;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0vw;
+	color: #eeeeee;
 }
 .music-box {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: inline-flex;
-  width: 100vw;
-  height: 21vw;
-  margin: 5vw 4vw 5vw 6vw;
+	display: -webkit-inline-box;
+	display: -webkit-inline-flex;
+	display: inline-flex;
+	width: 100vw;
+	height: 21vw;
+	margin: 5vw 4vw 5vw 6vw;
 }
 .music-image {
-  width: 21vw;
-  height: 21vw;
-  border-radius: 1vw;
+	width: 21vw;
+	height: 21vw;
+	border-radius: 1vw;
+}
+.rling-radio-weekly {
+	margin-left: 6vw;
+	font-family: Helvetica;
+	font-size: 6vw;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0vw;
+	color: #eeeeee;
+}
+.rling-radio-weekly2 {
+	margin-top: 1vw;
+	margin-left: 6vw;
+	font-family: Helvetica;
+	font-size: 4vw;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 5vw;
+	letter-spacing: 0vw;
+	color: #817a7a;
 }
 .text-box {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
 }
 .text-box-title {
-  margin: 3vw 0 0 4vw;
-  font-family: Helvetica;
-  font-size: 4vw;
-  font-weight: normal;
-  font-stretch: normal;
-  letter-spacing: 0vw;
-  color: #eeeeee;
+	margin: 3vw 0 0 4vw;
+	font-family: Helvetica;
+	font-size: 4vw;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0vw;
+	color: #eeeeee;
 }
 .text-box-centent {
-  margin: 2vw 0 0 4vw;
-  font-family: Helvetica;
-  font-size: 3vw;
-  font-weight: normal;
-  font-stretch: normal;
-  letter-spacing: 0vw;
-  color: #817a7a;
+	margin: 2vw 0 0 4vw;
+	font-family: Helvetica;
+	font-size: 3vw;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0vw;
+	color: #817a7a;
 }
 
