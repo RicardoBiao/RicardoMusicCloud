@@ -4,10 +4,7 @@
 			<text class="title"> Rling </text>
 			<button class="search"></button>
 		</view>
-		<!-- swiper-tranform组件 -->
-		<view class="swiper-tranform">
-			
-		</view>
+		<albums-view :img-urls="imgUrls"></albums-view>
 		<text> Rling Weekly </text>
 		<!-- video组件 -->
 		<view class="video">
@@ -35,7 +32,29 @@
 </template>
 
 <script>
+	export default {
+		data() {
+			return {
+				title: 'Radio',
+				popular: [
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png',
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png'
+				],
+				imgUrls:[
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png',
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png',
+					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/204941-15776237817d95.png'
+				]
+			}
+		},
+		onLoad() {
+			console.log("index:"+this.swiperData)
 	
+		},
+		methods: {
+			
+		}	
+	}
 </script>
 
 <style lang="less">

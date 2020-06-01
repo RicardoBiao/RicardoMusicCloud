@@ -1,8 +1,8 @@
 <template>
 	<view class="wrap">
 		<swiper class="swiper" 
-		next-margin="50px" 
-		previous-margin="27px" 
+		next-margin="200px" 
+		previous-margin="120px" 
 		:circular="circular" 
 		:indicator-dots="indicatorDots" 
 		:autoplay="autoplay" 
@@ -10,8 +10,8 @@
 		:current="currentSwiper"
 		:duration="duration"
 		@change="swiperChange">
-			<block>
-				<swiper-item v-for="item in imgUrls" class="swiper-item" >
+			<block v-for="item in imgUrls" >
+				<swiper-item class="swiper-item" >
 					<image :src="item" mode="aspectFill"></image>
 				</swiper-item>
 			</block>		

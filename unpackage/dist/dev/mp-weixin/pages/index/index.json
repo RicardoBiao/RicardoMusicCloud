@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "index",
-  "usingComponents": {}
+  "usingComponents": {
+    "albums-view": "/components/albums-view/albums-view"
+  }
 }
