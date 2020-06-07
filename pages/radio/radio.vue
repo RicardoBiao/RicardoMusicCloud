@@ -56,7 +56,7 @@
 	}
 </script>
 
-<style>
+<style lang="less">
 	.content {
 		background-color: #0e0b1f;
 		height: 100%;

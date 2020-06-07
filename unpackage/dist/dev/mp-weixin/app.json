@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/explore/explore",
     "pages/radio/radio",
-    "pages/account/account"
+    "pages/account/account",
+    "pages/login/login"
   ],
   "subPackages": [],
   "window": {
@@ -44,6 +45,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap58.json"
+  "usingComponents": {}
 }

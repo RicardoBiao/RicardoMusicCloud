@@ -12,6 +12,16 @@ const api = {
 		return request.get('/search', {
 		    ...data
 		})
+	},
+	postPhoneLogin(data) {
+		return request.post('/login/cellphone', {
+			...data
+		})
+	},
+	postEmailLogin(data) {
+		return request.post('/login', {
+			...data
+		})
 	}
 }
 

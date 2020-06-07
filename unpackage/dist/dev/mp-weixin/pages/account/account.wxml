@@ -1,1 +1,1 @@
-<music-swiper vue-id="c3f6e438-1" img-urls="{{imgUrls}}" bind:__l="__l"></music-swiper>
+<view class="content"><view class="user-info"><image src="{{userInfo.profile.backgroundUrl}}" mode></image><view class="info-right"><button class="edit">Edit</button></view></view></view>

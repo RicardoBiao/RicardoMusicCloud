@@ -1,23 +1,37 @@
 <template>
-	<music-swiper :img-urls="imgUrls"></music-swiper>
+	<view class="content">
+		<view class="user-info">
+			<image :src="userInfo.profile.backgroundUrl" mode=""></image>
+			<view class="info-right">
+				
+				<button class="edit">Edit</button>
+			</view>
+		</view>
+	</view>
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
-				imgUrls:[
-					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png',
-					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png',
-					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png'
-				]
+				
 			}
+		},
+		methods: {
+			
+		},
+		onLoad() {
+			uni.$on('login',(userInfo)=>{  
+			        this.userInfo = userInfo;  
+			});
+			console.log(this.userInfo);
+		},
+		onUnload() {  
+			uni.$off('login');  
 		}
 	}
 </script>
 
 <style lang="less">
-	page {
-		background-color: #0e0b1f;
-	}
+	
 </style>

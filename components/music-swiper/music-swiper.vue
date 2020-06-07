@@ -1,8 +1,8 @@
 <template>
 	<view class="wrap">
 		<swiper class="swiper" 
-		next-margin="200px" 
-		previous-margin="120px" 
+		next-margin="55px" 
+		previous-margin="25px" 
 		:circular="circular" 
 		:indicator-dots="indicatorDots" 
 		:autoplay="autoplay" 

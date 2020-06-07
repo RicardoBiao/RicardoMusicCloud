@@ -12,8 +12,8 @@
 		@change="swiperChange"
 		>
 			<block v-for="(item,index) in imgUrls" :index="index" :key="item" >
-				<swiper-item class="swiper-item" >
-					<image :src="item" mode="aspectFill" class="slide-image" :class="index == currentSwiper ? 'active' : ''"></image>
+				<swiper-item class="swiper-item" @click="swiperClick(e)">
+					<image :src="item"  mode="aspectFill" class="slide-image" :class="index == currentSwiper ? 'active' : ''"></image>
 				</swiper-item>
 			</block>		
 		</swiper>
@@ -35,20 +35,28 @@
 		data() {
 			return {
 				indicatorDots: false,
-				autoplay: true,
+				autoplay: false,
 				interval: 2000,
-				duration: 500,
+				duration: 2000,
 				circular: true,
 				currentSwiper: 0,
+				index: '',
 				swiperChange: function(e) {
-					// console.log(e.detail.current);
-					// console.log(this);
+					console.log(e.detail.current);
+					console.log(this.currentSwiper);
 					this.currentSwiper = e.detail.current;
+					console.log(this.currentSwiper);
 				 }
-				}
+				
+			}
+				
 		},
 		methods: {
-			
+			swiperClick(e) {
+				// this.currentSwiper = e.detail.current;					
+				console.log(this.current);				
+				console.log(this.currentSwiper);
+			}
 		},
 		onLoad() {
 			console.log(imgUrls);
@@ -78,7 +86,7 @@
 	.slide-image {
 		width: 35vw;
 		height: 35vw;
-		z-index: 10;
+		z-index: 10;	
 	}
 	.active {
 		transform: scale(1.2,1.2);
