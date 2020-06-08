@@ -25,8 +25,7 @@
 				phone: '',
 				email: 'RicardoLe@yeah.net',
 				password: 'qinqinqin753',
-				backgroundUrl: '',
-				userInfo:[]
+				backgroundUrl: ''
 			}
 		},
 		methods: {
@@ -40,11 +39,8 @@
 						console.log(this.password);
 						console.log(res);
 						this.backgroundUrl = res.data.profile.backgroundUrl;
-						this.userInfo = res.data;
-						console.log(this.userInfo);
-						uni.$emit('login', {  
-							userInfo: this.userInfo
-						});
+						this.$store.state.userInfo = res.data;
+						console.log(this.$store.state.userInfo);
 						uni.switchTab({
 							url:'../account/account'
 						});
@@ -69,7 +65,7 @@
 		font-weight: normal;
 		font-stretch: normal;
 		letter-spacing: 0vw;
-		color: #ffffff;
+		color: #eeeeee;
 	}
 	.email-box {
 		display: flex;
@@ -100,7 +96,7 @@
 	}
 	input {
 		display: inline-flex;
-		color: #ffffff;
+		color: #eeeeee;
 		padding-left: 6vw;
 		width: 100%;
 	}
@@ -125,7 +121,7 @@
 		font-weight: normal;
 		font-stretch: normal;
 		letter-spacing: 0vw;
-		color: #ffffff;
+		color: #eeeeee;
 		background-color: #ef01a0;
 	}
 	.bg-image {

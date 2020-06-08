@@ -11,7 +11,7 @@ page {
   font-weight: normal;
   font-stretch: normal;
   letter-spacing: 0vw;
-  color: #ffffff;
+  color: #eeeeee;
 }
 .email-box {
   display: -webkit-box;
@@ -50,7 +50,7 @@ input {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: inline-flex;
-  color: #ffffff;
+  color: #eeeeee;
   padding-left: 6vw;
   width: 100%;
 }
@@ -75,7 +75,7 @@ input {
   font-weight: normal;
   font-stretch: normal;
   letter-spacing: 0vw;
-  color: #ffffff;
+  color: #eeeeee;
   background-color: #ef01a0;
 }
 .bg-image {
