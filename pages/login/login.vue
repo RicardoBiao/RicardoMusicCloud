@@ -35,11 +35,8 @@
 					password:this.password
 				}).then(res => {
 					if (res.data.code === 200) {
-						console.log(this.email);
-						console.log(this.password);
-						console.log(res);
 						this.backgroundUrl = res.data.profile.backgroundUrl;
-						this.$store.state.userInfo = res.data;
+						this.$store.state.userInfo = res.data.profile;
 						console.log(this.$store.state.userInfo);
 						uni.switchTab({
 							url:'../account/account'

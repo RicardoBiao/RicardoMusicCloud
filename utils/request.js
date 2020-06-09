@@ -6,8 +6,8 @@ const newFly = new Fly() // 用于请求session,因fly已经被锁定拦截
 
 
 // 设置请求接口 域名
-fly.config.baseURL = newFly.config.baseURL = 'http://192.168.43.61:3000' //本地
-// fly.config.baseURL = newFly.config.baseURL = 'http://musicapi.leanapp.cn' //网络
+// fly.config.baseURL = newFly.config.baseURL = 'http://192.168.43.61:3000' //本地
+fly.config.baseURL = newFly.config.baseURL = 'http://ricardofighting.top:3000' //网络
 
 
 fly.config.headers['Content-Type'] = newFly.config.headers['Content-Type'] = 'application/x-www-form-urlencoded'

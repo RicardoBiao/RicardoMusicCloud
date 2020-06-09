@@ -1,17 +1,17 @@
 <template>
 	<view class="content">
 		<view class="title-box">
-			<view class="title">Account</view>
-			<image class="setting" src="../../static/e-mail.png" mode=""></image>
+			<view class="title">{{ nickname == '' ? "Account" : nickname }}</view>
+			<image v-if="nickname != ''" class="setting" src="../../static/e-mail.png" mode=""></image>
 		</view>
 		<view class="user-info">
-			<image class="user-image" :src="userInfo.profile.backgroundUrl" mode=""></image>
+			<image class="user-image" @click="goToLogin()" :src="userInfo.avatarUrl" mode="aspectFill"></image>
 			<view class="info-right">
 				<view>
 					<view class="text-box" style="color: #FFFFFF">
-						<view class="text"> {{playlist}} </view>
-						<view class="text"> {{follower}} </view>
-						<view class="text"> {{following}} </view>
+						<view class="text"> {{ playlist == '' ? 0 : playlist }} </view>
+						<view class="text"> {{ follower == '' ? 0 : follower }} </view>
+						<view class="text"> {{ following == '' ? 0 : following }} </view>
 					</view>
 					<view class="text-box" style="color: #eeeeee">
 						<view class="text"> Playlist </view>
@@ -30,21 +30,29 @@
 		data() {
 			return {
 				userInfo:[],
-				playlist:'20',
-				follower:'360 K',
-				following: '56'
+				playlist:'',
+				follower:'',
+				following: '',
+				nickname: ''
 			}
 		},
 		methods: {
-			
+			goToLogin() {
+				if (this.nickname == undefined) {
+					uni.navigateTo({
+						url:'../login/login'
+					});
+				};
+			}
 		},
-		onLoad() { 
+		onShow() { 
 			this.userInfo = this.$store.state.userInfo;
-			console.log('this.userInfo');
+			this.following = this.userInfo.follows;
+			this.follower = this.userInfo.followeds;
+			this.playlist = this.userInfo.playlistCount;
+			this.nickname = this.userInfo.nickname;
 			console.log(this.userInfo);
-		},
-		onUnload() {  
-			
+			console.log(this.following);
 		}
 	}
 </script>
@@ -86,6 +94,7 @@
 		flex-direction: column;
 	}
 	.user-image {
+		background-image: url(../../static/logo.png);
 		width: 21vw;
 		height: 21vw;
 		border-radius: 50%;
