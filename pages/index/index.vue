@@ -2,32 +2,38 @@
 	<view class="content">
 		<view class="top-box">
 			<text class="title"> Rling </text>
-			<button class="search"></button>
+			<image @click="goToSearch()" src="../../static/search.png" class="search"></image>
+		</view>
+		<view class="albums-title">
+			<text > New Albums </text>
+			<text style="font-size: 24rpx;" > View all </text>
 		</view>
 		<albums-view :img-urls="imgUrls"></albums-view>
 		<text> Rling Weekly </text>
 		<!-- video组件 -->
-		<view class="video">
-			
-		</view>
+		<video 
+		src="https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/video/6c974701358444789711847f5e5ebce7.mp4" 
+		controls
+		:enable-play-gesture = "true"
+		:vslide-gesture-in-fullscreen = "true"
+		
+		>
+		</video>
 		<text> Recently Music </text>
 		<!-- mini-music组件 -->
-		<view class="mini-music">
+		<recently-music></recently-music>
+		<recently-music></recently-music>
+		
+		<!-- <view class="mini-music2">
 			
-		</view>
-		<view class="mini-music">
-			
-		</view>
-		<view class="mini-music2">
-			
-		</view>
+		</view> -->
 		<!-- music-play组件 -->
-		<view class="music-play">
+		<!-- <view class="music-play">
 			
 		</view>
 		<view class="music-play-bottom">
 			
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -52,7 +58,11 @@
 	
 		},
 		methods: {
-			
+			goToSearch() {
+					uni.navigateTo({
+						url:'../search/search'
+					});
+			}
 		}	
 	}
 </script>
@@ -64,12 +74,23 @@
 		background-color: #0e0b1f;
 	}
 	.top-box {
-		width: 100%;
+		display: flex;
+		justify-content: space-between;
 		height: 15vw;
+		.title {
+			display: inline-flex;
+			font-size: 13vw;
+			// width: 40vw;
+		}
+		image {
+			width: 7vw;
+			height: 7vw;
+			margin: auto 0;
+			margin-right: 7vw;
+		}
 	}
 	text {
 		display: block;
-		width: 100%;
 		height: 12vw;
 		line-height: 12vw;
 		font-family: Helvetica;
@@ -78,29 +99,32 @@
 		font-stretch: normal;
 		letter-spacing: 0vw;
 		color: #eeeeee;
+		padding: 0 6vw;
 	}
-	.title {
-		padding-left: 6vw;
-		font-size: 13vw;
+	.albums-title {
+		display: flex;
+		justify-content: space-between;
+		
+	}
+	video {
+		width: 654rpx;
+		height: 376rpx;
+		margin: 0 6vw;
 	}
 	
 	.swiper-tranform {
-		width: 100%;
 		height: 53vw;
 		background-color: #007AFF;
 	}
 	.video {
-		width: 100%;
 		height: 50vw;
 		background-color: #007AFF;
 	}
 	.mini-music {
-		width: 100%;
 		height: 50vw;
 		background-color: #007AFF;
 	}
 	.mini-music2 {
-		width: 100%;
 		height: 10vw;
 		background-color: #ffba66;
 	}

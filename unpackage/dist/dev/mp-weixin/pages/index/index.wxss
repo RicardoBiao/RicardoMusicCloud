@@ -4,12 +4,28 @@ page {
   background-color: #0e0b1f;
 }
 .top-box {
-  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
   height: 15vw;
+}
+.top-box .title {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  font-size: 13vw;
+}
+.top-box image {
+  width: 7vw;
+  height: 7vw;
+  margin: auto 0;
+  margin-right: 7vw;
 }
 text {
   display: block;
-  width: 100%;
   height: 12vw;
   line-height: 12vw;
   font-family: Helvetica;
@@ -18,28 +34,34 @@ text {
   font-stretch: normal;
   letter-spacing: 0vw;
   color: #eeeeee;
+  padding: 0 6vw;
 }
-.title {
-  padding-left: 6vw;
-  font-size: 13vw;
+.albums-title {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+video {
+  width: 654rpx;
+  height: 376rpx;
+  margin: 0 6vw;
 }
 .swiper-tranform {
-  width: 100%;
   height: 53vw;
   background-color: #007AFF;
 }
 .video {
-  width: 100%;
   height: 50vw;
   background-color: #007AFF;
 }
 .mini-music {
-  width: 100%;
   height: 50vw;
   background-color: #007AFF;
 }
 .mini-music2 {
-  width: 100%;
   height: 10vw;
   background-color: #ffba66;
 }

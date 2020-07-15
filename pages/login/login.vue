@@ -35,9 +35,21 @@
 					password:this.password
 				}).then(res => {
 					if (res.data.code === 200) {
+						
 						this.backgroundUrl = res.data.profile.backgroundUrl;
 						this.$store.state.userInfo = res.data.profile;
-						console.log(this.$store.state.userInfo);
+						this.$store.state.loginData = res.data;
+						this.$store.state.isLogin = 1;
+						console.log('res.data:',res.data);
+						this.$api.getDetail({
+							uid:this.$store.state.userInfo.userId
+						}).then(res => {
+							if (res.data.code === 200) {
+								this.$store.state.detail = res.data;
+								console.log('this.$store.state.detail:',this.$store.state.detail);
+							}
+						});
+						console.log('this.$store.state.userInfo:',this.$store.state.userInfo);
 						uni.switchTab({
 							url:'../account/account'
 						});

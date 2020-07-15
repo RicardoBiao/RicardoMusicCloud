@@ -1,9 +1,12 @@
 <template>
 	<view class="">
-		<input type="text" placeholder="请输入搜索内容" v-model="keywords"/>
+		<input type="text" placeholder="请输入搜索内容"  v-model="keywords"/>
 		<button class="button1"  @click="searchMusic()">搜索</button>
 		<button class="button1" @click="goToLogin()">去登录</button>
 		<audio-mini v-for="song in songs" :song="song" ></audio-mini>
+		<view class="show-log" v-show="showLog">
+			<image src="../../static/loading.gif" mode=""></image>
+		</view>
 	</view>
 	
 </template>
@@ -12,19 +15,30 @@
 	export default {
 		data() {
 			return {
-				songs:[]
+				songs: [],
+				limit: 30,
+				page: 0,
+				showLog: false,
+				isLoading: false,
+				total: 0
 			}
 		},
 		methods: {
 			searchMusic() {
 				this.$api.getSearch({
-					keywords: this.keywords
+					// keywords: this.keywords,
+					keywords: "起风了",
+					limit: this.limit,
+					offset:this.page*30
 				}).then(res => {
 					if (res.data.code === 200) {
-						console.log(res.data);
+						console.log('res.data:',res.data);
 						console.log(res.data.result);
 						console.log(res.data.result.songs);
-						this.songs = res.data.result.songs;
+						this.songs = this.songs.concat(res.data.result.songs);
+						this.total = res.data.result.songCount;
+						this.showLog = false;
+						this.isLoading = false;
 						// console.log(res.data.data[0].url);
 						// for (var i=0,len=res.data.data.length; i<len; i++) {
 						// 	urlArr.push(res.data.data[i].url);
@@ -32,11 +46,22 @@
 					}
 				});
 			},
-			goToLogin() {
-				uni.navigateTo({
-					url:'../login/login'
-				})
+			onReachBottom() {
+			    let that = this;
+					if (that.limit * that.page < that.total && !that.isLoading) { 
+						that.page++;
+						that.showLog = true;
+						that.isLoading = true;
+						console.log('onReachBottomonReachBottomonReachBottom');
+						setTimeout(function() {
+							that.searchMusic();
+						}, 1500);
+					}
 			}
+		},
+		onLoad() {
+			// var audios = document.getElementsByName("audio");
+			// console.log("Audio",audios);
 		}
 	}
 </script>
@@ -55,4 +80,13 @@
 		height: 40px;
 		line-height: 40px;
 	}
+	.show-log {
+		width: 100%;
+		text-align: center;
+		image {
+			width: 20px;
+			height: 20px;
+		}
+	}
+	
 </style>

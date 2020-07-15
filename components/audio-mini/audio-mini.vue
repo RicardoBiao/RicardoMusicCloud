@@ -1,9 +1,9 @@
 <template>
 	<view class="box">
-		<view class="music-box">
+		<view class="music-box" name="audio">
 			<view class="image-box">
-				<image v-if="musicPaused == 1" class="play-icon" @click="musicPlay(song.id)"></image>
-				<image v-if="musicPaused == 0" class="pause-icon" @click="musicPause(song.id)"></image>
+				<image v-if="musicPaused == 1" src="../../static/play.png" mode="aspectFill" class="play-icon" @click="musicPlay()"></image>
+				<image v-if="musicPaused == 0" src="../../static/stop.png" mode="aspectFill" class="pause-icon" @click="musicPause()"></image>
 				<image  class="music-image" mode="aspectFill" :src="song.artists[0].img1v1Url"></image>
 			</view>
 			<view class="text-box">
@@ -12,6 +12,9 @@
 				</text>
 				<text class="text-box-centent">
 					{{song.artists[0].name}}
+				</text>
+				<text class="text-box-centent">
+					{{current}}/{{duration}}
 				</text>
 			</view>
 		</view>
@@ -30,60 +33,71 @@
 		},
 		data() {
 			return {
-				musicId:'',
-				keywords:'',
-				musicPaused:1,
-				innerAudioContext:''
+				musicId: '',
+				keywords: '',
+				musicPaused: 1,
+				innerAudioContext: '',
+				audios: [],
+				duration: '',
+				current: '00:00'
 			}
 		},
 		methods: {
-			musicPlay(itemId) {
-				this.$api.getMusicUrl({
-					id: itemId
-				}).then(res => {
-					if (res.data.code === 200) {
-						// var urlArr = [];
-						// console.log(res.data);
-						// console.log(res.data.data[0].url);
-						let musicUrl = res.data.data[0].url;
-						console.log(musicUrl);
-						console.log(this.musicPaused);
-						this.innerAudioContext = uni.createInnerAudioContext();
-						this.innerAudioContext.autoplay = true;
-						this.innerAudioContext.src = musicUrl;
-						this.musicPaused = 0;
-						console.log('musicPaused:'+this.musicPaused);
-						// innerAudioContext.onPlay(() => {
-						//   console.log('开始播放');
-						// });
-						// innerAudioContext.onError((res) => {
-						//   console.log(res.errMsg);
-						//   console.log(res.errCode);
-						// });
-						
-						// for (var i=0,len=res.data.data.length; i<len; i++) {
-						// 	urlArr.push(res.data.data[i].url);
-						// }
-					}
-				});
+			format(num) {  
+				return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
+			},
+			musicPlay() {
+					this.innerAudioContext.play();
+					this.musicPaused = 0;
+					let format = function(num) {
+						return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
+					};
+					this.innerAudioContext.onTimeUpdate( () => {
+						//音频进度更新事件  
+						this.current = format(this.innerAudioContext.currentTime);
+						console.log('this.current:',this.current);
+					});
+					
 			},
 			musicPause() {
-				console.log(this.innerAudioContext);
 				this.innerAudioContext.pause();
 				this.musicPaused = 1;
 			}
 		},
 		onLoad (){
-			// const innerAudioContext = uni.createInnerAudioContext();
-			// innerAudioContext.autoplay = true;
-			// innerAudioContext.src = 'http://m8.music.126.net/20200530204917/2e3ec5acb37c008b339841f332b8d956/ymusic/0758/550f/545f/028d3b9421be8425d60dc57735cf6ebc.mp3';
-			// innerAudioContext.onPlay(() => {
-			//   console.log('开始播放');
-			// });
-			// innerAudioContext.onError((res) => {
-			//   console.log(res.errMsg);
-			//   console.log(res.errCode);
-			// });
+			
+		},
+		created () {
+				this.$api.getMusicUrl({
+					id: this.song.id
+				}).then(res => {
+					if (res.data.code === 200) {
+						let musicUrl = res.data.data[0].url;
+						// console.log(musicUrl);
+						// console.log(this.musicPaused);
+						this.innerAudioContext = uni.createInnerAudioContext();
+						// console.log('innerAudioContext:',this.innerAudioContext);
+						this.innerAudioContext.src = musicUrl;
+						let format = function(num) {
+							return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
+						};
+						this.innerAudioContext.onCanplay( ()=>{
+							this.duration = format(this.innerAudioContext.duration);
+							console.log('this.duration:',this.duration);
+						});
+						
+						this.musicPaused = 1;
+						// console.log('musicPaused:'+this.musicPaused);
+					}
+				});
+				
+		},
+		watch: {
+			//监听当前进度改变  
+			// current(e) {  
+			// 	this.currentTime = this.format(e);  
+			// 	console.log('this.currentTime:',this.currentTime);
+			// }
 		}
 	}
 </script>
@@ -96,7 +110,6 @@
 	}
 	.music-box {
 		display: inline-flex;
-		width: 100vw;
 		height: 21vw;
 		margin: 5vw 4vw 5vw 6vw;
 	}
@@ -113,14 +126,14 @@
 		width: 9vw;
 		height: 9vw;
 		z-index: 100;
-		background-color: #4CD964;
+		// background-color: #4CD964;
 	}
 	.pause-icon {
 		position: absolute;
 		width: 9vw;
 		height: 9vw;
 		z-index: 100;
-		background-color: #d90003;
+		// background-color: #d90003;
 	}
 	.music-image {
 		width: 21vw;

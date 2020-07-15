@@ -8,7 +8,10 @@ Vue.use(Vuex)
 const debug = false
 
 const state = {
-	userInfo: []
+	userInfo: [],
+	detail:[],
+	loginData:[],
+	isLogin: 0
 }
 
 export default new Vuex.Store({  

@@ -11,4 +11,12 @@ input {
   height: 40px;
   line-height: 40px;
 }
+.show-log {
+  width: 100%;
+  text-align: center;
+}
+.show-log image {
+  width: 20px;
+  height: 20px;
+}
 

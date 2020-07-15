@@ -7,7 +7,6 @@ page {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: inline-flex;
-  width: 100vw;
   height: 21vw;
   margin: 5vw 4vw 5vw 6vw;
 }
@@ -30,14 +29,12 @@ page {
   width: 9vw;
   height: 9vw;
   z-index: 100;
-  background-color: #4CD964;
 }
 .pause-icon {
   position: absolute;
   width: 9vw;
   height: 9vw;
   z-index: 100;
-  background-color: #d90003;
 }
 .music-image {
   width: 21vw;

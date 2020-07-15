@@ -19,7 +19,8 @@
 						<view class="text"> Following </view>
 					</view>
 				</view>
-				<button class="edit">Edit</button>
+				<button v-show="nickname" class="edit" @click="getWxUserInfo()">Edit</button>
+				<button v-show="!nickname" class="edit" @click="getWxUserInfo()">login</button>
 			</view>
 		</view>
 	</view>
@@ -43,6 +44,40 @@
 						url:'../login/login'
 					});
 				};
+			},
+			getWxUserInfo() {
+				uni.authorize({
+				    scope: 'scope.userLocation',
+				    success() {
+				        uni.getLocation();
+				    }
+				});
+				uni.authorize({
+				    scope: 'scope.userInfo',
+				    success() {
+				        uni.getUserInfo();
+				    }
+				});
+				uni.getSetting({
+				   success(res) {
+				      console.log("res.authSetting",res.authSetting);
+				   }
+				});
+				uni.openSetting({
+				  success(res) {
+				    console.log(res.authSetting);
+				  }
+				});
+			},
+			getLikeMusic() {
+				this.$api.getLikeMusic({
+					uid:this.$store.state.userInfo.userId,
+					cookie:this.$store.state.loginData.cookie
+				}).then(res => {
+					if (res.data.code === 200) {
+						console.log('res.data:',res.data);
+					}
+				});
 			}
 		},
 		onShow() { 
@@ -53,6 +88,11 @@
 			this.nickname = this.userInfo.nickname;
 			console.log(this.userInfo);
 			console.log(this.following);
+		},
+		goToLogin() {
+			uni.navigateTo({
+				url:'../login/login'
+			})
 		}
 	}
 </script>

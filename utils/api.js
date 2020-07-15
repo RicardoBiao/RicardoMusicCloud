@@ -22,6 +22,16 @@ const api = {
 		return request.post('/login', {
 			...data
 		})
+	},
+	getDetail(data) {
+		return request.get('/user/detail', {
+			...data
+		})
+	},
+	getLikeMusic(data) {
+		return request.get('/likelist', {
+			...data
+		})
 	}
 }
 

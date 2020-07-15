@@ -21,6 +21,7 @@ page {
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
+  border-radius: 10rpx;
 }
 .slide-image {
   width: 35vw;
@@ -31,5 +32,8 @@ page {
   -webkit-transform: scale(1.2, 1.2);
           transform: scale(1.2, 1.2);
   z-index: 100;
+}
+image {
+  border-radius: 10rpx;
 }
 
