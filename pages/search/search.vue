@@ -53,6 +53,10 @@
 						<view>当前搜热门搜索已隐藏</view>
 					</view>
 				</view>
+				<audio-mini v-for="song in songs" :song="song" :key="song.id" ></audio-mini>
+				<view class="show-log" v-show="showLog">
+					<image src="../../static/loading.gif" mode=""></image>
+				</view>
 			</scroll-view>
 		</view>
 	</view>
@@ -70,7 +74,13 @@
 				hotKeywordList: [],
 				keywordList: [],
 				forbid: '',
-				isShowKeywordList: false
+				isShowKeywordList: false,
+				songs: [],
+				limit: 30,
+				page: 0,
+				showLog: false,
+				isLoading: false,
+				total: 0
 			}
 		},
 		onLoad() {
@@ -93,6 +103,7 @@
 			//加载默认搜索关键字
 			loadDefaultKeyword() {
 				//定义默认搜索关键字，可以自己实现ajax请求数据再赋值,用户未输入时，以水印方式显示在输入框，直接不输入内容搜索会搜索默认关键字
+				
 				this.defaultKeyword = "默认关键字";
 			},
 			//加载历史搜索,自动读取本地Storage
@@ -108,7 +119,18 @@
 			//加载热门搜索
 			loadHotKeyword() {
 				//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
-				this.hotKeywordList = ['陈奕迅', 'AGA', '吴雨霏', '周杰伦', '薛之谦', '周柏豪', '陈柏宇', '侧田', '李荣浩'];
+				// this.hotKeywordList = ['陈奕迅', 'AGA', '吴雨霏', '周杰伦', '薛之谦', '周柏豪', '陈柏宇', '侧田', '李荣浩'];
+				this.$api.getSearchHot()
+					.then(res => {
+						if (res.data.code === 200) {
+							console.log('res.data:',res.data);
+							let that  = this ;
+							for (let i = 0 ; i < 10 ; i++ ) {
+								that.hotKeywordList.push(res.data.result.hots[i].first);
+							}
+							console.log(this.hotKeywordList);
+						}
+					});
 			}, 
 			//监听输入
 			inputChange(event) {
@@ -121,14 +143,14 @@
 				}
 				this.isShowKeywordList = true;
 				//以下示例截取淘宝的关键字，请替换成你的接口
-				uni.request({
-					url: 'https://suggest.taobao.com/sug?code=utf-8&q=' + keyword, //仅为示例
-					success: (res) => {
-						this.keywordList = [];
-						this.keywordList = this.drawCorrelativeKeyword(res.data.result, keyword);
+				// uni.request({
+				// 	url: 'https://suggest.taobao.com/sug?code=utf-8&q=' + keyword, //仅为示例
+				// 	success: (res) => {
+				// 		this.keywordList = [];
+				// 		this.keywordList = this.drawCorrelativeKeyword(res.data.result, keyword);
 						
-					}
-				});
+				// 	}
+				// });
 			},
 			//高亮关键字
 			drawCorrelativeKeyword(keywords, keyword) {
@@ -174,14 +196,32 @@
 			},
 			//执行搜索
 			doSearch(keyword) {
-				keyword = keyword===false?this.keyword:keyword;
+				keyword = keyword === false ? this.keyword : keyword;
 				this.keyword = keyword;
 				this.saveKeyword(keyword); //保存为历史 
-				uni.showToast({
-					title: keyword,
-					icon: 'none',
-					duration: 2000
+				// uni.showToast({
+				// 	title: keyword,
+				// 	icon: 'none',
+				// 	duration: 2000
+				// });
+				this.$api.getSearch({
+					keywords: this.keyword,
+					// keywords: "起风了",
+					limit: this.limit,
+					offset:this.page*30
+				}).then(res => {
+					if (res.data.code === 200) {
+						console.log('res.data:',res.data);
+						console.log(res.data.result);
+						console.log(res.data.result.songs);
+						this.songs = this.songs.concat(res.data.result.songs);
+						console.log("this.songs:",this.songs);
+						this.total = res.data.result.songCount;
+						this.showLog = false;
+						this.isLoading = false;
+					}
 				});
+				
 				//以下是示例跳转淘宝搜索，可自己实现搜索逻辑
 				/*
 				//#ifdef APP-PLUS
@@ -222,6 +262,19 @@
 						this.oldKeywordList = OldKeys; //更新历史搜索
 					}
 				});
+			},
+			onReachBottom() {
+				console.log('onReachBottom');
+			    let that = this;
+					if (that.limit * that.page < that.total && !that.isLoading) { 
+						that.page++;
+						that.showLog = true;
+						that.isLoading = true;
+						console.log('onReachBottomonReachBottomonReachBottom');
+						setTimeout(function() {
+							that.doSearch(that.keyword);
+						}, 1000);
+					}
 			}
 		}
 	}
@@ -235,19 +288,27 @@
 	.search-box .input-box>input {width:100%;height:60upx;font-size:32upx;border:0;border-radius:60upx;-webkit-appearance:none;-moz-appearance:none;appearance:none;padding:0 3%;margin:0;background-color:#0e0b1f;}
 	.placeholder-class {color:#eeeeee;}
 	.search-keyword {width:100%;background-color:#0e0b1f;}
-	.keyword-list-box {height:calc(100vh - 110upx);padding-top:10upx;border-radius:20upx 20upx 0 0;background-color:#0e0b1f;}
+	.keyword-list-box {height:calc(100vh - 80upx);padding-top:10upx;border-radius:20upx 20upx 0 0;background-color:#0e0b1f;}
 	.keyword-entry-tap {background-color:#0e0b1f;}
 	.keyword-entry {width:94%;height:80upx;margin:0 3%;font-size:30upx;color:#333;display:flex;justify-content:space-between;align-items:center;border-bottom:solid 1upx #e7e7e7;}
 	.keyword-entry image {width:60upx;height:60upx;}
 	.keyword-entry .keyword-text,.keyword-entry .keyword-img {height:80upx;display:flex;align-items:center;}
 	.keyword-entry .keyword-text {width:90%;}
 	.keyword-entry .keyword-img {width:10%;justify-content:center;}
-	.keyword-box {height:calc(100vh - 110upx);border-radius:20upx 20upx 0 0;background-color:#0e0b1f;}
+	.keyword-box {height:calc(100vh - 80upx);border-radius:20upx 20upx 0 0;background-color:#0e0b1f;}
 	.keyword-box .keyword-block {padding:10upx 0;}
 	.keyword-box .keyword-block .keyword-list-header {width:94%;padding:10upx 3%;font-size:27upx;color:#eeeeee;display:flex;justify-content:space-between;}
 	.keyword-box .keyword-block .keyword-list-header image {width:40upx;height:40upx;}
 	.keyword-box .keyword-block .keyword {width:94%;padding:3px 3%;display:flex;flex-flow:wrap;justify-content:flex-start;}
 	.keyword-box .keyword-block .hide-hot-tis {display:flex;justify-content:center;font-size:28upx;color:#eeeeee;}
 	.keyword-box .keyword-block .keyword>view {display:flex;justify-content:center;align-items:center;border-radius:60upx;padding:0 20upx;margin:10upx 20upx 10upx 0;height:60upx;font-size:28upx;background-color:#eeeeee;color:#6b6b6b;}
+	.show-log {
+		width: 100%;
+		text-align: center;
+		image {
+			width: 20px;
+			height: 20px;
+		}
+	}
 </style>
 

@@ -32,6 +32,16 @@ const api = {
 		return request.get('/likelist', {
 			...data
 		})
+	},
+	getSearchDefault(data) {
+		return request.get('/search/default', {
+			...data
+		})
+	},
+	getSearchHot(data) {
+		return request.get('/search/hot', {
+			...data
+		})
 	}
 }
 

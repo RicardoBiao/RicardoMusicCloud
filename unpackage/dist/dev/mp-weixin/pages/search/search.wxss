@@ -72,7 +72,7 @@ view {
   background-color: #0e0b1f;
 }
 .keyword-list-box {
-  height: calc(100vh - 110rpx);
+  height: calc(100vh - 80rpx);
   padding-top: 10rpx;
   border-radius: 20rpx 20rpx 0 0;
   background-color: #0e0b1f;
@@ -121,7 +121,7 @@ view {
           justify-content: center;
 }
 .keyword-box {
-  height: calc(100vh - 110rpx);
+  height: calc(100vh - 80rpx);
   border-radius: 20rpx 20rpx 0 0;
   background-color: #0e0b1f;
 }
@@ -183,5 +183,13 @@ view {
   font-size: 28rpx;
   background-color: #eeeeee;
   color: #6b6b6b;
+}
+.show-log {
+  width: 100%;
+  text-align: center;
+}
+.show-log image {
+  width: 20px;
+  height: 20px;
 }
 

@@ -55,7 +55,7 @@
 					this.innerAudioContext.onTimeUpdate( () => {
 						//音频进度更新事件  
 						this.current = format(this.innerAudioContext.currentTime);
-						console.log('this.current:',this.current);
+						// console.log('this.current:',this.current);
 					});
 					
 			},
@@ -83,7 +83,7 @@
 						};
 						this.innerAudioContext.onCanplay( ()=>{
 							this.duration = format(this.innerAudioContext.duration);
-							console.log('this.duration:',this.duration);
+							// console.log('this.duration:',this.duration);
 						});
 						
 						this.musicPaused = 1;
