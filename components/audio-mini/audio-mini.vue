@@ -14,7 +14,7 @@
 					{{song.artists[0].name}}
 				</text>
 				<text class="text-box-centent">
-					{{current}}/{{duration}}
+					{{current}}
 				</text>
 			</view>
 		</view>
