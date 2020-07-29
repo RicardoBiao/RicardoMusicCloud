@@ -4,7 +4,7 @@
 			<view class="image-box">
 				<image v-if="musicPaused == 1" src="../../static/play.png" mode="aspectFill" class="play-icon" @click="musicPlay()"></image>
 				<image v-if="musicPaused == 0" src="../../static/stop.png" mode="aspectFill" class="pause-icon" @click="musicPause()"></image>
-				<image  class="music-image" mode="aspectFill" :src="song.artists[0].img1v1Url"></image>
+				<image  class="music-image" mode="aspectFill" :src="songImg"></image>
 			</view>
 			<view class="text-box">
 				<text class="text-box-title">
@@ -39,7 +39,8 @@
 				innerAudioContext: '',
 				audios: [],
 				duration: '',
-				current: '00:00'
+				current: '00:00',
+				songImg: ''
 			}
 		},
 		methods: {
@@ -88,6 +89,15 @@
 						
 						this.musicPaused = 1;
 						// console.log('musicPaused:'+this.musicPaused);
+					}
+				});
+				this.$api.getSongDetail({
+					ids: this.song.id
+				}).then(res => {
+					if (res.data.code === 200) {
+						console.log('res.data:',res.data);
+						this.songImg = res.data.songs[0].al.picUrl;
+						console.log('this.songImg:',this.songImg);
 					}
 				});
 				

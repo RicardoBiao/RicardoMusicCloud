@@ -42,7 +42,13 @@ const api = {
 		return request.get('/search/hot', {
 			...data
 		})
+	},
+	getSongDetail(data) {
+		return request.get('/song/detail', {
+			...data
+		})
 	}
+	
 }
 
 export default api
