@@ -1,11 +1,12 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/explore/explore",
-    "pages/radio/radio",
-    "pages/account/account",
+    "pages/tabBar/home/home",
+    "pages/tabBar/explore/explore",
+    "pages/tabBar/radio/radio",
+    "pages/tabBar/account/account",
     "pages/login/login",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/movie/movie"
   ],
   "subPackages": [],
   "window": {
@@ -21,25 +22,25 @@
     "backgroundColor": "#0e0b1f",
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/tabBar/home/home",
         "iconPath": "static/HomeIcon.png",
         "selectedIconPath": "static/selectedHomeIcon.png",
         "text": "Home"
       },
       {
-        "pagePath": "pages/explore/explore",
+        "pagePath": "pages/tabBar/explore/explore",
         "iconPath": "static/ExploreIcon.png",
         "selectedIconPath": "static/selectedExploreIcon.png",
         "text": "Explore"
       },
       {
-        "pagePath": "pages/radio/radio",
+        "pagePath": "pages/tabBar/radio/radio",
         "iconPath": "static/RadioIcon.png",
         "selectedIconPath": "static/selectedRadioIcon.png",
         "text": "Radio"
       },
       {
-        "pagePath": "pages/account/account",
+        "pagePath": "pages/tabBar/account/account",
         "iconPath": "static/AccountIcon.png",
         "selectedIconPath": "static/selectedAccountIcon.png",
         "text": "Account"

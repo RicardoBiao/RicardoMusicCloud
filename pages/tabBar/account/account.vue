@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="title-box">
 			<view class="title">{{ nickname == '' ? "Account" : nickname }}</view>
-			<image v-if="nickname != ''" class="setting" src="../../static/e-mail.png" mode=""></image>
+			<image v-if="nickname != ''" class="setting" src="../../../static/e-mail.png" mode=""></image>
 		</view>
 		<view class="user-info">
 			<image class="user-image" @click="goToLogin()" :src="userInfo.avatarUrl" mode="aspectFill"></image>
@@ -41,7 +41,7 @@
 			goToLogin() {
 				if (this.nickname == undefined) {
 					uni.navigateTo({
-						url:'../login/login'
+						url:'../../login/login'
 					});
 				};
 			},
@@ -91,7 +91,7 @@
 		},
 		goToLogin() {
 			uni.navigateTo({
-				url:'../login/login'
+				url:'../../login/login'
 			})
 		}
 	}
@@ -134,7 +134,7 @@
 		flex-direction: column;
 	}
 	.user-image {
-		background-image: url(../../static/logo.png);
+		background-image: url(../../../static/logo.png);
 		width: 21vw;
 		height: 21vw;
 		border-radius: 50%;

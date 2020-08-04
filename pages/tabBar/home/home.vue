@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="top-box">
 			<text class="title"> Rling </text>
-			<image @click="goToSearch()" src="../../static/search.png" class="search"></image>
+			<image @click="goToSearch()" src="../../../static/search.png" class="search"></image>
 		</view>
 		<view class="albums-title">
 			<text > New Albums </text>
@@ -60,7 +60,7 @@
 		methods: {
 			goToSearch() {
 					uni.navigateTo({
-						url:'../search/search'
+						url:'../../search/search'
 					});
 			}
 		}	

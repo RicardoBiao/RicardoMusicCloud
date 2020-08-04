@@ -10,18 +10,18 @@
 		:current="currentSwiper"
 		:duration="duration"
 		@change="swiperChange">
-			<block v-for="item in imgUrls" >
+			<block v-for="item in banners" >
 				<swiper-item class="swiper-item" >
-					<image :src="item" mode="aspectFill"></image>
+					<image :src="item.pic" mode="aspectFit"></image>
 				</swiper-item>
 			</block>		
 		</swiper>
 		<!-- 重置小圆点的样式 -->
-		<view class="dots"> 
-			<block v-for="(item,index) in imgUrls.length" :index="index" :key="item"> 
+		<!-- <view class="dots"> 
+			<block v-for="(item,index) in banners.length" :index="index" :key="item"> 
 				<view class="dot" :class="index == currentSwiper ? ' active' : '' "></view> 
 			</block> 
-		</view> 
+		</view> -->
 	</view>
 </template>
 
@@ -29,7 +29,7 @@
 	export default {
 		name:'MusicSwiper',	
 		props: {
-			imgUrls: {
+			banners: {
 				type: Array,
 				default: function () {
 					return [];
@@ -62,25 +62,24 @@
 
 <style lang="less">
 	page {
-		width: 100%;
-		height: 100%;
+		// width: 100%;
+		// height: 100%;
 	}
 	.wrap {
 		width: 100%;
-		height: auto;
+		// height: auto;
 		position: relative;
 	}
 	.swiper {
 		width: 100%;
-		height: 50vw;
+		height: 218rpx;
 	}
 	.swiper-item {
-		// width: 75vw;
-		// height: 50vw;
-		// border-radius: 2vw;
+		width: 75vw;
+		height: 218rpx;
 		image {
 			width: 75vw;
-			height: 50vw;
+			height: 218rpx;
 			border-radius: 2vw;
 		}
 	}
@@ -92,17 +91,17 @@
 	}
 	/*未选中时的小圆点样式 */
 	.dot {
-	 width: 2vw;
-	 height: 2vw;
+	 width: 20rpx;
+	 height: 4rpx;
 	 margin-top: 2vw;
-	 border-radius: 50%;
-	 margin-right: 2vw;
+	 // border-radius: 50%;
+	 // margin-right: 2vw;
 	 background-color: #FFFFFF;
 	}
 	/*选中以后的小圆点样式 */
 	.active {
-	 width: 2vw;
-	 height: 2vw;
+	width: 20rpx;
+	height: 4rpx;
 	 background-color: #ef01a0;
 	}
 	

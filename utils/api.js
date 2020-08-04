@@ -47,7 +47,44 @@ const api = {
 		return request.get('/song/detail', {
 			...data
 		})
+	},
+	//获取banner图
+	getBanner(data) {
+		return request.get('/banner',{
+			...data
+		})
+	},
+	//热门歌手
+	getTopArtists(data) {
+		return request.get('/top/artists',{
+			...data
+		})
+	},
+	//推荐电台
+	getDjProgram(data) {
+		return request.get('/personalized/djprogram',{
+			...data
+		})
+	},
+	//mv排行榜
+	getTopMv(data) {
+		return request.get('/top/mv',{
+			...data
+		})
+	},
+	//获取mv数据
+	getMvDetail(data) {
+		return request.get('/mv/detail',{
+			...data
+		})
+	},
+	//获取mv地址
+	getMvUrl(data) {
+		return request.get('/mv/url',{
+			...data
+		})
 	}
+	
 	
 }
 

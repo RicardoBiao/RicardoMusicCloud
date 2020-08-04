@@ -5,7 +5,7 @@
 		<button class="button1" @click="goToLogin()">去登录</button>
 		<audio-mini v-for="song in songs" :song="song" ></audio-mini>
 		<view class="show-log" v-show="showLog">
-			<image src="../../static/loading.gif" mode=""></image>
+			<image src="../../../static/loading.gif" mode=""></image>
 		</view>
 	</view>
 	

@@ -1,4 +1,4 @@
-.content {
+page {
   background-color: #0e0b1f;
   height: 100%;
 }
@@ -30,14 +30,13 @@
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: inline-flex;
-  width: 100vw;
-  height: 21vw;
-  margin: 5vw 4vw 5vw 6vw;
+  width: 90vw;
+  margin: 15rpx 30rpx 15rpx 30rpx;
 }
-.music-image {
-  width: 21vw;
-  height: 21vw;
-  border-radius: 1vw;
+.music-box .music-image {
+  width: 400rpx;
+  height: 230rpx;
+  border-radius: 10rpx;
 }
 .rling-radio-weekly {
   margin-left: 6vw;
@@ -67,8 +66,11 @@
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
           flex-direction: column;
+  width: 35vw;
 }
 .text-box-title {
+  height: auto;
+  width: auto;
   margin: 3vw 0 0 4vw;
   font-family: Helvetica;
   font-size: 4vw;

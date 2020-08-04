@@ -1,0 +1,1 @@
+<view class="center"><video class="mv-box" poster="{{mv.cover}}" src="{{mvurl}}" controls></video></view>

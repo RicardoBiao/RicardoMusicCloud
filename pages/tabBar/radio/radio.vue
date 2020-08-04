@@ -11,19 +11,18 @@
 				Rling Radio Weekly
 			</view>
 		</view>
-		<music-swiper :img-urls="imgUrls"></music-swiper>
+		<music-swiper :banners="banners"></music-swiper>
 		<view class="popular">
 			popular
 		</view>
-		<view class="music-box" v-for="item in popular">
-			<image class="music-image" mode="aspectFill" :src="item"></image>
+		<view class="music-box" v-for="item in mvs" @tap="goToMv('/pages/movie/movie?mvid=' + item.id)">
+			<image class="music-image" mode="aspectFit" :src="item.cover"></image>
 			<view class="text-box">
 				<text class="text-box-title">
-					Rling Radio Weekly
+					{{item.name}}
 				</text>
 				<text class="text-box-centent">
-					Collection of the best Radio stations
-					of RLING, constantly updated weekly.
+					{{item.artistName}}
 				</text>
 			</view>
 		</view>
@@ -35,29 +34,53 @@
 		data() {
 			return {
 				title: 'Radio',
-				popular: [
-					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png',
-					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png'
-				],
-				imgUrls:[
-					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png',
-					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png',
-					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/204941-15776237817d95.png'
-				]
+				mvs: [],
+				// 'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png',
+				// 'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png',
+				// 'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/204941-15776237817d95.png'
+				banners:[],
+				limit: 10
 			}
 		},
-		onLoad() {
-			console.log("index:"+this.swiperData)
+		created() {
+			this.getBaners();
+			this.getTopMv();
+			console.log("index:"+this.swiperData);
 
 		},
 		methods: {
+			getBaners() {
+				this.$api.getBanner({
+					type: 2
+				}).then( res => {
+					if (res.data.code === 200) {
+						this.banners = res.data.banners;
+					}
+				});
+			},
+			getTopMv() {
+				this.$api.getTopMv({
+					limit: this.limit
+				}).then( res => {
+					if (res.data.code === 200) {
+						this.mvs = res.data.data;
+						
+					}
+				});
+			},
+			goToMv(url) {
+				uni.navigateTo({
+					url: url
+				});
+				console.log("url:",url);
+			}
 			
 		}	
 	}
 </script>
 
 <style lang="less">
-	.content {
+	page {
 		background-color: #0e0b1f;
 		height: 100%;
 	}
@@ -87,15 +110,15 @@
 	}
 	.music-box {
 		display: inline-flex;
-		width: 100vw;
-		height: 21vw;
-		margin: 5vw 4vw 5vw 6vw;
+		width: 90vw;
+		margin: 15rpx 30rpx 15rpx 30rpx;
+		.music-image {
+			width: 400rpx;
+			height: 230rpx;
+			border-radius: 10rpx;
+		}
 	}
-	.music-image {
-		width: 21vw;
-		height: 21vw;
-		border-radius: 1vw;
-	}
+	
 	.rling-radio-weekly {
 		margin-left: 6vw;
 		font-family: Helvetica;
@@ -119,8 +142,11 @@
 	.text-box {
 		display: flex;
 		flex-direction: column;
+		width: 35vw;
 	}
 	.text-box-title {
+		height: auto;
+		width: auto;
 		margin: 3vw 0 0 4vw;
 		font-family: Helvetica;
 		font-size: 4vw;

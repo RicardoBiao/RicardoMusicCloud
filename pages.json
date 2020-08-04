@@ -1,25 +1,25 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
+			"path": "pages/tabBar/home/home",
 			"style": {
 				"navigationBarTitleText": "index"
 			}
 		},
 		{
-			"path": "pages/explore/explore",
+			"path": "pages/tabBar/explore/explore",
 			"style": {
 				"navigationBarTitleText": "explore"
 			}
 		},
 		{
-			"path": "pages/radio/radio",
+			"path": "pages/tabBar/radio/radio",
 			"style": {
 				"navigationBarTitleText": "radio"
 			}
 		},
 		{
-			"path": "pages/account/account",
+			"path": "pages/tabBar/account/account",
 			"style": {
 				"navigationBarTitleText": "account"
 			}
@@ -35,6 +35,12 @@
 			"style": {
 				"navigationBarTitleText": "search"
 			}
+		},
+		{
+			"path": "pages/movie/movie",
+			"style": {
+				"navigationBarTitleText": "movie"
+			}
 		}
     ],
 	"globalStyle": {
@@ -49,22 +55,22 @@
 	    "borderStyle": "black",
 	    "backgroundColor": "#0e0b1f",
 	    "list": [{
-	        "pagePath": "pages/index/index",
+	        "pagePath": "pages/tabBar/home/home",
 	        "iconPath": "static/HomeIcon.png",
 	        "selectedIconPath": "static/selectedHomeIcon.png",
 	        "text": "Home"
 	    }, {
-	        "pagePath": "pages/explore/explore",
+	        "pagePath": "pages/tabBar/explore/explore",
 	        "iconPath": "static/ExploreIcon.png",
 	        "selectedIconPath": "static/selectedExploreIcon.png",
 	        "text": "Explore"
 	    },{
-	        "pagePath": "pages/radio/radio",
+	        "pagePath": "pages/tabBar/radio/radio",
 	        "iconPath": "static/RadioIcon.png",
 	        "selectedIconPath": "static/selectedRadioIcon.png",
 	        "text": "Radio"
 	    },{
-	        "pagePath": "pages/account/account",
+	        "pagePath": "pages/tabBar/account/account",
 	        "iconPath": "static/AccountIcon.png",
 	        "selectedIconPath": "static/selectedAccountIcon.png",
 	        "text": "Account"

@@ -1,19 +1,18 @@
-page {
-  width: 100%;
-  height: 100%;
-}
 .wrap {
   width: 100%;
-  height: auto;
   position: relative;
 }
 .swiper {
   width: 100%;
-  height: 50vw;
+  height: 218rpx;
+}
+.swiper-item {
+  width: 75vw;
+  height: 218rpx;
 }
 .swiper-item image {
   width: 75vw;
-  height: 50vw;
+  height: 218rpx;
   border-radius: 2vw;
 }
 /*用来包裹所有的小圆点 */
@@ -31,17 +30,15 @@ page {
 }
 /*未选中时的小圆点样式 */
 .dot {
-  width: 2vw;
-  height: 2vw;
+  width: 20rpx;
+  height: 4rpx;
   margin-top: 2vw;
-  border-radius: 50%;
-  margin-right: 2vw;
   background-color: #FFFFFF;
 }
 /*选中以后的小圆点样式 */
 .active {
-  width: 2vw;
-  height: 2vw;
+  width: 20rpx;
+  height: 4rpx;
   background-color: #ef01a0;
 }
 
