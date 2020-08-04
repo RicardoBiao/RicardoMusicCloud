@@ -39,7 +39,7 @@
 		{
 			"path": "pages/movie/movie",
 			"style": {
-				"navigationBarTitleText": "movie"
+				"navigationBarTitleText": "mv"
 			}
 		}
     ],

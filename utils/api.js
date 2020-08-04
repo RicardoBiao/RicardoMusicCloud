@@ -83,6 +83,12 @@ const api = {
 		return request.get('/mv/url',{
 			...data
 		})
+	},
+	//获取mv评论
+	getMvComment(data) {
+		return request.get('/comment/mv',{
+			...data
+		})
 	}
 	
 	
