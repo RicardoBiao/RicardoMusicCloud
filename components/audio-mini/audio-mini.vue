@@ -6,7 +6,7 @@
 				<image v-if="musicPaused == 0" src="../../static/stop.png" mode="aspectFill" class="pause-icon" @click="musicPause()"></image>
 				<image  class="music-image" mode="aspectFill" :src="songImg"></image>
 			</view>
-			<view class="text-box">
+			<view  class="text-box" @click="goToPlayer('/pages/player/player?ids=' + song.id)">
 				<text class="text-box-title">
 					{{song.name}}
 				</text>
@@ -33,8 +33,6 @@
 		},
 		data() {
 			return {
-				musicId: '',
-				keywords: '',
 				musicPaused: 1,
 				innerAudioContext: '',
 				audios: [],
@@ -44,6 +42,11 @@
 			}
 		},
 		methods: {
+			goToPlayer(url) {
+				uni.navigateTo({
+					url: url
+				});
+			},
 			format(num) {  
 				return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
 			},
@@ -145,6 +148,7 @@
 		z-index: 100;
 		// background-color: #d90003;
 	}
+
 	.music-image {
 		width: 21vw;
 		height: 21vw;
@@ -154,6 +158,8 @@
 	.text-box {
 		display: flex;
 		flex-direction: column;
+		width: 70vw;
+	
 	}
 	.text-box-title {
 		margin: 3vw 0 0 4vw;

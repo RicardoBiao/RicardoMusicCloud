@@ -43,6 +43,7 @@ const api = {
 			...data
 		})
 	},
+	//获取歌曲详情
 	getSongDetail(data) {
 		return request.get('/song/detail', {
 			...data

@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/tabBar/home/home",
+    "pages/player/player",
     "pages/tabBar/explore/explore",
     "pages/tabBar/radio/radio",
     "pages/tabBar/account/account",

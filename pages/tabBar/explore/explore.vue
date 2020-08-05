@@ -2,8 +2,8 @@
 	<view class="">
 		<input type="text" placeholder="请输入搜索内容"  v-model="keywords"/>
 		<button class="button1"  @click="searchMusic()">搜索</button>
-		<button class="button1" @click="goToLogin()">去登录</button>
-		<audio-mini v-for="song in songs" :song="song" ></audio-mini>
+		<button class="button1" @click="goToPlayer()">去登录</button>
+		<audio-mini v-for="song in songs" :key="song" :song="song"  ></audio-mini>
 		<view class="show-log" v-show="showLog">
 			<image src="../../../static/loading.gif" mode=""></image>
 		</view>
@@ -57,6 +57,11 @@
 							that.searchMusic();
 						}, 1500);
 					}
+			},
+			goToPlayer(url) {
+				uni.navigateTo({
+					url: url
+				});
 			}
 		},
 		onLoad() {
