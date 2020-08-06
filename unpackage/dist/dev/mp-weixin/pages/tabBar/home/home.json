@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "index",
-  "usingComponents": {
-    "albums-view": "/components/albums-view/albums-view",
-    "recently-music": "/components/recently-music/recently-music"
-  }
-}
