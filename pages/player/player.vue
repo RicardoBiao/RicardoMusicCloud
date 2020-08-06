@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="img-box">
-			<image class="img" :src="picUrl" mode="aspectFit"></image>
+			<image class="img" :class=" musicPaused == 0 ? 'turn' : '' " :src="picUrl" mode="aspectFit"></image>
 			<!-- <view class="img"></view> -->
 			<text class="song-name"> {{songName}} </text>
 			<text class="singer"> {{singer}} </text>
@@ -143,6 +143,9 @@
 	  75%{-webkit-transform:rotate(270deg);}
 	  100%{-webkit-transform:rotate(360deg);}
 	}
+	.turn {
+		animation:turn 10s linear infinite;
+	}
 	.img-box {
 		display: flex;
 		justify-content: space-around;
@@ -155,7 +158,6 @@
 			background-color: #999999;
 			border-radius: 50%;
 			margin: 300rpx auto 44rpx;
-			animation:turn 5s linear infinite;
 		}
 		text {
 			font-family: Helvetica;

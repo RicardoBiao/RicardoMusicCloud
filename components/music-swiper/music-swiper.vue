@@ -27,7 +27,7 @@
 
 <script>
 	export default {
-		name:'MusicSwiper',	
+		name:'musicSwiper',	
 		props: {
 			banners: {
 				type: Array,
