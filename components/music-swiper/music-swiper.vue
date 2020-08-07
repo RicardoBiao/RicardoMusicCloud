@@ -17,17 +17,17 @@
 			</block>		
 		</swiper>
 		<!-- 重置小圆点的样式 -->
-		<!-- <view class="dots"> 
+		<view class="dots"> 
 			<block v-for="(item,index) in banners.length" :index="index" :key="item"> 
 				<view class="dot" :class="index == currentSwiper ? ' active' : '' "></view> 
 			</block> 
-		</view> -->
+		</view>
 	</view>
 </template>
 
 <script>
 	export default {
-		name:'MusicSwiper',	
+		name:'musicSwiper',	
 		props: {
 			banners: {
 				type: Array,
@@ -91,17 +91,17 @@
 	}
 	/*未选中时的小圆点样式 */
 	.dot {
-	 width: 20rpx;
-	 height: 4rpx;
-	 margin-top: 2vw;
-	 // border-radius: 50%;
-	 // margin-right: 2vw;
+	 width: 10rpx;
+	 height: 10rpx;
+	 margin-top: 15rpx;
+	 border-radius: 50%;
+	 margin-right: 15rpx;
 	 background-color: #FFFFFF;
 	}
 	/*选中以后的小圆点样式 */
 	.active {
-	width: 20rpx;
-	height: 4rpx;
+	width: 10rpx;
+	height: 10rpx;
 	 background-color: #ef01a0;
 	}
 	

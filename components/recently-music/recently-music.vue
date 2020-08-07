@@ -12,7 +12,7 @@
 
 <script>
 	export default {
-		name: 'recently-music',
+		name: 'recentlyMusic',
 		props: {
 			
 		},

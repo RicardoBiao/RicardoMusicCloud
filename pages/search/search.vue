@@ -65,6 +65,7 @@
 <script>
 	//引用mSearch组件，如不需要删除即可
 	import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
+	import audioMini from '@/components/audio-mini/audio-mini.vue';
 	export default {
 		data() {
 			return {
@@ -88,7 +89,8 @@
 		},
 		components: {
 			//引用mSearch组件，如不需要删除即可
-			mSearch
+			mSearch,
+			audioMini
 		},
 		methods: {
 			init() {

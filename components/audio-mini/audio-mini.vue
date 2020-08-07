@@ -23,6 +23,7 @@
 
 <script>
 	export default {
+		name: 'audioMini',
 		props: {
 			song: {
 				type: Object,

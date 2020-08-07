@@ -30,6 +30,7 @@
 </template>
 
 <script>
+	import musicSwiper from '@/components/music-swiper/music-swiper.vue';
 	export default {
 		data() {
 			return {
@@ -41,6 +42,9 @@
 				banners:[],
 				limit: 10
 			}
+		},
+		components: {
+			musicSwiper
 		},
 		created() {
 			this.getBaners();
