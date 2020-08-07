@@ -6,7 +6,6 @@
 			<view class="img-box">
 				<image class="img turn" :style=" musicPaused == 0 ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="picUrl" mode="aspectFit"></image>
 			</view>
-			<!-- <view class="img"></view> -->
 			<text class="song-name"> {{songName}} </text>
 			<text class="singer"> {{singer}} </text>
 			<text class="song-content">It is a long established fact that a reader</text>
