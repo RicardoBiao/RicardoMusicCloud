@@ -1,13 +1,11 @@
 <template>
 	<view class="content">
-		<view class="img-box">
-<<<<<<< HEAD
-			<image class="img" :class="musicPaused == 0 ? 'turn' : '' " :src="picUrl" mode="aspectFit"></image>
-=======
-			<view class="img2" :style=" musicPaused == 0 ? 'animation-play-state: running;' : 'animation-play-state: paused;' "></view>
-			<view class="img2 img3" :style=" musicPaused == 0 ? 'animation-play-state: running;' : 'animation-play-state: paused;' "></view>
-			<image class="img turn" :style=" musicPaused == 0 ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="picUrl" mode="aspectFit"></image>
->>>>>>> develop
+		<view class="py-msg-box">
+			<image class="play-bar-support" src="../../static/play-bar-support.png" mode="aspectFit"></image>
+			<image class="play-bar" :class="{bar: musicPaused}" src="../../static/play-bar.png" mode="aspectFit"></image>
+			<view class="img-box">
+				<image class="img turn" :style=" musicPaused == 0 ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="picUrl" mode="aspectFit"></image>
+			</view>
 			<!-- <view class="img"></view> -->
 			<text class="song-name"> {{songName}} </text>
 			<text class="singer"> {{singer}} </text>
@@ -151,54 +149,54 @@
 	  75%{-webkit-transform:rotate(270deg);}
 	  100%{-webkit-transform:rotate(360deg);}
 	}
-	@keyframes living {
-		0%{
-			transform: scale(1);
-			opacity: 0.3;  
-		}
-		50%{
-			transform: scale(1.5);  
-			opacity: 0;   /*圆形放大的同时，透明度逐渐减小为0*/
-		}
-		100%{
-			transform: scale(1);
-			opacity: 0.3;
-		}
-	}
 	.turn {
 		animation:turn 10s linear infinite;
 	}
-	.img-box {
+	.py-msg-box {
 		display: flex;
 		position: relative;
 		justify-content: space-around;
 		flex-direction: column;
 		width: 100%;
-		.img {
-			width: 414rpx;
-			height: 414rpx;
-			background-color: #999999;
-			border-radius: 50%;
-			margin: 300rpx auto 44rpx;
-			z-index: 0;
-		}
-		.img2 {
+		.play-bar-support {
 			position: absolute;
-			width: 414rpx;
-			height: 414rpx;
-			left: 0; 
-			right: 0; 
-			margin-left: auto; 
-			margin-right: auto;
-			background-color: #FFFFFF;
-			border-radius: 50%;
-			margin: 300rpx auto 44rpx;
-			z-index: -1;
-			top: 0;
-			-webkit-animation: living 3s linear infinite;
+			width: 40rpx;
+			height: 40rpx;
+			left: calc(50% - 20rpx);
+			z-index: 1;
+			}
+		.play-bar {
+		  width: 160rpx;
+		  height: 300rpx;
+		  position: absolute;
+		  left: calc(50% - 20rpx);
+		  top: 15rpx;
+		  z-index: 1;
 		}
-		.img3 {
-			-webkit-animation-delay: 1.5s; /*第二个span动画延迟1.5秒*/
+		.bar {
+		  top: 10px;
+		  transform-origin: 0 0;
+		  transform: rotate(-25deg);
+		  transition: all 0.1s;
+		}
+		.img-box {
+			left: 0;
+			right: 0;
+			width: 420rpx;
+			height: 420rpx;
+			background-color: #999999;
+			border: 80rpx solid #0e0e11;
+			border-radius: 50%;
+			box-shadow: 0 0 10px #fff;
+			margin: 200rpx auto 44rpx;
+			z-index: -1;
+			.img {
+				width: 400rpx;
+				height: 400rpx;
+				border: 10rpx solid #fff;
+				border-radius: 50%;
+				z-index: 0;
+			}
 		}
 		.turn {
 			transform: rotate(360deg);
@@ -247,5 +245,6 @@
 			margin: auto 0;
 		}
 	}
+	
 	
 </style>
