@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "search",
-  "usingComponents": {
-    "audio-mini": "/components/audio-mini/audio-mini",
-    "m-search": "/components/mehaotian-search-revision/mehaotian-search-revision"
-  }
-}

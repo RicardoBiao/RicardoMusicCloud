@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="img-box">
-			<image class="img" :src="picUrl" mode="aspectFit"></image>
+			<image class="img" :class="musicPaused == 0 ? 'turn' : '' " :src="picUrl" mode="aspectFit"></image>
 			<!-- <view class="img"></view> -->
 			<text class="song-name"> {{songName}} </text>
 			<text class="singer"> {{singer}} </text>
@@ -11,7 +11,8 @@
 		<view class="btn-box">
 			<image class="btn-icon" src="../../static/Shape.png" mode="aspectFit"></image>
 			<image class="btn-icon" src="../../static/addtolist.png" mode="aspectFit"></image>
-			<image class="btn-icon" src="../../static/like.png" mode="aspectFit"></image>
+			<image v-if="!isLike" @click="isLike = !isLike" class="btn-icon" src="../../static/like.png" mode="aspectFit"></image>
+			<image v-if="isLike" @click="isLike = !isLike" class="btn-icon" src="../../static/islike.png" mode="aspectFit"></image>
 			<image class="btn-icon" src="../../static/download.png" mode="aspectFit"></image>
 		</view>
 		
@@ -57,7 +58,8 @@
 				innerAudioContext: '',
 				audios: [],
 				duration: '',
-				current: '00:00'
+				current: '00:00',
+				isLike: 0
 			}
 		},
 		onLoad: function(option) {
@@ -148,6 +150,12 @@
 			background-color: #999999;
 			border-radius: 50%;
 			margin: 300rpx auto 44rpx;
+		}
+		.turn {
+			transform: rotate(360deg);
+			-webkit-transform:rotate(360deg);
+			-webkit-transition:-webkit-transform 1s linear;
+			translate: transform 5s linear 0.2s infinite;
 		}
 		text {
 			font-family: Helvetica;

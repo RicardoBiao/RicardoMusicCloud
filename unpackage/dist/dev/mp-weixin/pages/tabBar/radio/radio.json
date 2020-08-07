@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "radio",
-  "usingComponents": {
-    "music-swiper": "/components/music-swiper/music-swiper"
-  }
-}
