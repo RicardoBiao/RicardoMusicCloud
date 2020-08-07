@@ -40,7 +40,7 @@
 
 <script>
 	import recentlyMusic from '@/components/recently-music/recently-music.vue';
-	
+	import albumsView from '@/components/albums-view/albums-view.vue';
 	export default {
 		data() {
 			return {
@@ -57,10 +57,11 @@
 			}
 		},
 		components: {
-			recentlyMusic
+			recentlyMusic,
+			albumsView
 		},
 		onLoad() {
-			console.log("index:"+this.swiperData)
+			console.log("index:"+this.swiperData);
 	
 		},
 		methods: {

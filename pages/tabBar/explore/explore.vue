@@ -12,6 +12,7 @@
 </template>
 
 <script>
+	import audioMini from '@/components/audio-mini/audio-mini.vue';
 	export default {
 		data() {
 			return {
@@ -22,6 +23,9 @@
 				isLoading: false,
 				total: 0
 			}
+		},
+		components: {
+			audioMini
 		},
 		methods: {
 			searchMusic() {

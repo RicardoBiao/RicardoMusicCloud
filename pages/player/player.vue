@@ -1,7 +1,9 @@
 <template>
 	<view class="content">
 		<view class="img-box">
-			<image class="img" :class=" musicPaused == 0 ? 'turn' : '' " :src="picUrl" mode="aspectFit"></image>
+			<view class="img2" :style=" musicPaused == 0 ? 'animation-play-state: running;' : 'animation-play-state: paused;' "></view>
+			<view class="img2 img3" :style=" musicPaused == 0 ? 'animation-play-state: running;' : 'animation-play-state: paused;' "></view>
+			<image class="img turn" :style=" musicPaused == 0 ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="picUrl" mode="aspectFit"></image>
 			<!-- <view class="img"></view> -->
 			<text class="song-name"> {{songName}} </text>
 			<text class="singer"> {{singer}} </text>
@@ -143,21 +145,54 @@
 	  75%{-webkit-transform:rotate(270deg);}
 	  100%{-webkit-transform:rotate(360deg);}
 	}
+	@keyframes living {
+		0%{
+			transform: scale(1);
+			opacity: 0.3;  
+		}
+		50%{
+			transform: scale(1.5);  
+			opacity: 0;   /*圆形放大的同时，透明度逐渐减小为0*/
+		}
+		100%{
+			transform: scale(1);
+			opacity: 0.3;
+		}
+	}
 	.turn {
 		animation:turn 10s linear infinite;
 	}
 	.img-box {
 		display: flex;
+		position: relative;
 		justify-content: space-around;
 		flex-direction: column;
 		width: 100%;
 		.img {
-			display: flex;
 			width: 414rpx;
 			height: 414rpx;
 			background-color: #999999;
 			border-radius: 50%;
 			margin: 300rpx auto 44rpx;
+			z-index: 0;
+		}
+		.img2 {
+			position: absolute;
+			width: 414rpx;
+			height: 414rpx;
+			left: 0; 
+			right: 0; 
+			margin-left: auto; 
+			margin-right: auto;
+			background-color: #FFFFFF;
+			border-radius: 50%;
+			margin: 300rpx auto 44rpx;
+			z-index: -1;
+			top: 0;
+			-webkit-animation: living 3s linear infinite;
+		}
+		.img3 {
+			-webkit-animation-delay: 1.5s; /*第二个span动画延迟1.5秒*/
 		}
 		text {
 			font-family: Helvetica;
