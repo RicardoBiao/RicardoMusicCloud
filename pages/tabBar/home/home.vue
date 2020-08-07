@@ -38,6 +38,8 @@
 </template>
 
 <script>
+	// import recently-music from '@/components/recently-music/recently-music.vue';
+	
 	export default {
 		data() {
 			return {
@@ -53,6 +55,9 @@
 				]
 			}
 		},
+		// components: {
+		// 	recently-music
+		// },
 		onLoad() {
 			console.log("index:"+this.swiperData)
 	
