@@ -1,16 +1,87 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
+			"path": "pages/tabBar/home/home",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "index"
+			}
+		},
+		{
+			"path": "pages/player/player",
+			"style": {
+				"navigationBarTitleText": "player"
+			}
+		},
+		
+		{
+			"path": "pages/tabBar/explore/explore",
+			"style": {
+				"navigationBarTitleText": "explore"
+			}
+		},
+		{
+			"path": "pages/tabBar/radio/radio",
+			"style": {
+				"navigationBarTitleText": "radio"
+			}
+		},
+		{
+			"path": "pages/tabBar/account/account",
+			"style": {
+				"navigationBarTitleText": "account"
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "login"
+			}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "search"
+			}
+		},
+		{
+			"path": "pages/movie/movie",
+			"style": {
+				"navigationBarTitleText": "mv"
 			}
 		}
+		
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#0e0b1f",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+	    "color": "#4e4f52",
+	    "selectedColor": "#ef01a0",
+	    "borderStyle": "black",
+	    "backgroundColor": "#0e0b1f",
+	    "list": [{
+	        "pagePath": "pages/tabBar/home/home",
+	        "iconPath": "static/HomeIcon.png",
+	        "selectedIconPath": "static/selectedHomeIcon.png",
+	        "text": "Home"
+	    }, {
+	        "pagePath": "pages/tabBar/explore/explore",
+	        "iconPath": "static/ExploreIcon.png",
+	        "selectedIconPath": "static/selectedExploreIcon.png",
+	        "text": "Explore"
+	    },{
+	        "pagePath": "pages/tabBar/radio/radio",
+	        "iconPath": "static/RadioIcon.png",
+	        "selectedIconPath": "static/selectedRadioIcon.png",
+	        "text": "Radio"
+	    },{
+	        "pagePath": "pages/tabBar/account/account",
+	        "iconPath": "static/AccountIcon.png",
+	        "selectedIconPath": "static/selectedAccountIcon.png",
+	        "text": "Account"
+	    }]
 	}
 }
