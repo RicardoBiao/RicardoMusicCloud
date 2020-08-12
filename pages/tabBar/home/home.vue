@@ -60,8 +60,28 @@
 			recentlyMusic,
 			albumsView
 		},
+		onShareAppMessage(res) {
+		    return {
+		      title: 'RicardoMusicCloud',
+			  desc: '这里或许有你喜欢的歌~',
+		      path: '/pages/tabBar/home/home'
+		    }
+		},
+		onShareTimeline() {
+			return {
+			  title: 'RicardoMusicCloud',
+			  query: {
+				sales_id: 1
+			  },
+			  imageUrl: 'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png'
+			}
+		},
 		onLoad() {
 			console.log("index:"+this.swiperData);
+			wx.showShareMenu({
+			withShareTicket: false,
+			menus: ['shareAppMessage', 'shareTimeline']
+			});
 	
 		},
 		methods: {

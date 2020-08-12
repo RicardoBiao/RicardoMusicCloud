@@ -159,24 +159,25 @@
 		width: 100%;
 		.play-bar-support {
 			position: absolute;
-			width: 40rpx;
-			height: 40rpx;
-			left: calc(50% - 20rpx);
-			z-index: 1;
-			}
+			width: 50rpx;
+			height: 50rpx;
+			left: calc(50% - 29rpx);
+			top: -5rpx;
+			z-index: 2;
+		}
 		.play-bar {
 		  width: 160rpx;
 		  height: 300rpx;
 		  position: absolute;
-		  left: calc(50% - 20rpx);
-		  top: 15rpx;
+		  left: calc(50% - 18rpx);
+		  top: -5rpx;
 		  z-index: 1;
 		}
 		.bar {
-		  top: 10px;
+		  top: -5rpx;
 		  transform-origin: 0 0;
 		  transform: rotate(-25deg);
-		  transition: all 0.1s;
+		  // transition: all 0.1s;
 		}
 		.img-box {
 			left: 0;
@@ -187,7 +188,7 @@
 			border: 80rpx solid #0e0e11;
 			border-radius: 50%;
 			box-shadow: 0 0 10px #fff;
-			margin: 200rpx auto 44rpx;
+			margin: 180rpx auto 44rpx;
 			z-index: -1;
 			.img {
 				width: 400rpx;

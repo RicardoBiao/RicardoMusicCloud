@@ -14,7 +14,6 @@
 			Forgot Password ?
 		</view>
 		<button @click="emailLogin(email,password)" class="sign-in">SIGN IN</button>
-		<image class="bg-image" :src="backgroundUrl" mode=""></image>
 	</view>
 </template>
 
@@ -51,7 +50,7 @@
 						});
 						console.log('this.$store.state.userInfo:',this.$store.state.userInfo);
 						uni.switchTab({
-							url:'../account/account'
+							url:'../tabBar/account/account'
 						});
 					}
 				});

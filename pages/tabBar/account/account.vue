@@ -5,7 +5,7 @@
 			<image v-if="nickname != ''" class="setting" src="../../../static/e-mail.png" mode=""></image>
 		</view>
 		<view class="user-info">
-			<image class="user-image" @click="goToLogin()" :src="userInfo.avatarUrl" mode="aspectFill"></image>
+			<image class="user-image" :src="userInfo.avatarUrl" mode="aspectFill"></image>
 			<view class="info-right">
 				<view>
 					<view class="text-box" style="color: #FFFFFF">
@@ -20,7 +20,7 @@
 					</view>
 				</view>
 				<button v-show="nickname" class="edit" @click="getWxUserInfo()">Edit</button>
-				<button v-show="!nickname" class="edit" @click="getWxUserInfo()">login</button>
+				<button v-show="!nickname" class="edit" @click="goToLogin()">login</button>
 			</view>
 		</view>
 	</view>
