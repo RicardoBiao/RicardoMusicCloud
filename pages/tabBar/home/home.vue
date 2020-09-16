@@ -18,6 +18,7 @@
 		:vslide-gesture-in-fullscreen = "true"
 		
 		>
+		<cover-view style="position: absolute; top: 80%; right: 2%; height: 20rpx; width: 160rpx; line-height: 20rpx; font-size: 28rpx; color: white;"> Ricardo </cover-view>
 		</video>
 		<text> Recently Music </text>
 		<!-- mini-music组件 -->
