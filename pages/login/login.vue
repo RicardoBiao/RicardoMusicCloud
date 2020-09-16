@@ -5,15 +5,36 @@
 			<image class="icon" src="../../static/e-mail.png" mode=""></image>
 			<input type="text" v-model="email" value="" placeholder="E-Mail"/>
 		</view>
+		
 		<view class="password-box">
 			<image class="icon" src="../../static/psw.png" mode=""></image>
-			<input type="text" v-model="password" value="" placeholder="Password"/>
-			<image class="psw-show" src="../../static/psw-show.png" mode=""></image>
+			<input class="uni-input" :password="pswShow" type="text" v-model="password" value="" placeholder="Password"/>
+			<image v-if="pswShow" class="psw-show" src="../../static/notVisible.png" @tap="pswShow = !pswShow" mode=""></image>
+			<image v-else class="psw-show"  src="../../static/notVisible_forbid.png"  @tap="pswShow = !pswShow" mode=""></image>
 		</view>
+		
 		<view class="forgot-psw">
 			Forgot Password ?
 		</view>
+		
 		<button @click="emailLogin(email,password)" class="sign-in">SIGN IN</button>
+		
+		<view class="bl-box">
+			<view class="bl"></view>
+			<text> Or connect with </text>
+			<view class="bl"></view>
+		</view>
+		
+		<view class="otherlogin">
+			<image class="ot-login-img" src="../../static/changetype.png" mode=""></image>
+			<image class="ot-login-img" src="../../static/changetype.png" mode=""></image>
+			<image class="ot-login-img" src="../../static/changetype.png" mode=""></image>
+		</view>
+		
+		<view class="footer">
+			<text> Don't hava an account ? </text>
+			<text style="color: #ef01a0; margin-left: 2vw;" > Sign Up </text>
+		</view>
 	</view>
 </template>
 
@@ -24,7 +45,8 @@
 				phone: '',
 				email: 'RicardoLe@yeah.net',
 				password: 'qinqinqin753',
-				backgroundUrl: ''
+				backgroundUrl: '',
+				pswShow: true
 			}
 		},
 		methods: {
@@ -99,8 +121,8 @@
 	.psw-show {
 		float: right;
 		right: 0;
-		width: 5vw;
-		height: 3.4vw;
+		width: 9vw;
+		height: 6.4vw;
 	}
 	input {
 		display: inline-flex;
@@ -122,6 +144,7 @@
 		width: 79vw;
 		height: 12vw;
 		margin-top: 33vw;
+		margin-bottom: 25vw;
 		line-height: 12vw;
 		border-radius: 1vw;
 		font-family: Helvetica;
@@ -135,6 +158,54 @@
 	.bg-image {
 		width: 100%;
 		height: 30vw;
+	}
+	
+	.bl-box {
+		display: flex;
+		flex-direction: row;
+		color: #FFFFFF;
+		justify-content: center;
+		.bl {
+			height: 2vw;
+			width: 22vw;
+			border-bottom: solid 1px #808080; 
+		}
+		text {
+			width: 25vw;
+			height: 4vw;
+			line-height: 4vw;
+			font-family: Helvetica;
+			font-size: 3vw;
+			font-weight: normal;
+			font-stretch: normal;
+			letter-spacing: 0vw;
+			color: #8d92a3;
+			text-align: center;
+		}
+	}
+	
+	.otherlogin {
+		display: flex;
+		justify-content: center;
+		margin-top: 5vw;
+		.ot-login-img {
+			width: 10vw;
+			height: 10vw;
+			margin: 0 1.5vw;
+		}
+	}
+	
+	.footer {
+		display: flex;
+		justify-content: center;
+		margin-top: 10vw;
+		height: 5vw;
+		font-family: Helvetica;
+		font-size: 4vw;
+		font-weight: normal;
+		font-stretch: normal;
+		letter-spacing: 0vw;
+		color: #ffffff;
 	}
 	
 </style>
