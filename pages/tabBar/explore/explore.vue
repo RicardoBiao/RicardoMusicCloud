@@ -7,6 +7,8 @@
 		<view class="show-log" v-show="showLog">
 			<image src="../../../static/loading.gif" mode=""></image>
 		</view>
+		
+		
 	</view>
 	
 </template>
@@ -76,6 +78,9 @@
 </script>
 
 <style lang="less">
+	.swiper {
+		background-color: #007AFF;
+	}
 	page {
 		width: 100%;
 		height: 100%;
