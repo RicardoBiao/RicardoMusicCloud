@@ -12,11 +12,24 @@
 		</view>
 		
 		<view class="btn-box">
-			<image class="btn-icon" src="../../static/Shape.png" mode="aspectFit"></image>
-			<image class="btn-icon" src="../../static/addtolist.png" mode="aspectFit"></image>
-			<image v-if="!isLike" @click="isLike = !isLike" class="btn-icon" src="../../static/like.png" mode="aspectFit"></image>
-			<image v-if="isLike" @click="isLike = !isLike" class="btn-icon" src="../../static/islike.png" mode="aspectFit"></image>
-			<image class="btn-icon" src="../../static/download.png" mode="aspectFit"></image>
+			<!-- <button type="default" plain="true" open-type="share" style="margin: 0; padding: 0; border: none; width: 40rpx; height: 40rpx;">
+				<image class="btn-icon" src="../../static/Shape.png" mode="aspectFit"></image>
+			</button> -->
+			<button class="icon-btn" open-type="share" type="default">
+				<image class="btn-icon" src="../../static/Shape.png" mode="aspectFit"></image>
+			</button>
+			<button class="icon-btn" type="default">
+				<image class="btn-icon" src="../../static/addtolist.png" mode="aspectFit"></image>
+			</button>
+			<button v-if="!isLike"  @click="like()"  class="icon-btn" type="default">
+				<image class="btn-icon" src="../../static/like.png" mode="aspectFit"></image>
+			</button>
+			<button v-else @click="unlike()" class="icon-btn" type="default">
+				<image class="btn-icon" src="../../static/islike.png" mode="aspectFit"></image>
+			</button>
+			<button class="icon-btn" type="default">
+				<image class="btn-icon" src="../../static/download.png" mode="aspectFit"></image>
+			</button>
 		</view>
 		
 		<view class="time">
@@ -69,6 +82,22 @@
 			this.ids = option.ids;
 			console.log('option',option);
 			this.getSongDetail();
+			
+			//判断该音乐是否已喜欢
+			let likeList = this.$store.state.likeList;
+			let id = parseInt(option.ids);
+			console.log('id==>',id);
+			console.log('likeList.indexOf(id)==>',likeList.indexOf(id));
+			if (likeList.indexOf(id) != -1 ) {
+				this.isLike = 1;
+				console.log('我执行了==>');
+			}
+			
+			
+			wx.showShareMenu({
+			  withShareTicket: true,
+			  menus: ['shareAppMessage', 'shareTimeline']
+			});
 		},
 		methods: {
 			getSongDetail() {
@@ -79,6 +108,7 @@
 						let song = res.data.songs[0];
 						console.log('song:',song);
 						this.songName = song.name;
+						this.ids = song.id;
 						console.log('songname:',this.songName);
 						this.singer = song.ar[0].name;
 						console.log('singer:',this.singer);
@@ -127,7 +157,76 @@
 			musicPause() {
 				this.innerAudioContext.pause();
 				this.musicPaused = 1;
+			},
+			onShareAppMessage(res) {
+				    if (res.from === 'button') {
+				      // 来自页面内转发按钮
+				      console.log(res.target)
+				    }
+				    return {
+				      title: '这首歌超好听，快来听听~',
+				      path: '/page/player/player'
+				    }
+			},
+			like() {
+				this.$api.likeMusic({
+					id: this.ids,
+					like: true,
+					cookie: this.$store.state.cookie
+				})
+				.then(res => {
+					if(res.data.code === 200) {
+						console.log('like-res==>',res);
+						this.isLike = 1;
+					} else {
+						// uni.showToast({
+						// 	icon: 'none',
+						// 	title: res.data.msg
+						// })
+					}
+				})
+				.catch(err => {
+					uni.showToast({
+						icon: 'none',
+						duration: 2000,
+						title: err.response.data.msg
+					});
+					uni.reLaunch({
+						url: "/pages/login/login"
+					});
+					console.log('like发生错误',err);
+				});
+			},
+			unlike() {
+				this.$api.likeMusic({
+					id: this.ids,
+					like: false,
+					cookie: this.$store.state.cookie
+				})
+				.then(res => {
+					if(res.data.code === 200) {
+						console.log('like-res==>',res);
+						this.isLike = 0;
+					} else {
+						// uni.showToast({
+						// 	icon: 'none',
+						// 	title: res.data.msg
+						// });
+					}
+				})
+				.catch(err => {
+					uni.showToast({
+						icon: 'none',
+						duration: 2000,
+						title: err.response.data.msg
+					});
+					uni.reLaunch({
+						url: "/pages/login/login"
+					});
+					console.log('like发生错误',err);
+				});
 			}
+					
 		}
 		
 	}
@@ -162,7 +261,7 @@
 			width: 50rpx;
 			height: 50rpx;
 			left: calc(50% - 29rpx);
-			top: -5rpx;
+			top: -7rpx;
 			z-index: 2;
 		}
 		.play-bar {
@@ -226,11 +325,18 @@
 	}
 	.btn-box {
 		display: flex;
-		justify-content: space-between;
-		margin: 80rpx 110rpx;
-		.btn-icon {
-			width: 40rpx;
-			height: 40rpx;
+		justify-content: space-around;
+		margin: 10vw 8vw;
+		.icon-btn {
+			display: flex;
+			justify-content: center;
+			background-color: #0e0b1f;
+			// margin: 0;
+			// padding: 0;
+			.btn-icon {
+				width: 40rpx;
+				height: 40rpx;
+			}
 		}
 	}
 	.time {

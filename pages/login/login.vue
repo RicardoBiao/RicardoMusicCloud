@@ -13,7 +13,7 @@
 			<image v-else class="psw-show"  src="../../static/notVisible_forbid.png"  @tap="pswShow = !pswShow" mode=""></image>
 		</view>
 		
-		<view class="forgot-psw">
+		<view class="forgot-psw" @tap="forgotPwd()">
 			Forgot Password ?
 		</view>
 		
@@ -26,9 +26,15 @@
 		</view>
 		
 		<view class="otherlogin">
-			<image class="ot-login-img" src="../../static/changetype.png" mode=""></image>
-			<image class="ot-login-img" src="../../static/changetype.png" mode=""></image>
-			<image class="ot-login-img" src="../../static/changetype.png" mode=""></image>
+			<button type="default" class="ot-login-btn" open-type="getUserInfo" @getuserinfo="getUserInfo">
+				<image @click="wxLogin()" class="ot-login-img" src="../../static/WeChat.png" mode="aspectFill"></image>
+			</button>
+			<button type="default" class="ot-login-btn" open-type="getUserInfo" @getuserinfo="getUserInfo">
+				<image class="ot-login-img" src="../../static/weibo.png" mode="aspectFill"></image>
+			</button>
+			<button type="default" class="ot-login-btn" open-type="getUserInfo" @getuserinfo="getUserInfo">
+				<image class="ot-login-img" src="../../static/github.png" mode="aspectFill"></image>
+			</button>
 		</view>
 		
 		<view class="footer">
@@ -62,6 +68,7 @@
 						this.$store.state.loginData = res.data;
 						this.$store.state.isLogin = 1;
 						console.log('res.data:',res.data);
+						this.$store.state.cookie = res.data.cookie;
 						this.$api.getDetail({
 							uid:this.$store.state.userInfo.userId
 						}).then(res => {
@@ -70,13 +77,47 @@
 								console.log('this.$store.state.detail:',this.$store.state.detail);
 							}
 						});
+						this.$api.getLikeList({
+							uid: this.$store.state.userInfo.userId,
+							cookie: this.$store.state.cookie
+						}).then(res => {
+							if (res.data.code === 200) {
+								console.log('getLikeList-res==>',res);
+								this.$store.state.likeList = res.data.ids;
+								console.log('this.$store.state.likeList==>',this.$store.state.likeList);
+							}
+						});
 						console.log('this.$store.state.userInfo:',this.$store.state.userInfo);
 						uni.switchTab({
 							url:'../tabBar/account/account'
 						});
 					}
 				});
+			},
+			wxLogin() {
+				wx.login({
+					success (res) {
+						if (res.code) {
+							console.log('res===>',res);
+						} else {
+							console.log('登录失败！' + res.errMsg)
+						}
+					}
+				})
+			},
+			getUserInfo(e) {
+				if(e.detail.errMsg == "getUserInfo:fail auth deny"){       //用户决绝授权	
+					console.log('用户拒绝了授权');
+				} else {
+					console.log('用户确认了授权');
+				}
 			}
+			// ,
+			// goForgotPwd() {
+			// 	uni.navigateTo({
+					
+			// 	});
+			// }
 		}
 	}
 </script>
@@ -115,7 +156,7 @@
 	}
 	.icon {
 		display: inline-flex;
-		width: 5vw;
+		width: 6vw;
 		height: 5vw;
 	}
 	.psw-show {
@@ -188,10 +229,17 @@
 		display: flex;
 		justify-content: center;
 		margin-top: 5vw;
-		.ot-login-img {
-			width: 10vw;
-			height: 10vw;
+		.ot-login-btn {
+			width: 11vw;
+			height: 11vw;
 			margin: 0 1.5vw;
+			padding: 0;
+			background-color: #ffffff;
+			border-radius: 50%;
+			.ot-login-img {
+				width: 11vw;
+				height: 11vw;
+			}
 		}
 	}
 	

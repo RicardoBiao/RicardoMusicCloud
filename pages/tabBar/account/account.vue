@@ -23,6 +23,10 @@
 				<button v-show="!nickname" class="edit" @click="goToLogin()">login</button>
 			</view>
 		</view>
+		<view class="library-box">
+			<text>Library</text>
+			
+		</view>
 	</view>
 </template>
 

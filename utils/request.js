@@ -9,7 +9,7 @@ const newFly = new Fly() // 用于请求session,因fly已经被锁定拦截
 // fly.config.baseURL = newFly.config.baseURL = 'http://192.168.43.61:3000' //本地
 fly.config.baseURL = newFly.config.baseURL = 'http://ricardofighting.top:3000' //网络
 
-
+// 定义fly的请求头
 fly.config.headers['Content-Type'] = newFly.config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
 // 拦截器  可以通过Promise.reject／reslove直接中止请求

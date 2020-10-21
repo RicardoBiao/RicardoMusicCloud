@@ -90,6 +90,18 @@ const api = {
 		return request.get('/comment/mv',{
 			...data
 		})
+	},
+	//喜欢音乐
+	likeMusic(data) {
+		return request.post('/like',{
+			...data
+		})
+	},
+	//获取用户喜欢音乐列表
+	getLikeList(data) {
+		return request.get('/likelist',{
+			...data
+		})
 	}
 	
 	

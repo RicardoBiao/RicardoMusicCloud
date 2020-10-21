@@ -17,7 +17,7 @@
 		data() {
 			return {
 				songs: [],
-				limit: 30,
+				limit: 10,
 				page: 0,
 				showLog: false,
 				isLoading: false,

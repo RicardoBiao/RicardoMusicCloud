@@ -11,7 +11,10 @@ const state = {
 	userInfo: [],
 	detail:[],
 	loginData:[],
-	isLogin: 0
+	isLogin: 0,
+	token: '',
+	cookie: '',
+	likeList: []
 }
 
 export default new Vuex.Store({  
