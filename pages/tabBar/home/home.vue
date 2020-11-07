@@ -29,6 +29,10 @@
 			
 		</view> -->
 		<!-- music-play组件 -->
+		<view style="width: 100vw; height: 150rpx;">
+			
+		</view>
+		<player style="position: fixed; bottom: 0;"></player>
 		<!-- <view class="music-play">
 			
 		</view>
@@ -42,6 +46,7 @@
 <script>
 	import recentlyMusic from '@/components/recently-music/recently-music.vue';
 	import albumsView from '@/components/albums-view/albums-view.vue';
+	import player from '@/components/player/player.vue';
 	export default {
 		data() {
 			return {
@@ -59,7 +64,8 @@
 		},
 		components: {
 			recentlyMusic,
-			albumsView
+			albumsView,
+			player
 		},
 		onShareAppMessage(res) {
 		    return {

@@ -205,7 +205,7 @@
 				})
 				.then(res => {
 					if(res.data.code === 200) {
-						console.log('like-res==>',res);
+						console.log('unlike-res==>',res);
 						this.isLike = 0;
 					} else {
 						// uni.showToast({

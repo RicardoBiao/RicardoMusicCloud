@@ -206,6 +206,37 @@
 				// 	icon: 'none',
 				// 	duration: 2000
 				// });
+				this.songs = [];
+				this.$api.getSearch({
+					keywords: this.keyword,
+					// keywords: "起风了",
+					limit: this.limit,
+					offset:this.page*30
+				}).then(res => {
+					if (res.data.code === 200) {
+						console.log('res.data:',res.data);
+						console.log(res.data.result);
+						console.log(res.data.result.songs);
+						// this.songs = this.songs.concat(res.data.result.songs);
+						this.songs = res.data.result.songs;
+						console.log("this.songs:",this.songs);
+						this.total = res.data.result.songCount;
+						this.showLog = false;
+						this.isLoading = false;
+					}
+				});
+				
+				//以下是示例跳转淘宝搜索，可自己实现搜索逻辑
+				/*
+				//#ifdef APP-PLUS
+				plus.runtime.openURL(encodeURI('taobao://s.taobao.com/search?q=' + keyword));
+				//#endif
+				//#ifdef H5
+				window.location.href = 'taobao://s.taobao.com/search?q=' + keyword
+				//#endif
+				*/
+			},
+			searchMore() {
 				this.$api.getSearch({
 					keywords: this.keyword,
 					// keywords: "起风了",
@@ -223,16 +254,6 @@
 						this.isLoading = false;
 					}
 				});
-				
-				//以下是示例跳转淘宝搜索，可自己实现搜索逻辑
-				/*
-				//#ifdef APP-PLUS
-				plus.runtime.openURL(encodeURI('taobao://s.taobao.com/search?q=' + keyword));
-				//#endif
-				//#ifdef H5
-				window.location.href = 'taobao://s.taobao.com/search?q=' + keyword
-				//#endif
-				*/
 			},
 			//保存关键字到历史记录
 			saveKeyword(keyword) {
@@ -274,7 +295,7 @@
 						that.isLoading = true;
 						console.log('onReachBottomonReachBottomonReachBottom');
 						setTimeout(function() {
-							that.doSearch(that.keyword);
+							that.searchMore(that.keyword);
 						}, 1000);
 					}
 			}
