@@ -71,17 +71,34 @@
 				singer: '',
 				picUrl: '',
 				musicPaused: 1,
-				innerAudioContext: '',
+				innerAudioContext: {},
 				audios: [],
 				duration: '',
 				current: '00:00',
-				isLike: 0
+				isLike: 0,
+				music: {}
 			}
 		},
-		onLoad: function(option) {
+		created() {
+			this.$bus.on('music',music => {
+				console.log('bus-music22222222==>',music)
+				this.music = {};
+				this.music = music;
+				console.log('this.music==>',this.music)
+			})
+			
+			
+		},
+		beforeDestroy() {
+			this.$bus.off('music')
+		},
+		onLoad(option) {
 			this.ids = option.ids;
 			console.log('option',option);
 			this.getSongDetail();
+			console.log('this.music-onload==>',this.music)
+			
+			
 			
 			//判断该音乐是否已喜欢
 			let likeList = this.$store.state.likeList;
@@ -107,6 +124,7 @@
 					if ( res.data.code === 200) {
 						let song = res.data.songs[0];
 						console.log('song:',song);
+						this.$bus.emit('song',song);
 						this.songName = song.name;
 						this.ids = song.id;
 						console.log('songname:',this.songName);
@@ -115,44 +133,50 @@
 						this.picUrl = song.al.picUrl;
 					}
 				});
-				this.$api.getMusicUrl({
-					id: this.ids
-				}).then(res => {
-					if (res.data.code === 200) {
-						let musicUrl = res.data.data[0].url;
-						// console.log(musicUrl);
-						// console.log(this.musicPaused);
-						this.innerAudioContext = uni.createInnerAudioContext();
-						// console.log('innerAudioContext:',this.innerAudioContext);
-						this.innerAudioContext.src = musicUrl;
-						let format = function(num) {
-							return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
-						};
-						this.innerAudioContext.onCanplay( ()=>{
-							this.duration = format(this.innerAudioContext.duration);
-							// console.log('this.duration:',this.duration);
-						});
-						
-						this.musicPaused = 1;
-						// console.log('musicPaused:'+this.musicPaused);
-					}
-				});
+					this.$api.getMusicUrl({
+						id: this.ids
+					}).then(res => {
+						if (res.data.code === 200) {
+							let musicUrl = res.data.data[0].url;
+							// console.log(musicUrl);
+							// console.log(this.musicPaused);
+							this.innerAudioContext = uni.createInnerAudioContext();
+							// console.log('innerAudioContext:',this.innerAudioContext);
+							this.innerAudioContext.src = musicUrl;
+							console.log('this.music.src==>',this.music.src)
+							if(this.music.src == undefined) {
+								this.$bus.$emit('music',this.innerAudioContext);
+							}
+							let format = function(num) {
+								return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
+							};
+							this.innerAudioContext.onCanplay( ()=>{
+								this.duration = format(this.innerAudioContext.duration);
+								// console.log('this.duration:',this.duration);
+							});
+							
+							this.musicPaused = 1;
+							// console.log('musicPaused:'+this.musicPaused);
+						}
+					});
+				
 			},
 			format(num) {
 				return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
 			},
 			musicPlay() {
-					this.innerAudioContext.play();
-					this.musicPaused = 0;
-					let format = function(num) {
-						return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
-					};
-					this.innerAudioContext.onTimeUpdate( () => {
-						//音频进度更新事件  
-						this.current = format(this.innerAudioContext.currentTime);
-						// console.log('this.current:',this.current);
-					});
-					
+				
+				this.innerAudioContext.play();
+				this.musicPaused = 0;
+				let format = function(num) {
+					return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
+				};
+				this.innerAudioContext.onTimeUpdate( () => {
+					//音频进度更新事件  
+					this.current = format(this.innerAudioContext.currentTime);
+					// console.log('this.current:',this.current);
+				});
+				
 			},
 			musicPause() {
 				this.innerAudioContext.pause();

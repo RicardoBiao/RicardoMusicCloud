@@ -32,7 +32,7 @@
 		<view style="width: 100vw; height: 150rpx;">
 			
 		</view>
-		<player style="position: fixed; bottom: 0;"></player>
+		<player ref="player" @click="this.$refs.player.goPlayer()" style="position: fixed; bottom: 0;"></player>
 		<!-- <view class="music-play">
 			
 		</view>
@@ -93,10 +93,10 @@
 		},
 		methods: {
 			goToSearch() {
-					uni.navigateTo({
-						url:'../../search/search'
-					});
-			}
+				uni.navigateTo({
+					url:'../../search/search'
+				});
+			},
 		}	
 	}
 </script>
