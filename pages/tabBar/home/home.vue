@@ -32,7 +32,7 @@
 		<view style="width: 100vw; height: 150rpx;">
 			
 		</view>
-		<player ref="player" @click="this.$refs.player.goPlayer()" style="position: fixed; bottom: 0;"></player>
+		<player-box ref="player" @click="this.$refs.player.goPlayer()" style="position: fixed; bottom: 0;"></player-box>
 		<!-- <view class="music-play">
 			
 		</view>
@@ -46,7 +46,7 @@
 <script>
 	import recentlyMusic from '@/components/recently-music/recently-music.vue';
 	import albumsView from '@/components/albums-view/albums-view.vue';
-	import player from '@/components/player/player.vue';
+	import playerBox from '@/components/player-box/player-box.vue';
 	export default {
 		data() {
 			return {
@@ -65,7 +65,7 @@
 		components: {
 			recentlyMusic,
 			albumsView,
-			player
+			playerBox
 		},
 		onShareAppMessage(res) {
 		    return {

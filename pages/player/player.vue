@@ -71,7 +71,7 @@
 				singer: '',
 				picUrl: '',
 				musicPaused: 1,
-				innerAudioContext: {},
+				// innerAudioContext: {},
 				audios: [],
 				duration: '',
 				current: '00:00',
@@ -79,32 +79,47 @@
 				music: {}
 			}
 		},
-		created() {
-			this.$bus.on('music',music => {
-				console.log('bus-music22222222==>',music)
-				this.music = {};
-				this.music = music;
-				console.log('this.music==>',this.music)
-			})
-			
+		beforeCreate() {
+		// 	let that = this
+		// 	this.$bus.on('music',music => {
+		// 		console.log('bus-music22222222==>',music)
+		// 		that.music = {};
+		// 		that.music = music;
+		// 		console.log('this.music---111==>',that.music)
+		// 	})
+		// 	console.log('this.music---222==>',this.music)
 			
 		},
-		beforeDestroy() {
-			this.$bus.off('music')
+		// beforeDestroy() {
+		// 	this.$bus.off('music')
+		// },
+		watch: {
+			musicPaused: function (newVal, oldVal) {
+				console.log('this.musicPaused3==>',this.musicPaused)
+			}
+		},
+		onShow() {
+			if(this.innerAudioContext.paused === false) {
+				this.musicPaused = 0;
+			}
+			console.log('this.musicPaused2==>',this.musicPaused)
 		},
 		onLoad(option) {
+			
 			this.ids = option.ids;
-			console.log('option',option);
+			// console.log('option',option);
 			this.getSongDetail();
-			console.log('this.music-onload==>',this.music)
 			
-			
+			if(this.innerAudioContext.paused === false) {
+				this.musicPaused = 0;
+			}
+			console.log('this.musicPaused1==>',this.musicPaused)
 			
 			//判断该音乐是否已喜欢
 			let likeList = this.$store.state.likeList;
 			let id = parseInt(option.ids);
-			console.log('id==>',id);
-			console.log('likeList.indexOf(id)==>',likeList.indexOf(id));
+			// console.log('id==>',id);
+			// console.log('likeList.indexOf(id)==>',likeList.indexOf(id));
 			if (likeList.indexOf(id) != -1 ) {
 				this.isLike = 1;
 				console.log('我执行了==>');
@@ -123,42 +138,37 @@
 				}).then( res => {
 					if ( res.data.code === 200) {
 						let song = res.data.songs[0];
-						console.log('song:',song);
+						// console.log('song:',song);
 						this.$bus.emit('song',song);
 						this.songName = song.name;
 						this.ids = song.id;
-						console.log('songname:',this.songName);
+						// console.log('songname:',this.songName);
 						this.singer = song.ar[0].name;
-						console.log('singer:',this.singer);
+						// console.log('singer:',this.singer);
 						this.picUrl = song.al.picUrl;
 					}
 				});
-					this.$api.getMusicUrl({
-						id: this.ids
-					}).then(res => {
-						if (res.data.code === 200) {
-							let musicUrl = res.data.data[0].url;
-							// console.log(musicUrl);
-							// console.log(this.musicPaused);
-							this.innerAudioContext = uni.createInnerAudioContext();
-							// console.log('innerAudioContext:',this.innerAudioContext);
-							this.innerAudioContext.src = musicUrl;
-							console.log('this.music.src==>',this.music.src)
-							if(this.music.src == undefined) {
-								this.$bus.$emit('music',this.innerAudioContext);
-							}
-							let format = function(num) {
-								return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
-							};
-							this.innerAudioContext.onCanplay( ()=>{
-								this.duration = format(this.innerAudioContext.duration);
-								// console.log('this.duration:',this.duration);
-							});
-							
-							this.musicPaused = 1;
-							// console.log('musicPaused:'+this.musicPaused);
-						}
-					});
+				this.$api.getMusicUrl({
+					id: this.ids
+				}).then(res => {
+					if (res.data.code === 200) {
+						let musicUrl = res.data.data[0].url;
+						// console.log(musicUrl);
+						// console.log(this.musicPaused);
+						// console.log('innerAudioContext==>',this.innerAudioContext);
+						this.innerAudioContext.src = musicUrl;
+						let format = function(num) {
+							return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
+						};
+						this.innerAudioContext.onCanplay( ()=>{
+							this.duration = format(this.innerAudioContext.duration);
+							// console.log('this.duration:',this.duration);
+						});
+						
+						// this.musicPaused = 1;
+						// console.log('musicPaused:'+this.musicPaused);
+					}
+				});
 				
 			},
 			format(num) {

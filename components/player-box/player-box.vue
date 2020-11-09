@@ -1,11 +1,11 @@
 <template>
-	<view class="player-box" v-if="song.al.name != undefined">
+	<view class="player-box" v-if="song.name != undefined">
 		<view class="box-left" @click="goPlayer(song.id)">
 			<view class="song-img">
 				<image style="width: 100rpx;height: 100rpx; border-radius: 50%;" :src="song.al.picUrl" mode=""></image>
 			</view>
 			<view class="song-name">
-				 {{song.al.name}}
+				 {{song.name}}
 			</view>
 		</view>
 		<view class="box-right">
@@ -18,14 +18,14 @@
 
 <script>
 	export default {
-		name: 'player',
+		name: 'playerBox',
 		props: {
 			
 		},
 		data() {
 			return {
 				song: {},
-				music: {}
+				musicUrl: {}
 			};
 		},
 		created() {
@@ -33,31 +33,31 @@
 				console.log('bus-song==>',song)
 				this.song = song;
 			})
-			this.$bus.on('music',music => {
-				console.log('bus-music1==>',music)
-				this.music = {};
-				this.music = music;
+			this.$bus.on('playList',playList => {
+				console.log('playList==>',playList)
+				this.playList = {};
+				this.playList = playList;
 			})
-			console.log('this.music1==>',this.music)
+			console.log('this.playList==>',this.playList)
 		},
 		beforeDestroy() {
-			this.$bus.off('song',song)
-			this.$bus.off('music',music)
+			this.$bus.off('song')
+			this.$bus.off('playList')
 		},
 		methods: {
 			onPause() {
 				console.log('music-onPause')
-				this.music.pause();
+				this.innerAudioContext.pause();
 			},
 			onPlay() {
 				console.log('music-onPlay')
-				this.music.play();
+				this.innerAudioContext.play();
 			},
 			format(num) {
 				return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
 			},
 			nextSong() {
-				this.music.src = 'http://m8.music.126.net/20201107183404/adda5d922c50e642d6a184e9ab990b3f/ymusic/4afa/0216/a89f/c9941d4ebd3f829a9a3b3a52a8d738ce.mp3'
+				this.innerAudioContext.src = 'http://m8.music.126.net/20201107183404/adda5d922c50e642d6a184e9ab990b3f/ymusic/4afa/0216/a89f/c9941d4ebd3f829a9a3b3a52a8d738ce.mp3'
 			},
 			goPlayer(id) {
 				uni.navigateTo({
