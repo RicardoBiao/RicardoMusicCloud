@@ -66,6 +66,7 @@
 	//引用mSearch组件，如不需要删除即可
 	import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
 	import audioMini from '@/components/audio-mini/audio-mini.vue';
+	import {songs,playList} from '@/utils/class.js'
 	export default {
 		data() {
 			return {
@@ -218,7 +219,7 @@
 						console.log(res.data.result);
 						console.log(res.data.result.songs);
 						// this.songs = this.songs.concat(res.data.result.songs);
-						this.songs = res.data.result.songs;
+						this.songs = new songs(res.data.result.songs);
 						console.log("this.songs:",this.songs);
 						this.total = res.data.result.songCount;
 						this.showLog = false;

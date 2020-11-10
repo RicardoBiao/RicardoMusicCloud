@@ -3,6 +3,7 @@ import qs from 'qs'
 import request from './request'
 
 const api = {
+	//获取音乐播放链接
 	getMusicUrl(data) {
 		return request.get('/song/url', {
             ...data
@@ -13,11 +14,13 @@ const api = {
 		    ...data
 		})
 	},
+	//手机登录
 	postPhoneLogin(data) {
 		return request.post('/login/cellphone', {
 			...data
 		})
 	},
+	//email登录
 	postEmailLogin(data) {
 		return request.post('/login', {
 			...data
@@ -28,6 +31,7 @@ const api = {
 			...data
 		})
 	},
+	//获取喜欢音乐列表
 	getLikeMusic(data) {
 		return request.get('/likelist', {
 			...data

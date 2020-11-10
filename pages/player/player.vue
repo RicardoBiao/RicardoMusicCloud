@@ -4,10 +4,10 @@
 			<image class="play-bar-support" src="../../static/play-bar-support.png" mode="aspectFit"></image>
 			<image class="play-bar" :class="{bar: musicPaused}" src="../../static/play-bar.png" mode="aspectFit"></image>
 			<view class="img-box">
-				<image class="img turn" :style=" musicPaused == 0 ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="picUrl" mode="aspectFit"></image>
+				<image class="img turn" :style=" musicPaused == 0 ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="song.picUrl" mode="aspectFit"></image>
 			</view>
-			<text class="song-name"> {{songName}} </text>
-			<text class="singer"> {{singer}} </text>
+			<text class="song-name"> {{song.name}} </text>
+			<text class="singer"> {{song.singer}} </text>
 			<text class="song-content">It is a long established fact that a reader</text>
 		</view>
 		
@@ -62,16 +62,16 @@
 </template>
 
 <script>
+	import {songs} from '../../utils/class.js'
 	export default {
 		data() {
 			return {
 				ids: '',
-				songName: '',
-				songUrl: '',
-				singer: '',
-				picUrl: '',
+				song: {
+					name: '',
+					singer: ''
+				},
 				musicPaused: 1,
-				// innerAudioContext: {},
 				audios: [],
 				duration: '',
 				current: '00:00',
@@ -79,19 +79,11 @@
 				music: {}
 			}
 		},
-		beforeCreate() {
-		// 	let that = this
-		// 	this.$bus.on('music',music => {
-		// 		console.log('bus-music22222222==>',music)
-		// 		that.music = {};
-		// 		that.music = music;
-		// 		console.log('this.music---111==>',that.music)
-		// 	})
-		// 	console.log('this.music---222==>',this.music)
+		// beforeCreate() {
 			
-		},
+		// },
 		// beforeDestroy() {
-		// 	this.$bus.off('music')
+			
 		// },
 		watch: {
 			musicPaused: function (newVal, oldVal) {
@@ -137,15 +129,15 @@
 					ids: this.ids
 				}).then( res => {
 					if ( res.data.code === 200) {
-						let song = res.data.songs[0];
+						this.song = new songs(res.data.songs);
 						// console.log('song:',song);
-						this.$bus.emit('song',song);
-						this.songName = song.name;
-						this.ids = song.id;
+						this.$bus.emit('song',this.song);
+						// this.songName = song.name;
+						// this.ids = song.id;
 						// console.log('songname:',this.songName);
-						this.singer = song.ar[0].name;
+						// this.singer = song.ar[0].name;
 						// console.log('singer:',this.singer);
-						this.picUrl = song.al.picUrl;
+						// this.picUrl = song.al.picUrl;
 					}
 				});
 				this.$api.getMusicUrl({
@@ -204,7 +196,7 @@
 			},
 			like() {
 				this.$api.likeMusic({
-					id: this.ids,
+					id: this.song.id,
 					like: true,
 					cookie: this.$store.state.cookie
 				})
@@ -233,7 +225,7 @@
 			},
 			unlike() {
 				this.$api.likeMusic({
-					id: this.ids,
+					id: this.song.id,
 					like: false,
 					cookie: this.$store.state.cookie
 				})

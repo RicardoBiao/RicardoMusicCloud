@@ -2,16 +2,17 @@
 	<view class="player-box" v-if="song.name != undefined">
 		<view class="box-left" @click="goPlayer(song.id)">
 			<view class="song-img">
-				<image style="width: 100rpx;height: 100rpx; border-radius: 50%;" :src="song.al.picUrl" mode=""></image>
+				<image style="width: 100rpx;height: 100rpx; border-radius: 50%;" :src="song.picUrl" mode=""></image>
 			</view>
 			<view class="song-name">
 				 {{song.name}}
 			</view>
 		</view>
 		<view class="box-right">
-			<image @click="nextSong()" class="btn" src="../../static/upsong.png" mode=""></image>
-			<image @click="onPause()" style="width: 66rpx; height: 66rpx;" class="btn" src="../../static/play.png" mode=""></image>
-			<image @click="onPlay()" class="btn" src="../../static/nextsong.png" mode=""></image>
+			<image @click="preSong()" class="btn" src="../../static/upsong.png" mode=""></image>
+			<image v-if="musicPause" @click="onPlay()" style="width: 66rpx; height: 66rpx;" class="btn" src="../../static/play.png" mode=""></image>
+			<image v-else @click="onPause()" style="width: 66rpx; height: 66rpx;" class="btn" src="../../static/stop.png" mode=""></image>
+			<image @click="nextSong()" class="btn" src="../../static/nextsong.png" mode=""></image>
 		</view>
 	</view>
 </template>
@@ -24,8 +25,10 @@
 		},
 		data() {
 			return {
+				musicPause: 1,
 				song: {},
-				musicUrl: {}
+				musicUrl: {},
+				playlist: []
 			};
 		},
 		created() {
@@ -35,7 +38,7 @@
 			})
 			this.$bus.on('playList',playList => {
 				console.log('playList==>',playList)
-				this.playList = {};
+				this.playList = [];
 				this.playList = playList;
 			})
 			console.log('this.playList==>',this.playList)
@@ -48,16 +51,22 @@
 			onPause() {
 				console.log('music-onPause')
 				this.innerAudioContext.pause();
+				this.musicPause = 1;
 			},
 			onPlay() {
 				console.log('music-onPlay')
 				this.innerAudioContext.play();
+				this.musicPause = 0;
 			},
 			format(num) {
 				return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
 			},
+			presong() {
+				// this.innerAudioContext.src = 
+			},
 			nextSong() {
-				this.innerAudioContext.src = 'http://m8.music.126.net/20201107183404/adda5d922c50e642d6a184e9ab990b3f/ymusic/4afa/0216/a89f/c9941d4ebd3f829a9a3b3a52a8d738ce.mp3'
+				// this.innerAudioContext.src = 			
+				console.log('this.innerAudioContext.src',this.innerAudioContext.src)
 			},
 			goPlayer(id) {
 				uni.navigateTo({

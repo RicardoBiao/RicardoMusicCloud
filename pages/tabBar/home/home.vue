@@ -29,9 +29,7 @@
 			
 		</view> -->
 		<!-- music-play组件 -->
-		<view style="width: 100vw; height: 150rpx;">
-			
-		</view>
+		<view v-if="song.name" style="width: 100vw; height: 150rpx;"></view>
 		<player-box ref="player" @click="this.$refs.player.goPlayer()" style="position: fixed; bottom: 0;"></player-box>
 		<!-- <view class="music-play">
 			
@@ -59,7 +57,8 @@
 					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png',
 					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/202028-1578486028afb2.png',
 					'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/204941-15776237817d95.png'
-				]
+				],
+				song: {}
 			}
 		},
 		components: {
@@ -82,6 +81,14 @@
 			  },
 			  imageUrl: 'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png'
 			}
+		},
+		created() {
+			this.$bus.on('song',song => {
+				this.song = song;
+			})
+		},
+		beforeDestroy() {
+			this.$bus.off('song')
 		},
 		onLoad() {
 			console.log("index:"+this.swiperData);
