@@ -78,7 +78,7 @@
 				forbid: '',
 				isShowKeywordList: false,
 				songs: [],
-				limit: 30,
+				limit: 10,
 				page: 0,
 				showLog: false,
 				isLoading: false,
@@ -218,9 +218,9 @@
 						console.log('res.data:',res.data);
 						console.log(res.data.result);
 						console.log(res.data.result.songs);
-						// this.songs = this.songs.concat(res.data.result.songs);
-						this.songs = new songs(res.data.result.songs);
-						console.log("this.songs:",this.songs);
+						this.songs = this.songs.concat(res.data.result.songs);
+						// this.songs = new songs(res.data.result.songs);
+						console.log("this.songs====>",this.songs);
 						this.total = res.data.result.songCount;
 						this.showLog = false;
 						this.isLoading = false;

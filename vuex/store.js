@@ -1,23 +1,39 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createLogger from 'vuex/dist/logger'; // 修改日志
-
+import createLogger from 'vuex/dist/logger' // 修改日志
+import actions from './actions.js'
+import getters from './getters.js'
+import mutations from './mutations.js'
 
 Vue.use(Vuex)
 
 const debug = false
 
 const state = {
+	//用户信息
 	userInfo: [],
 	detail:[],
+	//登录信息
 	loginData:[],
+	//是否登录
 	isLogin: 0,
 	token: '',
 	cookie: '',
-	likeList: []
+	//喜欢音乐列表
+	likeList: [],
+	//播放列表
+	playList: [],
+	//音乐列表
+	musicList: [],
+	//是否正在播放
+	isPlay: 0,
+	innerAudioContext: uni.createInnerAudioContext(),
 }
 
 export default new Vuex.Store({  
     state,
+	actions,
+	getters,
+	mutations,
     plugins: debug ? [createLogger()] : []
 })
