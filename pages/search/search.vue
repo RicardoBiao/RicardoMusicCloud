@@ -27,7 +27,7 @@
 				</block>
 				
 			</scroll-view>
-			<scroll-view class="keyword-box" v-show="!isShowKeywordList" scroll-y>
+			<scroll-view @scroll="scroll" class="keyword-box" v-show="!isShowKeywordList" scroll-y>
 				<view class="keyword-block" v-if="oldKeywordList.length>0">
 					<view class="keyword-list-header">
 						<view>历史搜索</view>
@@ -53,7 +53,8 @@
 						<view>当前搜热门搜索已隐藏</view>
 					</view>
 				</view>
-				<audio-mini v-for="song in songs" :song="song" :key="song.id" ></audio-mini>
+				
+				<audio-mini v-for="song in songs" :song="song" :key="song.id" :scrollTop="scrollTop" ></audio-mini>
 				<view class="show-log" v-show="showLog">
 					<image src="../../static/loading.gif" mode=""></image>
 				</view>
@@ -83,7 +84,8 @@
 				page: 0,
 				showLog: false,
 				isLoading: false,
-				total: 0
+				total: 0,
+				scrollTop: 0
 			}
 		},
 		computed:{
@@ -102,6 +104,10 @@
 			audioMini
 		},
 		methods: {
+			scroll(e) {
+				console.log('e==>',e)
+				this.scrollTop = e.detail.scrollTop;
+			},
 			init() {
 				this.loadDefaultKeyword();
 				this.loadOldKeyword();

@@ -48,6 +48,7 @@ export default{
     watch:{
         scrollTop(val){
             this.onScroll(val)
+			console.log('scrollTop-watch---执行了')
         }
     },
     data(){
@@ -85,6 +86,7 @@ export default{
             const query = uni.createSelectorQuery().in(this);
             query.select('#'+id).boundingClientRect(data => {
                 if(!data) return;
+				console.log('data.top - this.viewHeight==>',data.top - this.viewHeight)
                 if(data.top - this.viewHeight<0){
                     this.loadImg = true;
                 }

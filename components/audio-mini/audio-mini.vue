@@ -4,7 +4,8 @@
 			<view class="image-box">
 				<!-- <image v-if="musicPaused == 1" src="../../static/play.png" mode="aspectFill" class="play-icon" @click="musicPlay()"></image>
 				<image v-if="musicPaused == 0" src="../../static/stop.png" mode="aspectFill" class="pause-icon" @click="musicPause()"></image> -->
-				<image  class="music-image" mode="aspectFill" :src="songImg"></image>
+				<!-- <image  class="music-image" mode="aspectFill" :src="songImg"></image> -->
+				<easy-loadimage class="music-image" mode="widthFix" loading-mode="spin-circle" :image-src="songImg" :scrollTop="scrollTop"></easy-loadimage>
 			</view>
 			<view  class="text-box" @click="goToPlayer(song.id)">
 				<text class="text-box-title">
@@ -22,6 +23,7 @@
 </template>
 
 <script>
+	import easyLoadimage from '@/components/easy-loadimage/easy-loadimage.vue'
 	import { mapGetters, mapActions } from 'vuex'
 	export default {
 		name: 'audioMini',
@@ -31,7 +33,16 @@
 				default: function () {
 					return [];
 				}
+			},
+			scrollTop: {
+				type: Number,
+				default: function (){
+					return 0;
+				}
 			}
+		},
+		components: {
+			easyLoadimage
 		},
 		data() {
 			return {
