@@ -22,6 +22,7 @@
 </template>
 
 <script>
+	import { mapGetters, mapActions } from 'vuex'
 	export default {
 		name: 'audioMini',
 		props: {
@@ -35,7 +36,6 @@
 		data() {
 			return {
 				musicPaused: 1,
-				innerAudioContext: {},
 				audios: [],
 				duration: '',
 				current: '00:00',

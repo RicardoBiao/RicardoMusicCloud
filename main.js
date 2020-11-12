@@ -11,7 +11,7 @@ Vue.use(VueBus)
 
 Vue.prototype.$api = api
 Vue.prototype.$store = store
-Vue.prototype.innerAudioContext = uni.createInnerAudioContext()
+// Vue.prototype.innerAudioContext = uni.createInnerAudioContext()
 Vue.config.productionTip = false
 
 App.mpType = 'app'

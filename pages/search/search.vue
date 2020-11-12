@@ -66,7 +66,8 @@
 	//引用mSearch组件，如不需要删除即可
 	import mSearch from '@/components/mehaotian-search-revision/mehaotian-search-revision.vue';
 	import audioMini from '@/components/audio-mini/audio-mini.vue';
-	import {songs,playList} from '@/utils/class.js'
+	import {songs,playList} from '@/utils/class.js';
+	import { mapGetters, mapActions } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -84,6 +85,13 @@
 				isLoading: false,
 				total: 0
 			}
+		},
+		computed:{
+			...mapGetters([
+				'isPlay',
+				'playList',
+				'innerAudioContext'
+			])
 		},
 		onLoad() {
 			this.init();

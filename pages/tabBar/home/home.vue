@@ -29,7 +29,7 @@
 			
 		</view> -->
 		<!-- music-play组件 -->
-		<view v-if="song.name" style="width: 100vw; height: 150rpx;"></view>
+		<view v-show="playList.length > 0" style="width: 100vw; height: 150rpx;"></view>
 		<player-box ref="player" @click="this.$refs.player.goPlayer()" style="position: fixed; bottom: 0;"></player-box>
 		<!-- <view class="music-play">
 			
@@ -45,6 +45,7 @@
 	import recentlyMusic from '@/components/recently-music/recently-music.vue';
 	import albumsView from '@/components/albums-view/albums-view.vue';
 	import playerBox from '@/components/player-box/player-box.vue';
+	import { mapGetters, mapActions } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -60,6 +61,13 @@
 				],
 				song: {}
 			}
+		},
+		computed:{
+			...mapGetters([
+				'isPlay',
+				'playList',
+				'innerAudioContext'
+			])
 		},
 		components: {
 			recentlyMusic,
@@ -82,13 +90,8 @@
 			  imageUrl: 'https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/images/235000-1584114600db79.png'
 			}
 		},
-		created() {
-			this.$bus.on('song',song => {
-				this.song = song;
-			})
-		},
-		beforeDestroy() {
-			this.$bus.off('song')
+		onShow() {
+			console.log('playList==>',this.playList)
 		},
 		onLoad() {
 			console.log("index:"+this.swiperData);

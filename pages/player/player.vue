@@ -2,9 +2,9 @@
 	<view class="content">
 		<view class="py-msg-box">
 			<image class="play-bar-support" src="../../static/play-bar-support.png" mode="aspectFit"></image>
-			<image class="play-bar" :class="{bar: musicPaused}" src="../../static/play-bar.png" mode="aspectFit"></image>
+			<image class="play-bar" :class="{bar: !isPlay}" src="../../static/play-bar.png" mode="aspectFit"></image>
 			<view class="img-box">
-				<image class="img turn" :style=" musicPaused == 0 ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="song.picUrl" mode="aspectFit"></image>
+				<image class="img turn" :style=" isPlay == true ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="song.picUrl" mode="aspectFit"></image>
 			</view>
 			<text class="song-name"> {{song.name}} </text>
 			<text class="singer"> {{song.singer}} </text>
@@ -39,7 +39,7 @@
 			<image class="py-icon" src="../../static/mix.png" mode="aspectFit"></image>
 			<image class="py-icon" src="../../static/upsong.png" mode="aspectFit"></image>
 			<image 
-			v-if="musicPaused == 1" 
+			v-if="isPlay == false" 
 			style="width: 146rpx; height: 146rpx;" 
 			class="py-icon" 
 			src="../../static/playbig.png"
@@ -47,7 +47,7 @@
 			@click="musicPlay()"
 			></image>
 			<image 
-			v-if="musicPaused == 0" 
+			v-else 
 			style="width: 146rpx; height: 146rpx;" 
 			class="py-icon" src="../../static/pausebig.png" 
 			mode="aspectFit"
@@ -62,7 +62,8 @@
 </template>
 
 <script>
-	import {songs} from '../../utils/class.js'
+	import {songs} from '../../utils/class.js';
+	import { mapGetters, mapActions } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -71,7 +72,6 @@
 					name: '',
 					singer: ''
 				},
-				musicPaused: 1,
 				audios: [],
 				duration: '',
 				current: '00:00',
@@ -79,22 +79,30 @@
 				music: {}
 			}
 		},
+		computed:{
+			...mapGetters([
+				'isPlay',
+				'playList',
+				'likeList',
+				'innerAudioContext'
+			])
+		},
 		// beforeCreate() {
 			
 		// },
 		// beforeDestroy() {
 			
 		// },
-		watch: {
-			musicPaused: function (newVal, oldVal) {
-				console.log('this.musicPaused3==>',this.musicPaused)
-			}
-		},
+		// watch: {
+		// 	isPlay: function (newVal, oldVal) {
+		// 		console.log('this.isPlay==>',this.isPlay)
+		// 	}
+		// },
 		onShow() {
-			if(this.innerAudioContext.paused === false) {
-				this.musicPaused = 0;
-			}
-			console.log('this.musicPaused2==>',this.musicPaused)
+			// if(this.innerAudioContext.paused === false) {
+			// 	this.musicPaused = 0;
+			// }
+			// console.log('this.musicPaused2==>',this.musicPaused)
 		},
 		onLoad(option) {
 			
@@ -102,19 +110,13 @@
 			// console.log('option',option);
 			this.getSongDetail();
 			
-			if(this.innerAudioContext.paused === false) {
-				this.musicPaused = 0;
-			}
-			console.log('this.musicPaused1==>',this.musicPaused)
-			
 			//判断该音乐是否已喜欢
-			let likeList = this.$store.state.likeList;
 			let id = parseInt(option.ids);
 			// console.log('id==>',id);
 			// console.log('likeList.indexOf(id)==>',likeList.indexOf(id));
-			if (likeList.indexOf(id) != -1 ) {
+			if (this.likeList.indexOf(id) != -1 ) {
 				this.isLike = 1;
-				console.log('我执行了==>');
+				console.log('我执行了isLike==>');
 			}
 			
 			
@@ -124,20 +126,22 @@
 			});
 		},
 		methods: {
+			...mapActions([
+				'setIsPlay',
+				'setAudioUrl',
+				'setPlayList'
+			]),
 			getSongDetail() {
 				this.$api.getSongDetail({
 					ids: this.ids
 				}).then( res => {
 					if ( res.data.code === 200) {
 						this.song = new songs(res.data.songs);
+						let list = this.playList;
+						list.push(this.song);
+						this.setPlayList(list);
+						console.log('this.playList===>',this.playList)
 						// console.log('song:',song);
-						this.$bus.emit('song',this.song);
-						// this.songName = song.name;
-						// this.ids = song.id;
-						// console.log('songname:',this.songName);
-						// this.singer = song.ar[0].name;
-						// console.log('singer:',this.singer);
-						// this.picUrl = song.al.picUrl;
 					}
 				});
 				this.$api.getMusicUrl({
@@ -145,20 +149,15 @@
 				}).then(res => {
 					if (res.data.code === 200) {
 						let musicUrl = res.data.data[0].url;
-						// console.log(musicUrl);
-						// console.log(this.musicPaused);
-						// console.log('innerAudioContext==>',this.innerAudioContext);
 						this.innerAudioContext.src = musicUrl;
 						let format = function(num) {
 							return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
 						};
+						this.musicPlay();
 						this.innerAudioContext.onCanplay( ()=>{
 							this.duration = format(this.innerAudioContext.duration);
-							// console.log('this.duration:',this.duration);
 						});
 						
-						// this.musicPaused = 1;
-						// console.log('musicPaused:'+this.musicPaused);
 					}
 				});
 				
@@ -169,7 +168,7 @@
 			musicPlay() {
 				
 				this.innerAudioContext.play();
-				this.musicPaused = 0;
+				this.setIsPlay(true);
 				let format = function(num) {
 					return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
 				};
@@ -182,7 +181,7 @@
 			},
 			musicPause() {
 				this.innerAudioContext.pause();
-				this.musicPaused = 1;
+				this.setIsPlay(false);
 			},
 			onShareAppMessage(res) {
 				    if (res.from === 'button') {

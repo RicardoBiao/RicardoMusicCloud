@@ -1,16 +1,16 @@
 <template>
-	<view class="player-box" v-if="song.name != undefined">
-		<view class="box-left" @click="goPlayer(song.id)">
+	<view class="player-box" v-if="playList.length > 0">
+		<view class="box-left" @click="goPlayer(playList[0].id)">
 			<view class="song-img">
-				<image style="width: 100rpx;height: 100rpx; border-radius: 50%;" :src="song.picUrl" mode=""></image>
+				<image style="width: 100rpx;height: 100rpx; border-radius: 50%;" :src="playList[0].picUrl" mode=""></image>
 			</view>
 			<view class="song-name">
-				 {{song.name}}
+				 {{playList[0].name}}
 			</view>
 		</view>
 		<view class="box-right">
 			<image @click="preSong()" class="btn" src="../../static/upsong.png" mode=""></image>
-			<image v-if="musicPause" @click="onPlay()" style="width: 66rpx; height: 66rpx;" class="btn" src="../../static/play.png" mode=""></image>
+			<image v-if="!isPlay" @click="onPlay()" style="width: 66rpx; height: 66rpx;" class="btn" src="../../static/play.png" mode=""></image>
 			<image v-else @click="onPause()" style="width: 66rpx; height: 66rpx;" class="btn" src="../../static/stop.png" mode=""></image>
 			<image @click="nextSong()" class="btn" src="../../static/nextsong.png" mode=""></image>
 		</view>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+	import { mapGetters, mapActions } from 'vuex'
 	export default {
 		name: 'playerBox',
 		props: {
@@ -25,41 +26,35 @@
 		},
 		data() {
 			return {
-				musicPause: 1,
 				song: {},
-				musicUrl: {},
-				playlist: []
 			};
 		},
-		created() {
-			this.$bus.on('song',song => {
-				console.log('bus-song==>',song)
-				this.song = song;
-			})
-			this.$bus.on('playList',playList => {
-				console.log('playList==>',playList)
-				this.playList = [];
-				this.playList = playList;
-			})
-			console.log('this.playList==>',this.playList)
+		computed:{
+			...mapGetters([
+				'isPlay',
+				'playList',
+				'innerAudioContext'
+			])
 		},
-		beforeDestroy() {
-			this.$bus.off('song')
-			this.$bus.off('playList')
+		onLoad() {
+			console.log('box-playList===>',this.playList)
 		},
 		methods: {
+			...mapActions([
+				'setIsPlay',
+				'setAudioUrl'
+			]),
 			onPause() {
 				console.log('music-onPause')
 				this.innerAudioContext.pause();
-				this.musicPause = 1;
+				this.setIsPlay(false);
 			},
 			onPlay() {
 				console.log('music-onPlay')
 				this.innerAudioContext.play();
-				this.musicPause = 0;
-			},
-			format(num) {
-				return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
+				this.setIsPlay(true);
+				console.log('playList====>',this.playList)
+				
 			},
 			presong() {
 				// this.innerAudioContext.src = 

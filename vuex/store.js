@@ -16,7 +16,7 @@ const state = {
 	//登录信息
 	loginData:[],
 	//是否登录
-	isLogin: 0,
+	isLogin: true,
 	token: '',
 	cookie: '',
 	//喜欢音乐列表
@@ -26,7 +26,7 @@ const state = {
 	//音乐列表
 	musicList: [],
 	//是否正在播放
-	isPlay: 0,
+	isPlay: false,
 	innerAudioContext: uni.createInnerAudioContext(),
 }
 
