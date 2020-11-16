@@ -76,7 +76,8 @@
 				duration: '',
 				current: '00:00',
 				isLike: 0,
-				music: {}
+				music: {},
+				musicUrl: ''
 			}
 		},
 		computed:{
@@ -120,7 +121,6 @@
 				console.log('我执行了isLike==>');
 			}
 			
-			
 			wx.showShareMenu({
 			  withShareTicket: true,
 			  menus: ['shareAppMessage', 'shareTimeline']
@@ -137,40 +137,73 @@
 				this.$api.getSongDetail({
 					ids: this.ids
 				}).then( res => {
-					if ( res.data.code === 200) {
+					if (res.data.code === 200) {
 						this.song = new songs(res.data.songs);
 						// console.log('song:',song);
 					}
 				});
-				this.getMusicUrl(this.ids);
+				this.getMusicUrl();
 				
 			},
-			getMusicUrl(id) {
+			getMusicUrl() {
 				this.$api.getMusicUrl({
-					id: id
+					id: this.ids
 				}).then(res => {
 					if (res.data.code === 200) {
-						let musicUrl = res.data.data[0].url;
-						this.setAudioUrl(musicUrl);
-						let list = new playList(this.playList.length,this.song,musicUrl);
-						this.playList.push(list);
-						this.setPlayList(this.playList);
-						this.setCurrentIndex(this.playList.length - 1);
-						console.log('this.playList===>',this.playList)
-						let format = function(num) {
-							return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
-						};
-						this.musicPlay();
-						this.innerAudioContext.onCanplay( ()=>{
-							this.duration = format(this.innerAudioContext.duration);
-						});
+						this.musicUrl = res.data.data[0].url;
+						let that = this;
+						if (that.playList.length > 0) {
+							let result = that.playList.some(item => {
+								if(item.id == that.ids) {
+									console.warn('AAAAAAAAAAA',this.playList)
+									console.log('Aitem.id===>',item.id,'that.ids===>',that.ids)
+									that.setAudioUrl(item.src);
+									that.musicPlay();
+									that.setCurrentIndex(item.index);
+									return true
+								} 
+							});
+							if (result == true) {
+								return
+							} else {
+								console.warn('BBBBBBBBBB',this.playList)
+								that.setAudioUrl(that.musicUrl);
+								let list = new playList(that.playList.length,that.song,that.musicUrl);
+								that.playList.push(list);
+								that.setPlayList(that.playList);
+								that.setCurrentIndex(that.playList.length - 1);
+								that.musicPlay();
+							}
+							
+						} else {
+							console.warn('CCCCCCCCCC',this.playList)
+							that.setAudioUrl(that.musicUrl);
+							let list = new playList(that.playList.length,that.song,that.musicUrl);
+							that.playList.push(list);
+							that.setPlayList(that.playList);
+							that.setCurrentIndex(that.playList.length - 1);
+							that.musicPlay();
+						}
+						
 						
 					}
-					console.log('CurrentIndex===>',this.currentIndex)
 				});
 			},
 			format(num) {
 				return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
+			},
+			initMusic() {
+				this.innerAudioContext.onEnded((e) => {
+					this.nextSong();
+				});
+				this.innerAudioContext.onCanplay( ()=>{
+					this.duration = format(this.innerAudioContext.duration);
+				});
+				this.innerAudioContext.onTimeUpdate( () => {
+					//音频进度更新事件  
+					this.current = this.format(this.innerAudioContext.currentTime);
+					console.log('this.current:',this.current);
+				});
 			},
 			musicPlay() {
 				
@@ -179,11 +212,7 @@
 				let format = function(num) {
 					return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
 				};
-				this.innerAudioContext.onTimeUpdate( () => {
-					//音频进度更新事件  
-					this.current = format(this.innerAudioContext.currentTime);
-					// console.log('this.current:',this.current);
-				});
+				
 				
 			},
 			musicPause() {

@@ -32,10 +32,6 @@ const state = {
 	//当前播放index
 	currentIndex: 0
 }
-state.innerAudioContext.onEnded((e) => {
-	actions.setIsPlay(false);
-	
-})
 
 export default new Vuex.Store({  
     state,
