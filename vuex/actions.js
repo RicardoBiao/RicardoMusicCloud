@@ -42,5 +42,12 @@ export default {
 			
 			resolve(data)
 		})
+	},
+	setCurrentIndex({ commit }, data) {
+		return new Promise((resolve, reject) => {
+			commit('SET_CURRENT_INDEX', data) 
+			
+			resolve(data)
+		})
 	}
 }

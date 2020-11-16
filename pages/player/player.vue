@@ -4,10 +4,10 @@
 			<image class="play-bar-support" src="../../static/play-bar-support.png" mode="aspectFit"></image>
 			<image class="play-bar" :class="{bar: !isPlay}" src="../../static/play-bar.png" mode="aspectFit"></image>
 			<view class="img-box">
-				<image class="img turn" :style=" isPlay == true ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="song.picUrl" mode="aspectFit"></image>
+				<image class="img turn" :style=" isPlay == true ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="playList[currentIndex].pic" mode="aspectFit"></image>
 			</view>
-			<text class="song-name"> {{song.name}} </text>
-			<text class="singer"> {{song.singer}} </text>
+			<text class="song-name"> {{playList[currentIndex].title}} </text>
+			<text class="singer"> {{playList[currentIndex].artist}} </text>
 			<text class="song-content">It is a long established fact that a reader</text>
 		</view>
 		
@@ -37,7 +37,7 @@
 		</view>
 		<view class="py-btn-box">
 			<image class="py-icon" src="../../static/mix.png" mode="aspectFit"></image>
-			<image class="py-icon" src="../../static/upsong.png" mode="aspectFit"></image>
+			<image @tap="preSong()" class="py-icon" src="../../static/upsong.png" mode="aspectFit"></image>
 			<image 
 			v-if="isPlay == false" 
 			style="width: 146rpx; height: 146rpx;" 
@@ -53,7 +53,7 @@
 			mode="aspectFit"
 			@click="musicPause()"
 			></image>
-			<image class="py-icon" src="../../static/nextsong.png" mode="aspectFit"></image>
+			<image @tap="nextSong()" class="py-icon" src="../../static/nextsong.png" mode="aspectFit"></image>
 			<image style="width: 34rpx; height: 34rpx;" class="py-icon" src="../../static/changetype.png" mode="aspectFit"></image>
 		</view>
 		
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-	import {songs} from '../../utils/class.js';
+	import {songs, playList} from '../../utils/class.js';
 	import { mapGetters, mapActions } from 'vuex';
 	export default {
 		data() {
@@ -84,6 +84,7 @@
 				'isPlay',
 				'playList',
 				'likeList',
+				'currentIndex',
 				'innerAudioContext'
 			])
 		},
@@ -129,7 +130,8 @@
 			...mapActions([
 				'setIsPlay',
 				'setAudioUrl',
-				'setPlayList'
+				'setPlayList',
+				'setCurrentIndex'
 			]),
 			getSongDetail() {
 				this.$api.getSongDetail({
@@ -137,19 +139,24 @@
 				}).then( res => {
 					if ( res.data.code === 200) {
 						this.song = new songs(res.data.songs);
-						let list = this.playList;
-						list.push(this.song);
-						this.setPlayList(list);
-						console.log('this.playList===>',this.playList)
 						// console.log('song:',song);
 					}
 				});
+				this.getMusicUrl(this.ids);
+				
+			},
+			getMusicUrl(id) {
 				this.$api.getMusicUrl({
-					id: this.ids
+					id: id
 				}).then(res => {
 					if (res.data.code === 200) {
 						let musicUrl = res.data.data[0].url;
-						this.innerAudioContext.src = musicUrl;
+						this.setAudioUrl(musicUrl);
+						let list = new playList(this.playList.length,this.song,musicUrl);
+						this.playList.push(list);
+						this.setPlayList(this.playList);
+						this.setCurrentIndex(this.playList.length - 1);
+						console.log('this.playList===>',this.playList)
 						let format = function(num) {
 							return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
 						};
@@ -159,8 +166,8 @@
 						});
 						
 					}
+					console.log('CurrentIndex===>',this.currentIndex)
 				});
-				
 			},
 			format(num) {
 				return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
@@ -182,6 +189,35 @@
 			musicPause() {
 				this.innerAudioContext.pause();
 				this.setIsPlay(false);
+			},
+			preSong() {
+				if (this.currentIndex == 0) {
+					let current = this.playList.length - 1;
+					this.setCurrentIndex(current);
+					this.setAudioUrl(this.playList[current].src);
+					console.log('this.currentIndex====11>',this.currentIndex)
+				} else {
+					let current = this.currentIndex - 1;
+					this.setCurrentIndex(current);
+					this.setAudioUrl(this.playList[current].src);
+					console.log('this.currentIndex====22>',this.currentIndex)
+				}
+				this.musicPlay();
+				console.log('this.currentIndex====33>',this.currentIndex)
+			},
+			nextSong() {
+				if (this.currentIndex == this.playList.length - 1) {
+					this.setCurrentIndex(0);
+					this.setAudioUrl(this.playList[0].src);
+					console.log('this.currentIndex====44>',this.currentIndex)
+				} else {
+					let current = this.currentIndex + 1;
+					this.setCurrentIndex(current);
+					this.setAudioUrl(this.playList[current].src);
+					console.log('this.currentIndex====55>',this.currentIndex)
+				}
+				this.musicPlay();
+				console.log('this.currentIndex====66>',this.currentIndex)
 			},
 			onShareAppMessage(res) {
 				    if (res.from === 'button') {

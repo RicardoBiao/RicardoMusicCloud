@@ -1,11 +1,11 @@
 <template>
 	<view class="player-box" v-if="playList.length > 0">
-		<view class="box-left" @click="goPlayer(playList[0].id)">
+		<view class="box-left" @click="goPlayer(playList[currentIndex].id)">
 			<view class="song-img">
-				<image style="width: 100rpx;height: 100rpx; border-radius: 50%;" :src="playList[0].picUrl" mode=""></image>
+				<image style="width: 100rpx;height: 100rpx; border-radius: 50%;" :src="playList[currentIndex].pic" mode=""></image>
 			</view>
 			<view class="song-name">
-				 {{playList[0].name}}
+				 {{playList[currentIndex].title}}
 			</view>
 		</view>
 		<view class="box-right">
@@ -33,6 +33,7 @@
 			...mapGetters([
 				'isPlay',
 				'playList',
+				'currentIndex',
 				'innerAudioContext'
 			])
 		},
@@ -42,7 +43,8 @@
 		methods: {
 			...mapActions([
 				'setIsPlay',
-				'setAudioUrl'
+				'setAudioUrl',
+				'setCurrentIndex'
 			]),
 			onPause() {
 				console.log('music-onPause')
@@ -56,12 +58,34 @@
 				console.log('playList====>',this.playList)
 				
 			},
-			presong() {
-				// this.innerAudioContext.src = 
+			preSong() {
+				if (this.currentIndex == 0) {
+					let current = this.playList.length - 1;
+					this.setCurrentIndex(current);
+					this.setAudioUrl(this.playList[current].src);
+					console.log('this.currentIndex====11>',this.currentIndex)
+				} else {
+					let current = this.currentIndex - 1;
+					this.setCurrentIndex(current);
+					this.setAudioUrl(this.playList[current].src);
+					console.log('this.currentIndex====22>',this.currentIndex)
+				}
+				this.onPlay();
+				console.log('this.currentIndex====33>',this.currentIndex)
 			},
 			nextSong() {
-				// this.innerAudioContext.src = 			
-				console.log('this.innerAudioContext.src',this.innerAudioContext.src)
+				if (this.currentIndex == this.playList.length - 1) {
+					this.setCurrentIndex(0);
+					this.setAudioUrl(this.playList[0].src);
+					console.log('this.currentIndex====44>',this.currentIndex)
+				} else {
+					let current = this.currentIndex + 1;
+					this.setCurrentIndex(current);
+					this.setAudioUrl(this.playList[current].src);
+					console.log('this.currentIndex====55>',this.currentIndex)
+				}
+				this.onPlay();
+				console.log('this.currentIndex====66>',this.currentIndex)
 			},
 			goPlayer(id) {
 				uni.navigateTo({

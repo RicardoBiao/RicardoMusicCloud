@@ -1,13 +1,13 @@
 <template>
 	<view class="box">
-		<view class="music-box" name="audio">
+		<view class="music-box" name="audio" @click="goToPlayer(song.id)">
 			<view class="image-box">
 				<!-- <image v-if="musicPaused == 1" src="../../static/play.png" mode="aspectFill" class="play-icon" @click="musicPlay()"></image>
 				<image v-if="musicPaused == 0" src="../../static/stop.png" mode="aspectFill" class="pause-icon" @click="musicPause()"></image> -->
 				<!-- <image  class="music-image" mode="aspectFill" :src="songImg"></image> -->
 				<easy-loadimage class="music-image" mode="widthFix" loading-mode="spin-circle" :image-src="songImg" :scrollTop="scrollTop"></easy-loadimage>
 			</view>
-			<view  class="text-box" @click="goToPlayer(song.id)">
+			<view  class="text-box" >
 				<text class="text-box-title">
 					{{song.name}}
 				</text>

@@ -27,8 +27,15 @@ const state = {
 	musicList: [],
 	//是否正在播放
 	isPlay: false,
+	//全局音乐文件
 	innerAudioContext: uni.createInnerAudioContext(),
+	//当前播放index
+	currentIndex: 0
 }
+state.innerAudioContext.onEnded((e) => {
+	actions.setIsPlay(false);
+	
+})
 
 export default new Vuex.Store({  
     state,

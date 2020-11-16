@@ -4,6 +4,7 @@ const getters = {
 	playList: state => state.playList,
 	likeList: state => state.likeList,
 	cookie: state => state.cookie,
-	innerAudioContext: state => state.innerAudioContext
+	innerAudioContext: state => state.innerAudioContext,
+	currentIndex: state => state.currentIndex
 }
 export default getters

@@ -3,6 +3,7 @@ import App from './App'
 import api from './utils/api'
 import store from '@/vuex/store'
 import VueBus from './vue-bus/vue-bus.js'
+import utils from 'utils/utils.js'
 // import VueRouter from 'vue-router'
 // import VueLazyload from 'vue-lazyload'
 // Vue.use(VueLazyload)
@@ -11,6 +12,7 @@ Vue.use(VueBus)
 
 Vue.prototype.$api = api
 Vue.prototype.$store = store
+Vue.prototype.$utils = utils
 // Vue.prototype.innerAudioContext = uni.createInnerAudioContext()
 Vue.config.productionTip = false
 

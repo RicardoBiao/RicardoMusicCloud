@@ -4,6 +4,7 @@ const SET_LIKELIST = 'SET_LIKELIST'
 const SET_USERINFO = 'SET_USERINFO'
 const SET_COOKIE = 'SET_COOKIE'
 const SET_AUDIOURL = 'SET_AUDIOURL'
+const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX'
 
 export default {
 	[SET_ISPLAY](state, data) {
@@ -23,5 +24,8 @@ export default {
 	},
 	[SET_AUDIOURL](state, data) {
 		state.innerAudioContext.src = data
+	},
+	[SET_CURRENT_INDEX](state, data) {
+		state.currentIndex = data
 	}
 }
