@@ -7,13 +7,14 @@
 		<view class="show-log" v-show="showLog">
 			<image src="../../../static/loading.gif" mode=""></image>
 		</view>
-		
+		<player-box ref="player" @click="this.$refs.player.goPlayer()" style="position: fixed; bottom: 0;"></player-box>
 		
 	</view>
 	
 </template>
 
 <script>
+	import playerBox from '@/components/player-box/player-box.vue';
 	import audioMini from '@/components/audio-mini/audio-mini.vue';
 	export default {
 		data() {
@@ -27,7 +28,8 @@
 			}
 		},
 		components: {
-			audioMini
+			audioMini,
+			playerBox
 		},
 		methods: {
 			searchMusic() {

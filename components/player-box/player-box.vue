@@ -10,8 +10,8 @@
 		</view>
 		<view class="box-right">
 			<image @click="preSong()" class="btn" src="../../static/upsong.png" mode=""></image>
-			<image v-if="!isPlay" @click="onPlay()" style="width: 66rpx; height: 66rpx;" class="btn" src="../../static/play.png" mode=""></image>
-			<image v-else @click="onPause()" style="width: 66rpx; height: 66rpx;" class="btn" src="../../static/stop.png" mode=""></image>
+			<image v-if="!isPlay" @click="onPlay()" style="width: 66rpx; height: 66rpx;" class="btn" src="../../static/play2.png" mode=""></image>
+			<image v-else @click="onPause()" style="width: 66rpx; height: 66rpx;" class="btn" src="../../static/pause2.png" mode=""></image>
 			<image @click="nextSong()" class="btn" src="../../static/nextsong.png" mode=""></image>
 		</view>
 	</view>
@@ -19,7 +19,9 @@
 
 <script>
 	import { mapGetters, mapActions } from 'vuex'
+	import {playListMixin} from '@/utils/mixin.js'
 	export default {
+		mixins: [playListMixin],
 		name: 'playerBox',
 		props: {
 			
@@ -41,51 +43,17 @@
 			console.log('box-playList===>',this.playList)
 		},
 		methods: {
-			...mapActions([
-				'setIsPlay',
-				'setAudioUrl',
-				'setCurrentIndex'
-			]),
 			onPause() {
-				console.log('music-onPause')
-				this.innerAudioContext.pause();
-				this.setIsPlay(false);
+				this.musicPause();
 			},
 			onPlay() {
-				console.log('music-onPlay')
-				this.innerAudioContext.play();
-				this.setIsPlay(true);
-				console.log('playList====>',this.playList)
-				
+				this.musicPlay();
 			},
 			preSong() {
-				if (this.currentIndex == 0) {
-					let current = this.playList.length - 1;
-					this.setCurrentIndex(current);
-					this.setAudioUrl(this.playList[current].src);
-					console.log('this.currentIndex====11>',this.currentIndex)
-				} else {
-					let current = this.currentIndex - 1;
-					this.setCurrentIndex(current);
-					this.setAudioUrl(this.playList[current].src);
-					console.log('this.currentIndex====22>',this.currentIndex)
-				}
-				this.onPlay();
-				console.log('this.currentIndex====33>',this.currentIndex)
+				this.preMusic();
 			},
 			nextSong() {
-				if (this.currentIndex == this.playList.length - 1) {
-					this.setCurrentIndex(0);
-					this.setAudioUrl(this.playList[0].src);
-					console.log('this.currentIndex====44>',this.currentIndex)
-				} else {
-					let current = this.currentIndex + 1;
-					this.setCurrentIndex(current);
-					this.setAudioUrl(this.playList[current].src);
-					console.log('this.currentIndex====55>',this.currentIndex)
-				}
-				this.onPlay();
-				console.log('this.currentIndex====66>',this.currentIndex)
+				this.nextMusic();
 			},
 			goPlayer(id) {
 				uni.navigateTo({

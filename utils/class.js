@@ -1,11 +1,12 @@
 export class playList {
-	constructor(index, song, url='') {
+	constructor(index, song, url='', lyric) {
 	      this.index = index;
 	      this.title = song.name;
 	      this.artist = song.singer;
 	      this.src = url;
 	      this.pic = song.picUrl;
 	      this.id = song.id; 
+		  this.lyric = lyric;
 	    }
 }
 

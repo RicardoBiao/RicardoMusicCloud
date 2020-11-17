@@ -26,11 +26,13 @@
 				</text>
 			</view>
 		</view>
+		<!-- <player-box ref="player" @click="this.$refs.player.goPlayer()" style="position: fixed; bottom: 0;"></player-box> -->
 	</view>
 </template>
 
 <script>
 	import musicSwiper from '@/components/music-swiper/music-swiper.vue';
+	import playerBox from '@/components/player-box/player-box.vue';
 	export default {
 		data() {
 			return {
@@ -44,7 +46,8 @@
 			}
 		},
 		components: {
-			musicSwiper
+			musicSwiper,
+			playerBox
 		},
 		created() {
 			this.getBaners();

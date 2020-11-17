@@ -9,6 +9,11 @@ const api = {
             ...data
         })
     },
+	getLyric(data) {
+		return request.get('/lyric', {
+		    ...data
+		})
+	},
 	getSearch(data) {
 		return request.get('/search', {
 		    ...data

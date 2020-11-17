@@ -87,7 +87,7 @@ export default{
             query.select('#'+id).boundingClientRect(data => {
                 if(!data) return;
 				console.log('data.top - this.viewHeight==>',data.top - this.viewHeight)
-                if(data.top - this.viewHeight<0){
+                if(data.top - this.viewHeight - 30 <0){
                     this.loadImg = true;
                 }
             }).exec()

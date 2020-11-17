@@ -64,47 +64,23 @@
 <script>
 	import {songs, playList} from '../../utils/class.js';
 	import { mapGetters, mapActions } from 'vuex';
+	import {playListMixin} from '@/utils/mixin.js';
 	export default {
+		mixins: [playListMixin],
 		data() {
 			return {
 				ids: '',
-				song: {
-					name: '',
-					singer: ''
-				},
 				audios: [],
 				duration: '',
 				current: '00:00',
 				isLike: 0,
 				music: {},
-				musicUrl: ''
+				musicUrl: '',
+				lyric: ''
 			}
 		},
-		computed:{
-			...mapGetters([
-				'isPlay',
-				'playList',
-				'likeList',
-				'currentIndex',
-				'innerAudioContext'
-			])
-		},
-		// beforeCreate() {
-			
-		// },
-		// beforeDestroy() {
-			
-		// },
-		// watch: {
-		// 	isPlay: function (newVal, oldVal) {
-		// 		console.log('this.isPlay==>',this.isPlay)
-		// 	}
-		// },
 		onShow() {
-			// if(this.innerAudioContext.paused === false) {
-			// 	this.musicPaused = 0;
-			// }
-			// console.log('this.musicPaused2==>',this.musicPaused)
+			
 		},
 		onLoad(option) {
 			
@@ -127,12 +103,6 @@
 			});
 		},
 		methods: {
-			...mapActions([
-				'setIsPlay',
-				'setAudioUrl',
-				'setPlayList',
-				'setCurrentIndex'
-			]),
 			getSongDetail() {
 				this.$api.getSongDetail({
 					ids: this.ids
@@ -142,7 +112,16 @@
 						// console.log('song:',song);
 					}
 				});
+				this.$api.getLyric({
+					id: this.ids
+				}).then( res => {
+					if (res.data.code === 200) {
+						console.log('getLyric-res===>',res);
+						this.lyric = res.data.lrc.lyric;
+					}
+				});
 				this.getMusicUrl();
+				this.initMusic();
 				
 			},
 			getMusicUrl() {
@@ -168,7 +147,7 @@
 							} else {
 								console.warn('BBBBBBBBBB',this.playList)
 								that.setAudioUrl(that.musicUrl);
-								let list = new playList(that.playList.length,that.song,that.musicUrl);
+								let list = new playList(that.playList.length, that.song, that.musicUrl, that.lyric);
 								that.playList.push(list);
 								that.setPlayList(that.playList);
 								that.setCurrentIndex(that.playList.length - 1);
@@ -189,64 +168,17 @@
 					}
 				});
 			},
-			format(num) {
-				return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
+			onPlay() {
+				this.musicPlay();
 			},
-			initMusic() {
-				this.innerAudioContext.onEnded((e) => {
-					this.nextSong();
-				});
-				this.innerAudioContext.onCanplay( ()=>{
-					this.duration = format(this.innerAudioContext.duration);
-				});
-				this.innerAudioContext.onTimeUpdate( () => {
-					//音频进度更新事件  
-					this.current = this.format(this.innerAudioContext.currentTime);
-					console.log('this.current:',this.current);
-				});
-			},
-			musicPlay() {
-				
-				this.innerAudioContext.play();
-				this.setIsPlay(true);
-				let format = function(num) {
-					return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
-				};
-				
-				
-			},
-			musicPause() {
-				this.innerAudioContext.pause();
-				this.setIsPlay(false);
+			onPause() {
+				this.musicPause();
 			},
 			preSong() {
-				if (this.currentIndex == 0) {
-					let current = this.playList.length - 1;
-					this.setCurrentIndex(current);
-					this.setAudioUrl(this.playList[current].src);
-					console.log('this.currentIndex====11>',this.currentIndex)
-				} else {
-					let current = this.currentIndex - 1;
-					this.setCurrentIndex(current);
-					this.setAudioUrl(this.playList[current].src);
-					console.log('this.currentIndex====22>',this.currentIndex)
-				}
-				this.musicPlay();
-				console.log('this.currentIndex====33>',this.currentIndex)
+				this.preMusic();
 			},
 			nextSong() {
-				if (this.currentIndex == this.playList.length - 1) {
-					this.setCurrentIndex(0);
-					this.setAudioUrl(this.playList[0].src);
-					console.log('this.currentIndex====44>',this.currentIndex)
-				} else {
-					let current = this.currentIndex + 1;
-					this.setCurrentIndex(current);
-					this.setAudioUrl(this.playList[current].src);
-					console.log('this.currentIndex====55>',this.currentIndex)
-				}
-				this.musicPlay();
-				console.log('this.currentIndex====66>',this.currentIndex)
+				this.nextMusic();
 			},
 			onShareAppMessage(res) {
 				    if (res.from === 'button') {
@@ -438,6 +370,7 @@
 		.py-icon {
 			width: 26rpx;
 			height: 26rpx;
+			padding: 26rpx;
 			margin: auto 0;
 		}
 	}
