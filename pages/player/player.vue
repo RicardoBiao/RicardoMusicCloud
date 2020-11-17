@@ -6,8 +6,8 @@
 			<view class="img-box">
 				<image class="img turn" :style=" isPlay == true ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="playList[currentIndex].pic" mode="aspectFit"></image>
 			</view>
-			<text class="song-name"> {{playList[currentIndex].title}} </text>
-			<text class="singer"> {{playList[currentIndex].artist}} </text>
+			<text class="song-name"> {{playList[currentIndex].title == undefined ? '' : playList[currentIndex].title}} </text>
+			<text class="singer"> {{playList[currentIndex].artist == undefined ? '' : playList[currentIndex].artist}} </text>
 			<text class="song-content">It is a long established fact that a reader</text>
 		</view>
 		
@@ -32,7 +32,22 @@
 			</button>
 		</view>
 		
-		<view class="time">
+		<view class="time" style="display: flex; justify-content: space-around;">
+			
+			<bing-progress 
+			handleWidth="3vw"
+			handleHeight="3vw"
+			handleColor="#7b0e62"
+			handleBorderRadius="50%"
+			strokeWidth="1vw"
+			backgroundColor="#0e0b1f"
+			activeColor="#7b0e62"
+			noActiveColor="#bdb9b9"
+			width="90vw"
+			showInfo="false"
+			
+			
+			 ></bing-progress>
 			
 		</view>
 		<view class="py-btn-box">
@@ -65,6 +80,7 @@
 	import {songs, playList} from '../../utils/class.js';
 	import { mapGetters, mapActions } from 'vuex';
 	import {playListMixin} from '@/utils/mixin.js';
+	import bingProgress from '@/components/bing-progress/bing-progress.vue';
 	export default {
 		mixins: [playListMixin],
 		data() {
@@ -78,6 +94,9 @@
 				musicUrl: '',
 				lyric: ''
 			}
+		},
+		components: {
+			bingProgress
 		},
 		onShow() {
 			
@@ -280,17 +299,17 @@
 		width: 100%;
 		.play-bar-support {
 			position: absolute;
-			width: 50rpx;
-			height: 50rpx;
-			left: calc(50% - 29rpx);
-			top: -7rpx;
+			width: 5vw;
+			height: 5vw;
+			left: calc(50% - 3.2vw);
+			top: -1vw;
 			z-index: 2;
 		}
 		.play-bar {
-		  width: 160rpx;
-		  height: 300rpx;
+		  width: 22vw;
+		  height: 40vw;
 		  position: absolute;
-		  left: calc(50% - 18rpx);
+		  left: calc(50% - 1.7vw);
 		  top: -5rpx;
 		  z-index: 1;
 		}
@@ -303,17 +322,17 @@
 		.img-box {
 			left: 0;
 			right: 0;
-			width: 420rpx;
-			height: 420rpx;
+			width: 55.9vw;
+			height: 55.9vw;
 			background-color: #999999;
 			border: 80rpx solid #0e0e11;
 			border-radius: 50%;
 			box-shadow: 0 0 10px #fff;
-			margin: 180rpx auto 44rpx;
+			margin: 22vw auto 6vw;
 			z-index: -1;
 			.img {
-				width: 400rpx;
-				height: 400rpx;
+				width: 53vw;
+				height: 53vw;
 				border: 10rpx solid #fff;
 				border-radius: 50%;
 				z-index: 0;
