@@ -34,6 +34,7 @@
 	justify-content: center;
 	z-index: 5;
 	overflow: hidden;
+	border: #FFFFFF 8rpx solid;
 }
 .bp-handle-text {
 	text-align: center;

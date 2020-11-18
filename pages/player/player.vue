@@ -32,24 +32,32 @@
 			</button>
 		</view>
 		
-		<view class="time" style="display: flex; justify-content: space-around;">
+		<view class="time">
 			
 			<bing-progress 
-			handleWidth="3vw"
-			handleHeight="3vw"
+			handleWidth="14rpx"
+			handleHeight="14rpx"
 			handleColor="#7b0e62"
 			handleBorderRadius="50%"
-			strokeWidth="1vw"
+			strokeWidth="4rpx"
 			backgroundColor="#0e0b1f"
 			activeColor="#7b0e62"
 			noActiveColor="#bdb9b9"
-			width="90vw"
-			showInfo="false"
-			
-			
+			width="88vw"
+			:showInfo="false"
 			 ></bing-progress>
-			
 		</view>
+		<view class="time-box">
+			<view class="time-txt">
+				{{ current }}
+			</view>
+			<view class="time-txt">
+				{{ duration }}
+			</view>
+		</view>
+		
+		
+		
 		<view class="py-btn-box">
 			<image class="py-icon" src="../../static/mix.png" mode="aspectFit"></image>
 			<image @tap="preSong()" class="py-icon" src="../../static/upsong.png" mode="aspectFit"></image>
@@ -87,7 +95,7 @@
 			return {
 				ids: '',
 				audios: [],
-				duration: '',
+				duration: '00:00',
 				current: '00:00',
 				isLike: 0,
 				music: {},
@@ -97,6 +105,11 @@
 		},
 		components: {
 			bingProgress
+		},
+		watch: {
+			current(newVal,oldVal) {
+				console.log('this.current==>',this.current)
+			}
 		},
 		onShow() {
 			
@@ -322,8 +335,8 @@
 		.img-box {
 			left: 0;
 			right: 0;
-			width: 55.9vw;
-			height: 55.9vw;
+			width: 46vw;
+			height: 46vw;
 			background-color: #999999;
 			border: 80rpx solid #0e0e11;
 			border-radius: 50%;
@@ -331,8 +344,8 @@
 			margin: 22vw auto 6vw;
 			z-index: -1;
 			.img {
-				width: 53vw;
-				height: 53vw;
+				width: 43.4vw;
+				height: 43.4vw;
 				border: 10rpx solid #fff;
 				border-radius: 50%;
 				z-index: 0;
@@ -367,7 +380,7 @@
 	.btn-box {
 		display: flex;
 		justify-content: space-around;
-		margin: 10vw 8vw;
+		margin: 4vh 8vw;
 		.icon-btn {
 			display: flex;
 			justify-content: center;
@@ -381,11 +394,26 @@
 		}
 	}
 	.time {
+		display: flex;
+		justify-content: center;
+	}
+	.time-box {
+		display: flex;
+		justify-content: space-between;
+		margin: 1vh 7vw 0 7vw;
+		.time-txt {
+			font-family: Helvetica;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			letter-spacing: 0vh;
+			color: #ffffff;
+		}
 	}
 	.py-btn-box {
 		display: flex;
 		justify-content: space-between;
-		margin: 44rpx 56rpx;
+		margin: 10rpx 56rpx 44rpx 56rpx;
 		.py-icon {
 			width: 26rpx;
 			height: 26rpx;

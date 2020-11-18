@@ -3,46 +3,36 @@
 	backgroundColor:backgroundColor,flexDirection:direction!='vertical'?'row':'column'}">
 		<!-- 进度 -->
 		<!-- #ifdef APP-NVUE -->
-		<div class="bp-bar_max"
-		:style="{width:barMaxWidth,height:barMaxHeight,backgroundColor:noActiveColor,
+		<div class="bp-bar_max" :style="{width:barMaxWidth,height:barMaxHeight,backgroundColor:noActiveColor,
 		flexDirection:direction!='vertical'?'row':'column',left:barMaxLeft,borderRadius:barBorderRadius}">
-			<div class="bp-bar_sub_active"
-			:style="{width:barSubActiveWidth,height:barSubActiveHeight,backgroundColor:subActiveColor,
+			<div class="bp-bar_sub_active" :style="{width:barSubActiveWidth,height:barSubActiveHeight,backgroundColor:subActiveColor,
 			top:subActiveTop,bottom:subActiveBottom,left:subActiveLeft,right:subActiveRight,borderRadius:isActiveCircular?barBorderRadius:0}"></div>
-			<div class="bp-bar_active"
-			:style="{width:barActiveWidth,height:barActiveHeight,backgroundColor:activeColor,
+			<div class="bp-bar_active" :style="{width:barActiveWidth,height:barActiveHeight,backgroundColor:activeColor,
 			top:activeTop,bottom:activeBottom,left:activeLeft,right:activeRight,borderRadius:isActiveCircular?barBorderRadius:0}"></div>
 		</div>
 		<!-- #endif -->
 		<!-- #ifndef APP-NVUE -->
-		<view class="bp-bar_max"
-		:style="{width:barMaxWidth,height:barMaxHeight,backgroundColor:noActiveColor,borderRadius:barBorderRadius,
+		<view class="bp-bar_max" :style="{width:barMaxWidth,height:barMaxHeight,backgroundColor:noActiveColor,borderRadius:barBorderRadius,
 		flexDirection:direction!='vertical'?'row':'column',left:barMaxLeft}">
-			<view class="bp-bar_sub_active"
-			:style="{width:barSubActiveWidth,height:barSubActiveHeight,backgroundColor:subActiveColor,
+			<view class="bp-bar_sub_active" :style="{width:barSubActiveWidth,height:barSubActiveHeight,backgroundColor:subActiveColor,
 			top:subActiveTop,bottom:subActiveBottom,left:subActiveLeft,right:subActiveRight,borderRadius:isActiveCircular?barBorderRadius:0}"></view>
-			<view class="bp-bar_active"
-			:style="{width:barActiveWidth,height:barActiveHeight,backgroundColor:activeColor,
+			<view class="bp-bar_active" :style="{width:barActiveWidth,height:barActiveHeight,backgroundColor:activeColor,
 			top:activeTop,bottom:activeBottom,left:activeLeft,right:activeRight,borderRadius:isActiveCircular?barBorderRadius:0}"></view>
 		</view>
 		<!-- #endif -->
-		<movable-area class="bp-marea" @touchmove.stop.prevent="touchmove" @touchstart="touchstart" @touchcancel="touchend" @touchend="touchend"
-		:style="{width:mareaWidth,height:mareaHeight,left:mareaLeft}">
+		<movable-area class="bp-marea" @touchmove.stop.prevent="touchmove" @touchstart="touchstart" @touchcancel="touchend"
+		 @touchend="touchend" :style="{width:mareaWidth,height:mareaHeight,left:mareaLeft}">
 			<!-- 拖柄 -->
 			<movable-view class="bp-mview" :direction="direction=='vertical'?'vertical':'horizontal'" :animation="false"
-			 :disabled="true" :x="handleX" :y="handleY" friction="10" damping="100"
-			:style="{width:mhandleWidth,height:mhandleHeight,backgroundColor:handleColor,
+			 :disabled="true" :x="handleX" :y="handleY" friction="10" damping="100" :style="{width:mhandleWidth,height:mhandleHeight,backgroundColor:handleColor,
 			borderRadius:handleBorderRadius,fontSize:infoFontSize,top:mhandleTop}">
 				<view class="bp-handle" :style="{fontSize:infoFontSize,width:mhandleWidth,height:mhandleHeight,borderRadius:handleBorderRadius}">
-					<image class="bp-handle-img" :src="handleImgUrl" v-if="handleImgUrl" 
-					:style="{fontSize:infoFontSize,width:mhandleWidth,height:mhandleHeight,borderRadius:handleBorderRadius}"></image>
-					<text class="bp-handle-text" v-if="handleImgUrl=='' && infoAlign=='handle' && showInfo" 
-					:style="{fontSize:infoFontSize,color:infoColor,width:mhandleWidth,height:textHeight,borderRadius:'20px'}">{{ infoContent=='subValue'?msubValue:showValue }}{{ infoEndText }}</text>
+					<image class="bp-handle-img" :src="handleImgUrl" v-if="handleImgUrl" :style="{fontSize:infoFontSize,width:mhandleWidth,height:mhandleHeight,borderRadius:handleBorderRadius}"></image>
+					<text class="bp-handle-text" v-if="handleImgUrl=='' && infoAlign=='handle' && showInfo" :style="{fontSize:infoFontSize,color:infoColor,width:mhandleWidth,height:textHeight,borderRadius:'20px'}">{{ infoContent=='subValue'?msubValue:showValue }}{{ infoEndText }}</text>
 				</view>
 			</movable-view>
 		</movable-area>
-		<text class="bp-value" v-if="showValueState() || (infoAlign=='center'&&direction!='vertical' && showInfo)" 
-		:style="{color:infoColor,fontSize:infoFontSize,left:valueLeft,width:valueWidth()+'px'}">{{ infoContent=='subValue'?msubValue:showValue }}{{ infoEndText }}</text>
+		<text class="bp-value" v-if="showValueState() || (infoAlign=='center'&&direction!='vertical' && showInfo)" :style="{color:infoColor,fontSize:infoFontSize,left:valueLeft,width:valueWidth()+'px'}">{{ infoContent=='subValue'?msubValue:showValue }}{{ infoEndText }}</text>
 	</view>
 </template>
 
@@ -74,22 +64,19 @@
 				this.mainInfo.right = data.right
 			}).exec()
 			// #endif
-	
+
 			this.percent = Math.abs((this.valueFormat(this.value) - this.min) / (this.max - this.min))
-			this.subPercent = Math.abs((this.valueFormat(this.subValue,true) - this.min) / (this.max - this.min))
-			if(this.reverse) {
-				if(this.direction!='vertical') {
+			this.subPercent = Math.abs((this.valueFormat(this.subValue, true) - this.min) / (this.max - this.min))
+			if (this.reverse) {
+				if (this.direction != 'vertical') {
 					this.handleX = (1 - this.percent) * this.barMaxLength
-				}
-				else {
+				} else {
 					this.handleY = this.percent * this.barMaxLength
 				}
-			}
-			else {
-				if(this.direction!='vertical') {
+			} else {
+				if (this.direction != 'vertical') {
 					this.handleX = this.percent * this.barMaxLength
-				}
-				else {
+				} else {
 					this.handleY = (1 - this.percent) * this.barMaxLength
 				}
 			}
@@ -237,7 +224,7 @@
 				type: Boolean,
 				default: false
 			},
-			
+
 		},
 		data() {
 			return {
@@ -264,51 +251,53 @@
 			 * @param {Object} oldValue
 			 */
 			value(newValue, oldValue) {
-				if(!this.touchState) {
+				if (!this.touchState) {
 					newValue = this.valueSetBoundary(newValue)
 					this.percent = Math.abs((newValue - this.min) / (this.max - this.min))
 				}
 			},
 			showValue(newValue, oldValue) {
 				// 步进
-				if(!this.continuous) {
-					if(this.reverse) {
-						if(this.direction!='vertical') {
+				if (!this.continuous) {
+					if (this.reverse) {
+						if (this.direction != 'vertical') {
 							this.handleX = Math.abs(1 - (newValue - this.min) / (this.max - this.min)) * this.barMaxLength
-						}
-						else {
+						} else {
 							this.handleY = Math.abs((newValue - this.min) / (this.max - this.min)) * this.barMaxLength
 						}
-					}
-					else {
-						if(this.direction!='vertical') {
+					} else {
+						if (this.direction != 'vertical') {
 							this.handleX = Math.abs((newValue - this.min) / (this.max - this.min)) * this.barMaxLength
-						}
-						else {
+						} else {
 							this.handleY = (1 - Math.abs((newValue - this.min) / (this.max - this.min))) * this.barMaxLength
 						}
 					}
-					
+
 				}
-				this.$emit("change", {type: 'change',value:this.showValue,subValue:this.msubValue})
-				this.$emit("valuechange", {type: 'valuechange',value:this.showValue,subValue:this.msubValue})
+				this.$emit("change", {
+					type: 'change',
+					value: this.showValue,
+					subValue: this.msubValue
+				})
+				this.$emit("valuechange", {
+					type: 'valuechange',
+					value: this.showValue,
+					subValue: this.msubValue
+				})
 			},
 			percent(newValue, oldValue) {
 				// 连续
-				if(this.continuous) {
-					if(this.reverse) {
-						if(this.direction!='vertical') {
+				if (this.continuous) {
+					if (this.reverse) {
+						if (this.direction != 'vertical') {
 							this.handleX = (1 - newValue) * this.barMaxLength
-						}
-						else {
+						} else {
 							this.handleY = newValue * this.barMaxLength
 						}
-					}
-					else {
-						if(this.direction!='vertical') {
+					} else {
+						if (this.direction != 'vertical') {
 							this.handleX = newValue * this.barMaxLength
-						}
-						else {
+						} else {
 							this.handleY = (1 - newValue) * this.barMaxLength
 						}
 					}
@@ -316,56 +305,63 @@
 			},
 			subValue(newValue, oldValue) {
 				newValue = this.valueSetBoundary(newValue)
-				
-				if(this.subContinuous) {
+
+				if (this.subContinuous) {
 					this.msubValue = newValue
-				}
-				else {
+				} else {
 					this.msubValue = this.valueFormat(newValue, true)
 				}
 				this.subPercent = Math.abs((newValue - this.min) / (this.max - this.min))
-				this.$emit("change", {type: 'change',value:this.showValue,subValue:this.msubValue})
-				this.$emit("subvaluechange", {type: 'subvaluechange',value:this.showValue,subValue:this.msubValue})
-				
+				this.$emit("change", {
+					type: 'change',
+					value: this.showValue,
+					subValue: this.msubValue
+				})
+				this.$emit("subvaluechange", {
+					type: 'subvaluechange',
+					value: this.showValue,
+					subValue: this.msubValue
+				})
+
 			},
 		},
 		computed: {
 			bpWidth() {
-				if(this.direction=="vertical") {
+				if (this.direction == "vertical") {
 					return this.maxHeight()[2]
 				}
 				return this.sizeDeal(this.width)[2]
 			},
 			bpHeight() {
-				if(this.direction=="vertical") {
+				if (this.direction == "vertical") {
 					return this.sizeDeal(this.width)[2]
 				}
 				return this.maxHeight()[2]
 			},
 			mareaWidth() {
-				if(this.direction=="vertical") {
+				if (this.direction == "vertical") {
 					return this.maxHeight()[2]
 				}
 				let width = this.sizeDeal(this.width)[0]
 				return (width - this.textWidth()) + 'px'
 			},
 			mareaHeight() {
-				if(this.direction=="vertical") {
+				if (this.direction == "vertical") {
 					let width = this.sizeDeal(this.width)[0]
 					return (width - this.textWidth()) + 'px'
 				}
 				return this.maxHeight()[2]
 			},
 			mareaLeft() {
-				if(this.showValueState()) {
-					if(this.infoAlign == 'left') {
+				if (this.showValueState()) {
+					if (this.infoAlign == 'left') {
 						return this.textWidth() + 'px'
 					}
 				}
 				return 0
 			},
 			barMaxHeight() {
-				if(this.direction=="vertical") {
+				if (this.direction == "vertical") {
 					let width = this.sizeDeal(this.width)[0]
 					let handleWidth = this.sizeDeal(this.handleWidth)
 					return (width - this.textWidth() - handleWidth[0]) + 'px'
@@ -373,7 +369,7 @@
 				return this.sizeDeal(this.strokeWidth)[2]
 			},
 			barMaxWidth() {
-				if(this.direction=="vertical") {
+				if (this.direction == "vertical") {
 					return this.sizeDeal(this.strokeWidth)[2]
 				}
 				let width = this.sizeDeal(this.width)[0]
@@ -381,62 +377,60 @@
 				return (width - this.textWidth() - handleWidth[0]) + 'px'
 			},
 			barMaxLeft() {
-				if(this.showValueState()) {
-					if(this.infoAlign == 'left') {
+				if (this.showValueState()) {
+					if (this.infoAlign == 'left') {
 						return this.textWidth() + this.sizeDeal(this.handleWidth)[0] / 2 + 'px'
 					}
 				}
-				if(this.direction != 'vertical') {
+				if (this.direction != 'vertical') {
 					return this.sizeDeal(this.handleWidth)[0] / 2 + 'px'
 				}
 				// vertical
 				return (this.maxHeight()[0] - this.sizeDeal(this.strokeWidth)[0]) / 2 + 'px'
-				
+
 			},
 			activeRight() {
-				if(this.reverse) {
+				if (this.reverse) {
 					return 0
 				}
 				return 'unset'
 			},
 			activeLeft() {
-				if(this.reverse) {
+				if (this.reverse) {
 					return 'unset'
 				}
 				return 0
 			},
 			activeTop() {
-				if(this.reverse) {
+				if (this.reverse) {
 					return 0
 				}
 				return 'unset'
 			},
 			activeBottom() {
-				if(this.reverse) {
+				if (this.reverse) {
 					return 'unset'
 				}
 				return 0
 			},
 			barActiveWidth() {
-				if(this.direction=="vertical") {
+				if (this.direction == "vertical") {
 					return this.sizeDeal(this.strokeWidth)[2]
 				}
 				let percent
-				if(this.continuous) {
+				if (this.continuous) {
 					percent = this.percent
-				}
-				else {
+				} else {
 					percent = Math.abs((this.showValue - this.min) / (this.max - this.min))
 				}
 				return this.barMaxLength * percent + 'px'
 			},
 			barActiveHeight() {
-				if(this.direction=="vertical") {
+				if (this.direction == "vertical") {
 					let percent
-					if(this.continuous) {
+					if (this.continuous) {
 						percent = this.percent
-					}
-					else {
+					} else {
 						percent = Math.abs((this.showValue - this.min) / (this.max - this.min))
 					}
 					return this.barMaxLength * percent + 'px'
@@ -444,73 +438,70 @@
 				return this.sizeDeal(this.strokeWidth)[2]
 			},
 			subActiveTop() {
-				if(this.reverse) {
+				if (this.reverse) {
 					return 0
 				}
 				return 'unset'
 			},
 			subActiveBottom() {
-				if(this.reverse) {
+				if (this.reverse) {
 					return 'unset'
 				}
 				return 0
 			},
 			subActiveRight() {
-				if(this.reverse) {
+				if (this.reverse) {
 					return 0
 				}
 				return 'unset'
 			},
 			subActiveLeft() {
-				if(this.reverse) {
+				if (this.reverse) {
 					return 'unset'
 				}
 				return 0
 			},
 			barSubActiveWidth() {
-				if(this.direction == "vertical") {
+				if (this.direction == "vertical") {
 					return this.sizeDeal(this.strokeWidth)[2]
 				}
-				if(this.subContinuous) {
+				if (this.subContinuous) {
 					return this.barMaxLength * this.subPercent + 'px'
-				}
-				else {
+				} else {
 					return this.barMaxLength * Math.abs((this.msubValue - this.min) / (this.max - this.min)) + 'px'
 				}
-				
+
 			},
 			barSubActiveHeight() {
-				if(this.direction == "vertical") {
-					if(this.subContinuous) {
+				if (this.direction == "vertical") {
+					if (this.subContinuous) {
 						return this.barMaxLength * this.subPercent + 'px'
-					}
-					else {
+					} else {
 						this.barMaxLength * Math.abs((this.msubValue - this.min) / (this.max - this.min)) + 'px'
 					}
-					
+
 				}
 				return this.sizeDeal(this.strokeWidth)[2]
 			},
 			mhandleWidth() {
-				if(this.direction == "vertical") {
+				if (this.direction == "vertical") {
 					return this.sizeDeal(this.handleHeight)[2]
 				}
 				return this.sizeDeal(this.handleWidth)[2]
 			},
 			mhandleHeight() {
-				if(this.direction == "vertical") {
+				if (this.direction == "vertical") {
 					return this.sizeDeal(this.handleWidth)[2]
 				}
 				return this.sizeDeal(this.handleHeight)[2]
 			},
 			mhandleTop() {
-				if(this.direction == 'vertical') {
+				if (this.direction == 'vertical') {
 					return 0
-				}
-				else {
+				} else {
 					// 拖柄垂直居中
 					let handle = this.sizeDeal(this.handleHeight)[0]
-					let top = this.maxHeight()[0] / 2 - handle / 2 + 'px'
+					let top = this.maxHeight()[0] / 2 - handle / 2  - 3.6 + 'px'
 					return top
 				}
 			},
@@ -519,17 +510,15 @@
 			},
 			textHeight() {
 				let infoSize = this.sizeDeal(this.infoFontSize)
-				return infoSize[0]*1.2 + infoSize[1]
+				return infoSize[0] * 1.2 + infoSize[1]
 			},
 			valueLeft() {
-				if(this.infoAlign=='left') {
+				if (this.infoAlign == 'left') {
 					return 0
-				}
-				else if(this.infoAlign == 'center') {
+				} else if (this.infoAlign == 'center') {
 					let width = this.sizeDeal(this.width)
-					return width[0]/2 - this.valueWidth()/2 + 'px'
-				}
-				else if(this.infoAlign=='right'){
+					return width[0] / 2 - this.valueWidth() / 2 + 'px'
+				} else if (this.infoAlign == 'right') {
 					let width = this.sizeDeal(this.width)
 					return width[0] - this.textWidth() + 'px'
 				}
@@ -543,81 +532,89 @@
 		},
 		methods: {
 			touchstart(e) {
-				if(!this.disabled) {
+				if (!this.disabled) {
 					this.touchState = true
 					let detail = e.changedTouches[0]
 					this.handleMove(detail)
-					this.$emit("dragstart", {type: 'dragstart',value:this.showValue,subValue:this.msubValue})
+					this.$emit("dragstart", {
+						type: 'dragstart',
+						value: this.showValue,
+						subValue: this.msubValue
+					})
 				}
 			},
 			touchmove(e) {
-				if(!this.disabled) {
+				if (!this.disabled) {
 					e.stopPropagation()
 					let detail = e.changedTouches[0]
 					this.handleMove(detail)
-					this.$emit("dragging", {type: 'dragging',value:this.showValue,subValue:this.msubValue})
+					this.$emit("dragging", {
+						type: 'dragging',
+						value: this.showValue,
+						subValue: this.msubValue
+					})
 				}
 			},
 			touchend(e) {
-				if(!this.disabled) {
+				if (!this.disabled) {
 					let detail = e.changedTouches[0]
 					this.handleMove(detail)
 					this.touchState = false
-					this.$emit("dragend", {type: 'dragend',value:this.showValue,subValue:this.msubValue})
+					this.$emit("dragend", {
+						type: 'dragend',
+						value: this.showValue,
+						subValue: this.msubValue
+					})
 				}
 			},
 			handleMove(detail) {
 				let width = this.sizeDeal(this.width)[0]
 				let handleWidth = this.sizeDeal(this.handleWidth)
 				let percent
-				if(this.direction!='vertical') {
-					if(this.infoAlign=='left') {
+				if (this.direction != 'vertical') {
+					if (this.infoAlign == 'left') {
 						// #ifndef APP-NVUE
-						percent = (detail.pageX - this.mainInfo.left - this.textWidth() - handleWidth[0]/2)/ this.barMaxLength
+						percent = (detail.pageX - this.mainInfo.left - this.textWidth() - handleWidth[0] / 2) / this.barMaxLength
 						// #endif
 						// #ifdef APP-NVUE
-						percent = (detail.pageX  - handleWidth[0]/2)/ this.barMaxLength
+						percent = (detail.pageX - handleWidth[0] / 2) / this.barMaxLength
 						// #endif
-					}
-					else {
+					} else {
 						// #ifndef APP-NVUE
-						percent = (detail.pageX - this.mainInfo.left - handleWidth[0]/2)/ this.barMaxLength
+						percent = (detail.pageX - this.mainInfo.left - handleWidth[0] / 2) / this.barMaxLength
 						// #endif
 						// #ifdef APP-NVUE
-						percent = (detail.pageX - handleWidth[0]/2)/ this.barMaxLength
+						percent = (detail.pageX - handleWidth[0] / 2) / this.barMaxLength
 						// #endif
 					}
-				}
-				else {
+				} else {
 					// #ifdef APP-NVUE
-					percent = 1 - (detail.pageY - handleWidth[0]/2- 1) / this.barMaxLength
+					percent = 1 - (detail.pageY - handleWidth[0] / 2 - 1) / this.barMaxLength
 					// #endif
 					// #ifndef APP-NVUE
-					percent = 1 - (detail.pageY - this.mainInfo.top - handleWidth[0]/2)/ this.barMaxLength
+					percent = 1 - (detail.pageY - this.mainInfo.top - handleWidth[0] / 2) / this.barMaxLength
 					// #endif
 				}
 				percent = percent > 0 ? percent : 0
 				percent = percent < 1 ? percent : 1
-				if(this.reverse) {
+				if (this.reverse) {
 					this.percent = 1 - percent
-				}
-				else {
+				} else {
 					this.percent = percent
 				}
 			},
 			showValueState() {
-				if(this.direction != 'vertical' && this.showInfo && (this.infoAlign=='left' || this.infoAlign=='right')) {
+				if (this.direction != 'vertical' && this.showInfo && (this.infoAlign == 'left' || this.infoAlign == 'right')) {
 					return true
 				}
 				return false
 			},
 			valueSetBoundary(value) {
 				// 控制value在合法范围内
-				if(this.max > this.min) {
+				if (this.max > this.min) {
 					value = value < this.max ? value : this.max
 					value = value > this.min ? value : this.min
-				}
-				else {
+				} else {
 					value = value > this.max ? value : this.max
 					value = value < this.min ? value : this.min
 				}
@@ -627,7 +624,7 @@
 			 * @param {Object} v
 			 * @param {Object} isSub 是否是副副进度条
 			 */
-			valueFormat (v,isSub){
+			valueFormat(v, isSub) {
 				// set step
 				v = this.valueSetBoundary(v)
 				let stepInfo = this.stepInfo(isSub)
@@ -638,7 +635,7 @@
 				let remainderInt = Math.floor(remainder)
 				// 对余数四舍五入0-1
 				let sub = Math.round(remainder / step)
-				let value = (Math.floor(valueE) - remainderInt + sub*step) / (10 ** stepInfo[1])
+				let value = (Math.floor(valueE) - remainderInt + sub * step) / (10 ** stepInfo[1])
 				value = Number((value + this.min).toFixed(stepInfo[1]))
 				return value
 			},
@@ -648,48 +645,48 @@
 			 */
 			stepInfo(isSub) {
 				// return step, decimal位数
-				let step 
-				if(isSub) {
+				let step
+				if (isSub) {
 					step = Number(this.subStep)
-				}
-				else {
+				} else {
 					step = Number(this.step)
 				}
-				
-				if (step <= 0 || !step){
+
+				if (step <= 0 || !step) {
 					return [1, 0]
-				}
-				else{
+				} else {
 					let steps = step.toString().split('.')
-					if (steps.length == 1){
-						return [step,0]
-					}
-					else {
-						return [step,steps[1].length]
+					if (steps.length == 1) {
+						return [step, 0]
+					} else {
+						return [step, steps[1].length]
 					}
 				}
 			},
 			textWidth() {
-				if(this.showValueState()) {
-					let numWidth = this.max.toString().length> this.min.toString().length? this.max.toString().length: this.min.toString().length
-					let textWidth = ((numWidth + this.stepInfo()[1]) * 0.7 + this.infoEndText.length) * this.sizeDeal(this.infoFontSize)[0]
+				if (this.showValueState()) {
+					let numWidth = this.max.toString().length > this.min.toString().length ? this.max.toString().length : this.min.toString()
+						.length
+					let textWidth = ((numWidth + this.stepInfo()[1]) * 0.7 + this.infoEndText.length) * this.sizeDeal(this.infoFontSize)[
+						0]
 					return Number(textWidth.toFixed(2))
 				}
 				return 0
 			},
 			valueWidth() {
-				let numWidth = this.max.toString().length> this.min.toString().length? this.max.toString().length: this.min.toString().length
-				let textWidth = ((numWidth + this.stepInfo()[1]) * 0.7 + this.infoEndText.length) * this.sizeDeal(this.infoFontSize)[0]
+				let numWidth = this.max.toString().length > this.min.toString().length ? this.max.toString().length : this.min.toString()
+					.length
+				let textWidth = ((numWidth + this.stepInfo()[1]) * 0.7 + this.infoEndText.length) * this.sizeDeal(this.infoFontSize)[
+					0]
 				return Number(textWidth.toFixed(2))
 			},
 			maxHeight() {
 				let h = []
-				if (this.direction!='vertical'){ // direction 为 vertical 时不显示info
+				if (this.direction != 'vertical') { // direction 为 vertical 时不显示info
 					let subt = this.infoEndText.match(/[^\x00-\xff]/g)
-					if (subt){
+					if (subt) {
 						h.push(this.sizeDeal(this.infoFontSize)[0] * 1.1)
-					}
-					else{
+					} else {
 						h.push(this.sizeDeal(this.infoFontSize)[0])
 					}
 				}
@@ -707,16 +704,16 @@
 				if (u == 'rpx') {
 					s /= this.px2rpx
 					u = 'px'
-				}else if (u == 'vw') {
+				} else if (u == 'vw') {
 					u = 'px'
 					s = s / 100 * this.screenWidth
-				} else if(u == 'vh') {
+				} else if (u == 'vh') {
 					u = 'px'
 					s = s / 100 * this.screenHeight
-				} else{
+				} else {
 					u = 'px'
 				}
- 				
+
 				return [s, u, s + u]
 			},
 		}
