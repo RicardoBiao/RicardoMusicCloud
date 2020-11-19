@@ -45,6 +45,13 @@
 			noActiveColor="#bdb9b9"
 			width="88vw"
 			:showInfo="false"
+			:max="innerAudioContext.duration"
+			@change="progressChange()"
+			@dragging="progressChange()"
+			@dragend="progressHoldStop()"
+			
+			
+			
 			 ></bing-progress>
 		</view>
 		<view class="time-box">
@@ -100,16 +107,13 @@
 				isLike: 0,
 				music: {},
 				musicUrl: '',
-				lyric: ''
+				lyric: '',
+				value: 0,
+				sunValue: 0
 			}
 		},
 		components: {
 			bingProgress
-		},
-		watch: {
-			current(newVal,oldVal) {
-				console.log('this.current==>',this.current)
-			}
 		},
 		onShow() {
 			
@@ -128,6 +132,8 @@
 				this.isLike = 1;
 				console.log('我执行了isLike==>');
 			}
+			
+			
 			
 			wx.showShareMenu({
 			  withShareTicket: true,
@@ -199,6 +205,13 @@
 						
 					}
 				});
+			},
+			progressChange(e) {
+				console.log('this.innerAudioContext.duration===>',this.innerAudioContext.duration)
+				console.log('progressChange-value===>',e.value)
+			},
+			progressHoldStop(e) {
+				console.log('progressHoldStop-e===>',e.value)
 			},
 			onPlay() {
 				this.musicPlay();

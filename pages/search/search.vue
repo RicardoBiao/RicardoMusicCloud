@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="search-box">
 			<!-- mSearch组件 如果使用原样式，删除组件元素-->
-			<mSearch class="mSearch-input-box" :mode="2" button="inside" :placeholder="defaultKeyword" @search="doSearch(false)" @input="inputChange" @confirm="doSearch(false)" v-model="keyword"></mSearch>
+			<mSearch class="mSearch-input-box" :mode="2" button="inside" :placeholder="defaultKeyword" @search="doSearch(keyword)" @input="inputChange" @confirm="doSearch(keyword)" v-model="keyword"></mSearch>
 			<!-- 原样式 如果使用原样式，恢复下方注销代码 -->
 			<!-- 						
 			<view class="input-box">
@@ -152,13 +152,15 @@
 			//监听输入
 			inputChange(event) {
 				//兼容引入组件时传入参数情况
-				var keyword = event.detail?event.detail.value:event;
+				var keyword = event.detail ? event.detail.value : event;
 				if (!keyword) {
 					this.keywordList = [];
 					this.isShowKeywordList = false;
 					return;
 				}
-				this.isShowKeywordList = true;
+				//关键字列表
+				// this.isShowKeywordList = true; 
+				
 				//以下示例截取淘宝的关键字，请替换成你的接口
 				// uni.request({
 				// 	url: 'https://suggest.taobao.com/sug?code=utf-8&q=' + keyword, //仅为示例

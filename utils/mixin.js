@@ -64,13 +64,24 @@ export const playListMixin = {
 			this.innerAudioContext.onEnded((e) => {
 				this.nextSong();
 			});
-			this.innerAudioContext.onCanplay( ()=>{
+			this.innerAudioContext.onCanplay((e)=>{
+				
 				this.duration = this.format(this.innerAudioContext.duration);
+				
+				console.warn('this.innerAudioContext-onCanplay===>',this.innerAudioContext)
+				console.log('this.innerAudioContext.duration====>',this.innerAudioContext.duration);
+				console.log('this.duration====>',this.duration);
 			});
-			this.innerAudioContext.onTimeUpdate( () => {
+			this.innerAudioContext.onTimeUpdate((e) => {
 				//音频进度更新事件  
 				this.current = this.format(this.innerAudioContext.currentTime);
-				console.log('this.current:',this.current);
+				// if(this.duration == '00:00') {
+				// 	this.duration = this.format(this.innerAudioContext.duration);
+				// 	// this.innerAudioContext.aaa = this.innerAudioContext.duration;
+				// }
+				// console.log('this.innerAudioContext.currentTime====>',this.innerAudioContext.currentTime);
+				// console.log('this.innerAudioContext.duration====>',this.innerAudioContext.duration);
+				// console.log('this.innerAudioContext.currentTime====>',this.innerAudioContext.currentTime);
 			});
 		}
 	}
