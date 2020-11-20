@@ -178,6 +178,7 @@
 		},
 		methods: {
 			getSongDetail() {
+				let that = this;
 				this.$api.getSongDetail({
 					ids: this.ids
 				}).then( res => {
@@ -191,7 +192,8 @@
 				}).then( res => {
 					if (res.data.code === 200) {
 						console.log('getLyric-res===>',res.data.lrc);
-						this.lyric = new Lyric(res.data.lrc.lyric);
+						this.lyric = new Lyric(res.data.lrc.lyric, that.handleLyric);
+						this.lyric.play();
 						console.log('this.lyric===>',this.lyric);
 					}
 				});
@@ -323,6 +325,9 @@
 					});
 					console.log('like发生错误',err);
 				});
+			},
+			handleLyric(e) {
+				console.log('handleLyric===>',e)
 			}
 					
 		}
