@@ -1,6 +1,15 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export const playListMixin = {
+	data() {
+		return {
+			currentTime: 0,
+			duration: 0,
+			current: 0,
+			duration2: 0,
+			current2: 0
+		}
+	},
 	computed: {
 		...mapGetters([
 			'isPlay',
@@ -15,7 +24,8 @@ export const playListMixin = {
 			'setIsPlay',
 			'setAudioUrl',
 			'setPlayList',
-			'setCurrentIndex'
+			'setCurrentIndex',
+			'setCurrentTime'
 		]),
 		musicPause() {
 			console.log('music-onPause')
@@ -61,27 +71,21 @@ export const playListMixin = {
 			return '0'.repeat(2 - String(Math.floor(num / 60)).length) + Math.floor(num / 60) + ':' + '0'.repeat(2 - String(Math.floor(num % 60)).length) + Math.floor(num % 60)  
 		},
 		initMusic() {
-			this.innerAudioContext.onEnded((e) => {
+			this.innerAudioContext.onEnded(() => {
 				this.nextSong();
 			});
-			this.innerAudioContext.onCanplay((e)=>{
-				
-				this.duration = this.format(this.innerAudioContext.duration);
-				
-				console.warn('this.innerAudioContext-onCanplay===>',this.innerAudioContext)
-				console.log('this.innerAudioContext.duration====>',this.innerAudioContext.duration);
-				console.log('this.duration====>',this.duration);
+			
+			this.innerAudioContext.onCanplay(() =>{
+				this.innerAudioContext.duration;
+				this.innerAudioContext.currentTime;
 			});
-			this.innerAudioContext.onTimeUpdate((e) => {
+			
+			this.innerAudioContext.onTimeUpdate(() => {
 				//音频进度更新事件  
-				this.current = this.format(this.innerAudioContext.currentTime);
-				// if(this.duration == '00:00') {
-				// 	this.duration = this.format(this.innerAudioContext.duration);
-				// 	// this.innerAudioContext.aaa = this.innerAudioContext.duration;
-				// }
-				// console.log('this.innerAudioContext.currentTime====>',this.innerAudioContext.currentTime);
-				// console.log('this.innerAudioContext.duration====>',this.innerAudioContext.duration);
-				// console.log('this.innerAudioContext.currentTime====>',this.innerAudioContext.currentTime);
+				this.current = this.innerAudioContext.currentTime;
+				this.duration = this.innerAudioContext.duration;
+				this.current2 = this.format(this.innerAudioContext.currentTime);
+				this.duration2 = this.format(this.innerAudioContext.duration);
 			});
 		}
 	}

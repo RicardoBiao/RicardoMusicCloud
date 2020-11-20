@@ -45,7 +45,8 @@
 			noActiveColor="#bdb9b9"
 			width="88vw"
 			:showInfo="false"
-			:max="innerAudioContext.duration"
+			:max="duration"
+			:value="current"
 			@change="progressChange()"
 			@dragging="progressChange()"
 			@dragend="progressHoldStop()"
@@ -56,10 +57,10 @@
 		</view>
 		<view class="time-box">
 			<view class="time-txt">
-				{{ current }}
+				{{ current2 }}
 			</view>
 			<view class="time-txt">
-				{{ duration }}
+				{{ duration2 }}
 			</view>
 		</view>
 		
@@ -107,16 +108,11 @@
 				isLike: 0,
 				music: {},
 				musicUrl: '',
-				lyric: '',
-				value: 0,
-				sunValue: 0
+				lyric: ''
 			}
 		},
 		components: {
 			bingProgress
-		},
-		onShow() {
-			
 		},
 		onLoad(option) {
 			
@@ -160,7 +156,6 @@
 				});
 				this.getMusicUrl();
 				this.initMusic();
-				
 			},
 			getMusicUrl() {
 				this.$api.getMusicUrl({
@@ -172,7 +167,7 @@
 						if (that.playList.length > 0) {
 							let result = that.playList.some(item => {
 								if(item.id == that.ids) {
-									console.warn('AAAAAAAAAAA',this.playList)
+									// console.warn('AAAAAAAAAAA',this.playList)
 									console.log('Aitem.id===>',item.id,'that.ids===>',that.ids)
 									that.setAudioUrl(item.src);
 									that.musicPlay();
@@ -183,7 +178,7 @@
 							if (result == true) {
 								return
 							} else {
-								console.warn('BBBBBBBBBB',this.playList)
+								// console.warn('BBBBBBBBBB',this.playList)
 								that.setAudioUrl(that.musicUrl);
 								let list = new playList(that.playList.length, that.song, that.musicUrl, that.lyric);
 								that.playList.push(list);
@@ -193,7 +188,7 @@
 							}
 							
 						} else {
-							console.warn('CCCCCCCCCC',this.playList)
+							// console.warn('CCCCCCCCCC',this.playList)
 							that.setAudioUrl(that.musicUrl);
 							let list = new playList(that.playList.length,that.song,that.musicUrl);
 							that.playList.push(list);
@@ -202,16 +197,17 @@
 							that.musicPlay();
 						}
 						
-						
 					}
 				});
 			},
 			progressChange(e) {
-				console.log('this.innerAudioContext.duration===>',this.innerAudioContext.duration)
-				console.log('progressChange-value===>',e.value)
+				// console.log('this.innerAudioContext.duration===>',this.innerAudioContext.duration)
+				// console.log('progressChange-value===>',e.value)
 			},
 			progressHoldStop(e) {
-				console.log('progressHoldStop-e===>',e.value)
+				this.innerAudioContext.seek(e.value);
+				// console.log('progressHoldStop-e===>',e)
+				// console.log('progressHoldStop-e===>',e.value)
 			},
 			onPlay() {
 				this.musicPlay();

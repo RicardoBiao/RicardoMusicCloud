@@ -27,5 +27,5 @@ export default {
 	},
 	[SET_CURRENT_INDEX](state, data) {
 		state.currentIndex = data
-	}
+	},
 }
