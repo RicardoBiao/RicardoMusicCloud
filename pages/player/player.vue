@@ -1,6 +1,33 @@
 <template>
 	<view class="content">
-		<view class="py-msg-box">
+		<!-- swiper布局 -->
+		<!-- <view class="dots">
+			<block v-for="(item,index) in [0, 1, 2]" :index="index" :key="item"> 
+				<view class="dot" :class="index == currentSwiper ? ' active' : '' "></view> 
+			</block> 
+		</view>
+		<swiper class="swiper-box" 
+		:autoplay="autoplay" 
+		:interval="interval" 
+		:duration="duration"
+		current="1"
+		easing-function="easeInOutCubic"
+		@change="swiperChange"
+		>
+			<swiper-item class="swiper-item">
+				
+			</swiper-item>
+			
+			<swiper-item class="swiper-item">
+				
+			</swiper-item>
+			
+			<swiper-item class="swiper-item">
+				
+			</swiper-item>
+		</swiper> -->
+		
+		<view class="py-msg-box" v-if="!lookLyric" @tap="this.lookLyric = !this.lookLyric">
 			<image class="play-bar-support" src="../../static/play-bar-support.png" mode="aspectFit"></image>
 			<image class="play-bar" :class="{bar: !isPlay}" src="../../static/play-bar.png" mode="aspectFit"></image>
 			<view class="img-box">
@@ -9,28 +36,37 @@
 			<text class="song-name"> {{playList[currentIndex].title == undefined ? '' : playList[currentIndex].title}} </text>
 			<text class="singer"> {{playList[currentIndex].artist == undefined ? '' : playList[currentIndex].artist}} </text>
 			<text class="song-content">It is a long established fact that a reader</text>
+			
+			<view class="btn-box">
+				<button class="icon-btn" open-type="share" type="default">
+					<image class="btn-icon" src="../../static/Shape.png" mode="aspectFit"></image>
+				</button>
+				<button class="icon-btn" type="default">
+					<image class="btn-icon" src="../../static/addtolist.png" mode="aspectFit"></image>
+				</button>
+				<button v-if="!isLike"  @click="like()"  class="icon-btn" type="default">
+					<image class="btn-icon" src="../../static/like.png" mode="aspectFit"></image>
+				</button>
+				<button v-else @click="unlike()" class="icon-btn" type="default">
+					<image class="btn-icon" src="../../static/islike.png" mode="aspectFit"></image>
+				</button>
+				<button class="icon-btn" type="default">
+					<image class="btn-icon" src="../../static/download.png" mode="aspectFit"></image>
+				</button>
+			</view>
 		</view>
 		
-		<view class="btn-box">
-			<!-- <button type="default" plain="true" open-type="share" style="margin: 0; padding: 0; border: none; width: 40rpx; height: 40rpx;">
-				<image class="btn-icon" src="../../static/Shape.png" mode="aspectFit"></image>
-			</button> -->
-			<button class="icon-btn" open-type="share" type="default">
-				<image class="btn-icon" src="../../static/Shape.png" mode="aspectFit"></image>
-			</button>
-			<button class="icon-btn" type="default">
-				<image class="btn-icon" src="../../static/addtolist.png" mode="aspectFit"></image>
-			</button>
-			<button v-if="!isLike"  @click="like()"  class="icon-btn" type="default">
-				<image class="btn-icon" src="../../static/like.png" mode="aspectFit"></image>
-			</button>
-			<button v-else @click="unlike()" class="icon-btn" type="default">
-				<image class="btn-icon" src="../../static/islike.png" mode="aspectFit"></image>
-			</button>
-			<button class="icon-btn" type="default">
-				<image class="btn-icon" src="../../static/download.png" mode="aspectFit"></image>
-			</button>
+		<view class="py-msg-box" v-else @tap="this.lookLyric = !this.lookLyric">
+			<!-- <bing-lyric :lyrics="lyric.lines"></bing-lyric> -->
+			<scroll-view class="py-msg-box" scroll-y="true" >
+				<view style="color: #FFFFFF;text-align: center; margin: 10rpx 0;" v-for="(line, index) in lyric.lines" :key="line.key">
+					{{line.txt}}
+				</view>
+			</scroll-view>
+			
 		</view>
+		
+		
 		
 		<view class="time">
 			
@@ -97,22 +133,30 @@
 	import { mapGetters, mapActions } from 'vuex';
 	import {playListMixin} from '@/utils/mixin.js';
 	import bingProgress from '@/components/bing-progress/bing-progress.vue';
+	import bingLyric from '@/components/bing-lyric/bing-lyric.vue';
+	import Lyric from 'lyric-parser';
 	export default {
 		mixins: [playListMixin],
 		data() {
 			return {
 				ids: '',
 				audios: [],
-				duration: '00:00',
-				current: '00:00',
 				isLike: 0,
 				music: {},
 				musicUrl: '',
-				lyric: ''
+				lyric: [],
+				currentSwiper: 1,
+				swiperChange: function(e) {
+					// console.log(e.detail.current);
+					// console.log(this);
+					this.currentSwiper = e.detail.current;
+				},
+				lookLyric: 0
 			}
 		},
 		components: {
-			bingProgress
+			bingProgress,
+			bingLyric
 		},
 		onLoad(option) {
 			
@@ -122,14 +166,10 @@
 			
 			//判断该音乐是否已喜欢
 			let id = parseInt(option.ids);
-			// console.log('id==>',id);
-			// console.log('likeList.indexOf(id)==>',likeList.indexOf(id));
 			if (this.likeList.indexOf(id) != -1 ) {
 				this.isLike = 1;
 				console.log('我执行了isLike==>');
 			}
-			
-			
 			
 			wx.showShareMenu({
 			  withShareTicket: true,
@@ -150,8 +190,9 @@
 					id: this.ids
 				}).then( res => {
 					if (res.data.code === 200) {
-						console.log('getLyric-res===>',res);
-						this.lyric = res.data.lrc.lyric;
+						console.log('getLyric-res===>',res.data.lrc);
+						this.lyric = new Lyric(res.data.lrc.lyric);
+						console.log('this.lyric===>',this.lyric);
 					}
 				});
 				this.getMusicUrl();
@@ -254,9 +295,6 @@
 						duration: 2000,
 						title: err.response.data.msg
 					});
-					uni.reLaunch({
-						url: "/pages/login/login"
-					});
 					console.log('like发生错误',err);
 				});
 			},
@@ -282,9 +320,6 @@
 						icon: 'none',
 						duration: 2000,
 						title: err.response.data.msg
-					});
-					uni.reLaunch({
-						url: "/pages/login/login"
 					});
 					console.log('like发生错误',err);
 				});
@@ -313,12 +348,14 @@
 	.turn {
 		animation:turn 10s linear infinite;
 	}
+	
 	.py-msg-box {
 		display: flex;
 		position: relative;
 		justify-content: space-around;
 		flex-direction: column;
 		width: 100%;
+		height: 76vh;
 		.play-bar-support {
 			position: absolute;
 			width: 5vw;
@@ -402,6 +439,131 @@
 			}
 		}
 	}
+	.dots {
+		display: flex;
+		justify-content: center;
+		flex-direction: row;
+		position: absolute;
+		top: 6vh;
+		width: 100vw;
+		/*未选中时的小圆点样式 */
+		.dot {
+			width: 42rpx;
+			height: 6rpx;
+			background-color: #605e63;
+			border-radius: 3rpx;
+			margin: 0 8rpx;
+		}
+		/*选中以后的小圆点样式 */
+		.active {
+			width: 40rpx;
+			height: 6rpx;
+			background-color: #ffffff;
+			border-radius: 3rpx;
+		}
+	}
+	
+	.swiper-box {
+		width: 100%;
+		height: 75vh;
+		/*用来包裹所有的小圆点 */
+		.swiper-item{
+			width: 100%;
+			height: auto;
+			.py-msg-box {
+				display: flex;
+				position: relative;
+				justify-content: space-around;
+				flex-direction: column;
+				width: 100%;
+				.play-bar-support {
+					position: absolute;
+					width: 5vw;
+					height: 5vw;
+					left: calc(50% - 3.2vw);
+					top: -1vw;
+					z-index: 2;
+				}
+				.play-bar {
+				  width: 22vw;
+				  height: 40vw;
+				  position: absolute;
+				  left: calc(50% - 1.7vw);
+				  top: -5rpx;
+				  z-index: 1;
+				}
+				.bar {
+				  top: -5rpx;
+				  transform-origin: 0 0;
+				  transform: rotate(-25deg);
+				  // transition: all 0.1s;
+				}
+				.img-box {
+					left: 0;
+					right: 0;
+					width: 46vw;
+					height: 46vw;
+					background-color: #999999;
+					border: 80rpx solid #0e0e11;
+					border-radius: 50%;
+					box-shadow: 0 0 10px #fff;
+					margin: 22vw auto 6vw;
+					z-index: -1;
+					.img {
+						width: 43.4vw;
+						height: 43.4vw;
+						border: 10rpx solid #fff;
+						border-radius: 50%;
+						z-index: 0;
+					}
+				}
+				.turn {
+					transform: rotate(360deg);
+					-webkit-transform:rotate(360deg);
+					-webkit-transition:-webkit-transform 1s linear;
+					translate: transform 5s linear 0.2s infinite;
+				}
+				text {
+					font-family: Helvetica;
+					font-weight: normal;
+					font-stretch: normal;
+					color: #ffffff;
+					margin: 0 auto;
+				}
+				.song-name {
+					font-size: 48rpx;
+				}
+				.singer {
+					margin: 7rpx auto 62rpx;
+					font-size: 24rpx;
+				}
+				.song-content {
+					font-size: 28rpx;
+					color: #7b0e62;
+				}
+				
+			}
+			.btn-box {
+				display: flex;
+				justify-content: space-around;
+				margin: 4vh 8vw;
+				.icon-btn {
+					display: flex;
+					justify-content: center;
+					background-color: #0e0b1f;
+					// margin: 0;
+					// padding: 0;
+					.btn-icon {
+						width: 40rpx;
+						height: 40rpx;
+					}
+				}
+			}
+			
+		}
+	}
+	
+	
 	.time {
 		display: flex;
 		justify-content: center;

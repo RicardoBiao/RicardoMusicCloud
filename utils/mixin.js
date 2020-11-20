@@ -6,8 +6,8 @@ export const playListMixin = {
 			currentTime: 0,
 			duration: 0,
 			current: 0,
-			duration2: 0,
-			current2: 0
+			duration2: '00:00',
+			current2: '00:00'
 		}
 	},
 	computed: {

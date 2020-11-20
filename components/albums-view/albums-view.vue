@@ -10,6 +10,7 @@
 		:current="currentSwiper"
 		:duration="duration"
 		@change="swiperChange"
+		easing-function="linear"
 		>
 			<block v-for="(item,index) in imgUrls" :index="index" :key="item" >
 				<swiper-item class="swiper-item" @click="swiperClick(e)">

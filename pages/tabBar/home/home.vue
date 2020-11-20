@@ -29,7 +29,7 @@
 			
 		</view> -->
 		<!-- music-play组件 -->
-		<view v-show="playList.length > 0" style="width: 100vw; height: 150rpx;"></view>
+		<view v-if="playList.length > 0" style="width: 100vw; height: 150rpx;"></view>
 		<player-box ref="player" @click="this.$refs.player.goPlayer()" style="position: fixed; bottom: 0;"></player-box>
 		<!-- <view class="music-play">
 			
