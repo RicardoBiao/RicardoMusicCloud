@@ -50,4 +50,11 @@ export default {
 			resolve(data)
 		})
 	},
+	setCurrentLyric({ commit }, data) {
+		return new Promise((resolve, reject) => {
+			commit('SET_CURRENT_LYRIC', data) 
+			
+			resolve(data)
+		})
+	},
 }

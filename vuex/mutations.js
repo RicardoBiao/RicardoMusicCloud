@@ -5,6 +5,7 @@ const SET_USERINFO = 'SET_USERINFO'
 const SET_COOKIE = 'SET_COOKIE'
 const SET_AUDIOURL = 'SET_AUDIOURL'
 const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX'
+const SET_CURRENT_LYRIC = 'SET_CURRENT_LYRIC'
 
 export default {
 	[SET_ISPLAY](state, data) {
@@ -27,5 +28,8 @@ export default {
 	},
 	[SET_CURRENT_INDEX](state, data) {
 		state.currentIndex = data
+	},
+	[SET_CURRENT_LYRIC](state, data) {
+		state.currentLyric = data
 	},
 }

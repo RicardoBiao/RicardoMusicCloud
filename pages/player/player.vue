@@ -94,10 +94,10 @@
 		</view>
 		<view class="time-box">
 			<view class="time-txt">
-				{{ current2 }}
+				{{ this.format(this.innerAudioContext.currentTime) }}
 			</view>
 			<view class="time-txt">
-				{{ duration2 }}
+				{{ this.format(this.innerAudioContext.duration) }}
 			</view>
 		</view>
 		
@@ -145,16 +145,25 @@
 				isLike: 0,
 				music: {},
 				musicUrl: '',
-				lyric: [],
+				lyric: {},
 				currentSwiper: 1,
 				swiperChange: function(e) {
 					// console.log(e.detail.current);
 					// console.log(this);
 					this.currentSwiper = e.detail.current;
 				},
-				lookLyric: 0,
-				currentLyric: null
+				lookLyric: 0
 			}
+		},
+		computed: {
+			...mapGetters([
+				'isPlay',
+				'playList',
+				'likeList',
+				'currentIndex',
+				'innerAudioContext',
+				'currentLyric'
+			])
 		},
 		components: {
 			bingProgress,
@@ -215,33 +224,34 @@
 									console.log('Aitem.id===>',item.id,'that.ids===>',that.ids)
 									that.setAudioUrl(item.src);
 									that.setCurrentIndex(item.index);
-									that.musicPlay();
-									// that.playList[currentIndex].lyric.play();
 									return true
 								} 
 							});
 							if (result == true) {
 								return
 							} else {
+								that.playList[that.currentIndex].lyric.stop();
 								// console.warn('BBBBBBBBBB',this.playList)
 								that.setAudioUrl(that.musicUrl);
 								let list = new playList(that.playList.length, that.song, that.musicUrl, that.lyric);
 								that.playList.push(list);
+								console.log('list1===>',list);
 								that.setPlayList(that.playList);
 								that.setCurrentIndex(that.playList.length - 1);
 								that.musicPlay();
-								// that.playList[currentIndex].lyric.play();
+								that.playList[that.currentIndex].lyric.play();
 							}
 							
 						} else {
 							// console.warn('CCCCCCCCCC',this.playList)
 							that.setAudioUrl(that.musicUrl);
-							let list = new playList(that.playList.length,that.song,that.musicUrl);
+							let list = new playList(that.playList.length,that.song,that.musicUrl, that.lyric);
 							that.playList.push(list);
+							console.log('list2===>',list);
 							that.setPlayList(that.playList);
 							that.setCurrentIndex(that.playList.length - 1);
 							that.musicPlay();
-							// that.playList[currentIndex].lyric.play();
+							that.playList[that.currentIndex].lyric.play();
 						}
 						
 					}
@@ -253,7 +263,7 @@
 			},
 			progressHoldStop(e) {
 				this.innerAudioContext.seek(e.value);
-				// that.playList[currentIndex].lyric.seek(e.value * 1000);
+				this.playList[this.currentIndex].lyric.seek(e.value * 1000);
 				// console.log('progressHoldStop-e===>',e)
 				// console.log('progressHoldStop-e===>',e.value)
 			},
@@ -333,7 +343,7 @@
 			},
 			handleLyric(e) {
 				console.log('handleLyric===>',e)
-				this.currentLyric = e;
+				this.setCurrentLyric(e);
 			}
 					
 		}

@@ -5,6 +5,7 @@ const getters = {
 	likeList: state => state.likeList,
 	cookie: state => state.cookie,
 	innerAudioContext: state => state.innerAudioContext,
-	currentIndex: state => state.currentIndex
+	currentIndex: state => state.currentIndex,
+	currentLyric: state => state.currentLyric
 }
 export default getters

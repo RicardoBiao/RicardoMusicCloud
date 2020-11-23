@@ -30,7 +30,8 @@ const state = {
 	//全局音乐文件
 	innerAudioContext: uni.createInnerAudioContext(),
 	//当前播放index
-	currentIndex: 0
+	currentIndex: 0,
+	currentLyric: {}
 }
 
 export default new Vuex.Store({  

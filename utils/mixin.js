@@ -17,6 +17,7 @@ export const playListMixin = {
 			'playList',
 			'likeList',
 			'currentIndex',
+			'currentLyric',
 			'innerAudioContext'
 		])
 	},
@@ -26,7 +27,8 @@ export const playListMixin = {
 			'setAudioUrl',
 			'setPlayList',
 			'setCurrentIndex',
-			'setCurrentTime'
+			'setCurrentTime',
+			'setCurrentLyric'
 		]),
 		musicPause() {
 			console.log('music-onPause')
@@ -37,13 +39,13 @@ export const playListMixin = {
 		musicPlay() {
 			console.log('music-onPlay')
 			this.innerAudioContext.play();
-			// this.playList[this.currentIndex].lyric.togglePlay();
+			this.playList[this.currentIndex].lyric.togglePlay();
 			this.setIsPlay(true);
 			console.log('playList====>',this.playList)
-			console.log('this.playList[this.currentIndex].lyric====>',this.this.playList[this.currentIndex].lyric)
 		},
 		preMusic() {
 			if (this.playList.length > 1) {
+				this.playList[this.currentIndex].lyric.stop();
 				if (this.currentIndex == 0) {
 					let current = this.playList.length - 1;
 					this.setCurrentIndex(current);
@@ -56,7 +58,7 @@ export const playListMixin = {
 					console.log('this.currentIndex====22>',this.currentIndex)
 				}
 				this.musicPlay();
-				this.playList[this.currentIndex].lyric.seek(0);
+				this.playList[this.currentIndex].lyric.play();
 				console.log('this.currentIndex====33>',this.currentIndex)
 			} else {
 				uni.showToast({
@@ -68,7 +70,7 @@ export const playListMixin = {
 		},
 		nextMusic() {
 			if (this.playList.length > 1) {
-				
+				this.playList[this.currentIndex].lyric.stop();
 				if (this.currentIndex == this.playList.length - 1) {
 					this.setCurrentIndex(0);
 					this.setAudioUrl(this.playList[0].src);
@@ -80,7 +82,7 @@ export const playListMixin = {
 					console.log('this.currentIndex====55>',this.currentIndex)
 				}
 				this.musicPlay();
-				this.playList[this.currentIndex].lyric.seek(0);
+				this.playList[this.currentIndex].lyric.play();
 				console.log('this.currentIndex====66>',this.currentIndex)
 			} else {
 				uni.showToast({
@@ -106,10 +108,8 @@ export const playListMixin = {
 			this.innerAudioContext.onTimeUpdate(() => {
 				//音频进度更新事件  
 				this.current = this.innerAudioContext.currentTime;
-				// this.playList[currentIndex].lyric.seek(this.current * 1000);
+				// this.playList[this.currentIndex].lyric.seek(this.current * 1000);
 				this.duration = this.innerAudioContext.duration;
-				this.current2 = this.format(this.innerAudioContext.currentTime);
-				this.duration2 = this.format(this.innerAudioContext.duration);
 			});
 		}
 	}
