@@ -138,6 +138,7 @@
 <style lang="less">
 	page {
 		background-color: #0e0b1f;
+		// background-image: url('http://p1.music.126.net/9FRYTIkifMlk9q1EbvJGoQ==/109951164006503857.jpg');
 	}
 	.content {
 		margin: 0 6vw;

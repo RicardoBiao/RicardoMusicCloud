@@ -35,7 +35,8 @@
 			</view>
 			<text class="song-name"> {{playList[currentIndex].title == undefined ? '' : playList[currentIndex].title}} </text>
 			<text class="singer"> {{playList[currentIndex].artist == undefined ? '' : playList[currentIndex].artist}} </text>
-			<text class="song-content">It is a long established fact that a reader</text>
+			<!-- <text class="song-content">It is a long established fact that a reader</text> -->
+			<text class="song-content">{{currentLyric.txt}}</text>
 			
 			<view class="btn-box">
 				<button class="icon-btn" open-type="share" type="default">
@@ -151,7 +152,9 @@
 					// console.log(this);
 					this.currentSwiper = e.detail.current;
 				},
-				lookLyric: 0
+				lookLyric: 0,
+				currentLyric: null,
+				lrc: []
 			}
 		},
 		components: {
@@ -192,6 +195,25 @@
 				}).then( res => {
 					if (res.data.code === 200) {
 						console.log('getLyric-res===>',res.data.lrc);
+						// this.lyric = res.data.lrc.lyric;
+						// let lrcs = this.lyric.split('\n');
+						// console.warn('lrcs===>',lrcs);
+						// let timeExp = /\[(\d{2,}):(\d{2})(?:\.(\d{2,3}))?]/g;
+						// for (var i = 0; i < lrcs.length; i++) {
+						//   var lrc = lrcs[i];
+						//   var result = timeExp.exec(lrc);
+						//   console.warn('result===>',result);
+						//   if (result) {
+						//     var txt = lrc.replace(timeExp, '').trim();
+						// 	console.warn('txt===>',txt);
+						//     if (txt) {
+						//       this.lrc.push({
+						//         time: result[1] * 60 * 1000 + result[2] * 1000 + (result[3] || 0) * 10,
+						//         txt: txt
+						//       });
+						//     }
+						//   }
+						// }
 						this.lyric = new Lyric(res.data.lrc.lyric, that.handleLyric);
 						this.lyric.play();
 						console.log('this.lyric===>',this.lyric);
@@ -249,6 +271,7 @@
 			},
 			progressHoldStop(e) {
 				this.innerAudioContext.seek(e.value);
+				this.lyric.seek(e.value * 1000);
 				// console.log('progressHoldStop-e===>',e)
 				// console.log('progressHoldStop-e===>',e.value)
 			},
@@ -328,6 +351,7 @@
 			},
 			handleLyric(e) {
 				console.log('handleLyric===>',e)
+				this.currentLyric = e;
 			}
 					
 		}

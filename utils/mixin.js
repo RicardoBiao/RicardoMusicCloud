@@ -7,7 +7,8 @@ export const playListMixin = {
 			duration: 0,
 			current: 0,
 			duration2: '00:00',
-			current2: '00:00'
+			current2: '00:00',
+			lyric: []
 		}
 	},
 	computed: {
@@ -30,11 +31,13 @@ export const playListMixin = {
 		musicPause() {
 			console.log('music-onPause')
 			this.innerAudioContext.pause();
+			this.lyric.stop();
 			this.setIsPlay(false);
 		},
 		musicPlay() {
 			console.log('music-onPlay')
 			this.innerAudioContext.play();
+			this.lyric.play();
 			this.setIsPlay(true);
 			console.log('playList====>',this.playList)
 		},
@@ -83,6 +86,7 @@ export const playListMixin = {
 			this.innerAudioContext.onTimeUpdate(() => {
 				//音频进度更新事件  
 				this.current = this.innerAudioContext.currentTime;
+				// this.lyric.seek(this.current * 1000);
 				this.duration = this.innerAudioContext.duration;
 				this.current2 = this.format(this.innerAudioContext.currentTime);
 				this.duration2 = this.format(this.innerAudioContext.duration);
