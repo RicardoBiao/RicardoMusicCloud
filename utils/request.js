@@ -19,7 +19,7 @@ fly.config.headers['Content-Type'] = newFly.config.headers['Content-Type'] = 'ap
 
 
 fly.interceptors.response.use((response, Promise) => {
-	console.warn('response===>',response)
+	// console.warn('response===>',response)
 	if (response.data.success) {
 		return Promise.resolve(response)
 	} else if(response.data.code === '301') {
@@ -36,8 +36,8 @@ fly.interceptors.response.use((response, Promise) => {
 
 }, 
 (err, Promise) => {
-	console.log("error-response-interceptor", err)
-	console.log("err.response.data.code === 301 :", err.response.data.code === 301)
+	// console.log("error-response-interceptor", err)
+	// console.log("err.response.data.code === 301 :", err.response.data.code === 301)
 	if (err.response.data.code === 301) {
 		uni.reLaunch({
 			url: '/pages/login/login'

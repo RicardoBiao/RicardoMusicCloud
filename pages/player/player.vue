@@ -60,7 +60,7 @@
 		<view class="py-msg-box" v-else @tap="this.lookLyric = !this.lookLyric">
 			<!-- <bing-lyric :lyrics="lyric.lines"></bing-lyric> -->
 			<scroll-view class="py-msg-box" scroll-y="true" >
-				<view style="color: #FFFFFF;text-align: center; margin: 10rpx 0;" v-for="(line, index) in lyric.lines" :key="line.key">
+				<view style="text-align: center; margin: 10rpx 0;" :style="index === currentLyric.lineNum ? 'current-lyric' : ''" v-for="(line, index) in lyric.lines" :key="line.key">
 					{{line.txt}}
 				</view>
 			</scroll-view>
@@ -153,8 +153,7 @@
 					this.currentSwiper = e.detail.current;
 				},
 				lookLyric: 0,
-				currentLyric: null,
-				lrc: []
+				currentLyric: null
 			}
 		},
 		components: {
@@ -195,27 +194,7 @@
 				}).then( res => {
 					if (res.data.code === 200) {
 						console.log('getLyric-res===>',res.data.lrc);
-						// this.lyric = res.data.lrc.lyric;
-						// let lrcs = this.lyric.split('\n');
-						// console.warn('lrcs===>',lrcs);
-						// let timeExp = /\[(\d{2,}):(\d{2})(?:\.(\d{2,3}))?]/g;
-						// for (var i = 0; i < lrcs.length; i++) {
-						//   var lrc = lrcs[i];
-						//   var result = timeExp.exec(lrc);
-						//   console.warn('result===>',result);
-						//   if (result) {
-						//     var txt = lrc.replace(timeExp, '').trim();
-						// 	console.warn('txt===>',txt);
-						//     if (txt) {
-						//       this.lrc.push({
-						//         time: result[1] * 60 * 1000 + result[2] * 1000 + (result[3] || 0) * 10,
-						//         txt: txt
-						//       });
-						//     }
-						//   }
-						// }
 						this.lyric = new Lyric(res.data.lrc.lyric, that.handleLyric);
-						this.lyric.play();
 						console.log('this.lyric===>',this.lyric);
 					}
 				});
@@ -235,8 +214,9 @@
 									// console.warn('AAAAAAAAAAA',this.playList)
 									console.log('Aitem.id===>',item.id,'that.ids===>',that.ids)
 									that.setAudioUrl(item.src);
-									that.musicPlay();
 									that.setCurrentIndex(item.index);
+									that.musicPlay();
+									// that.playList[currentIndex].lyric.play();
 									return true
 								} 
 							});
@@ -250,6 +230,7 @@
 								that.setPlayList(that.playList);
 								that.setCurrentIndex(that.playList.length - 1);
 								that.musicPlay();
+								// that.playList[currentIndex].lyric.play();
 							}
 							
 						} else {
@@ -260,6 +241,7 @@
 							that.setPlayList(that.playList);
 							that.setCurrentIndex(that.playList.length - 1);
 							that.musicPlay();
+							// that.playList[currentIndex].lyric.play();
 						}
 						
 					}
@@ -271,7 +253,7 @@
 			},
 			progressHoldStop(e) {
 				this.innerAudioContext.seek(e.value);
-				this.lyric.seek(e.value * 1000);
+				// that.playList[currentIndex].lyric.seek(e.value * 1000);
 				// console.log('progressHoldStop-e===>',e)
 				// console.log('progressHoldStop-e===>',e.value)
 			},
@@ -385,6 +367,9 @@
 		flex-direction: column;
 		width: 100%;
 		height: 76vh;
+		.current-lyric {
+			color: red;
+		}
 		.play-bar-support {
 			position: absolute;
 			width: 5vw;
