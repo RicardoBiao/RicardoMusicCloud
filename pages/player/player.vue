@@ -60,7 +60,7 @@
 		<view class="py-msg-box" v-else @tap="this.lookLyric = !this.lookLyric">
 			<!-- <bing-lyric :lyrics="lyric.lines"></bing-lyric> -->
 			<scroll-view class="py-msg-box" scroll-y="true" >
-				<view style="text-align: center; margin: 10rpx 0;" :style="index === currentLyric.lineNum ? 'current-lyric' : ''" v-for="(line, index) in lyric.lines" :key="line.key">
+				<view class="lyric" :class="line.txt === currentLyric.txt ? 'current-lyric' : ''" v-for="(line, index) in lyric.lines" :key="line.key">
 					{{line.txt}}
 				</view>
 			</scroll-view>
@@ -377,8 +377,13 @@
 		flex-direction: column;
 		width: 100%;
 		height: 76vh;
+		.lyric {
+			text-align: center;
+			margin: 10rpx 0;
+			color: #FFFFFF;
+		}
 		.current-lyric {
-			color: red;
+			color: #7b0e62;
 		}
 		.play-bar-support {
 			position: absolute;
