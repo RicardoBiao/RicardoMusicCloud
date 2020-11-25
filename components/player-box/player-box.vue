@@ -1,5 +1,8 @@
 <template>
 	<view class="player-box" v-if="playList.length > 0">
+		<view class="progress" :style="{'width': (this.innerAudioContext.currentTime/this.innerAudioContext.duration) * 100 + '%'}">
+			
+		</view>
 		<view class="box-left" @click="goPlayer(playList[currentIndex].id)">
 			<view class="song-img">
 				<image style="width: 100rpx;height: 100rpx; border-radius: 50%;" :src="playList[currentIndex].pic" mode=""></image>
@@ -28,7 +31,7 @@
 		},
 		data() {
 			return {
-				song: {},
+				song: {}
 			};
 		},
 		computed:{
@@ -70,6 +73,15 @@
 		height: 150rpx;
 		display: flex;
 		background-image: linear-gradient(144deg, rgba(221, 19, 127, 0.9) 0%, rgba(81, 0, 77, 0.9) 100%);
+		
+		.progress {
+			box-shadow: 0 0 4rpx 0 #ef01a0;
+			border: solid 4rpx #ef01a0;
+			height: -2rpx;
+			position: absolute;
+			top: -8rpx;
+		}
+		
 		.box-left {
 			width: 60vw;
 			height: 150rpx;

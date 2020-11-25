@@ -55,8 +55,13 @@
 				</view>
 				
 				<audio-mini v-for="song in songs" :song="song" :key="song.id" :scrollTop="scrollTop" ></audio-mini>
-				<view class="show-log" v-show="showLog">
+				<!-- <view class="show-log" v-show="showLog">
 					<image src="../../static/loading.gif" mode=""></image>
+				</view> -->
+				<view class="spinner" v-show="showLog">
+				  <view class="bounce1"></view>
+				  <view class="bounce2"></view>
+				  <view class="bounce3"></view>
 				</view>
 			</scroll-view>
 		</view>
@@ -80,7 +85,7 @@
 				forbid: '',
 				isShowKeywordList: false,
 				songs: [],
-				limit: 10,
+				limit: 5,
 				page: 0,
 				showLog: false,
 				isLoading: false,
@@ -136,18 +141,18 @@
 			//加载热门搜索
 			loadHotKeyword() {
 				//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
-				// this.hotKeywordList = ['陈奕迅', 'AGA', '吴雨霏', '周杰伦', '薛之谦', '周柏豪', '陈柏宇', '侧田', '李荣浩'];
-				this.$api.getSearchHot()
-					.then(res => {
-						if (res.data.code === 200) {
-							console.log('res.data:',res.data);
-							let that  = this ;
-							for (let i = 0 ; i < 10 ; i++ ) {
-								that.hotKeywordList.push(res.data.result.hots[i].first);
-							}
-							console.log(this.hotKeywordList);
-						}
-					});
+				this.hotKeywordList = ['杨丞琳', '陈奕迅', 'AGA', '吴雨霏', '周杰伦', '薛之谦', '周柏豪', '陈柏宇', '侧田', '李荣浩'];
+				// this.$api.getSearchHot()
+				// 	.then(res => {
+				// 		if (res.data.code === 200) {
+				// 			console.log('res.data:',res.data);
+				// 			let that  = this ;
+				// 			for (let i = 0 ; i < 10 ; i++ ) {
+				// 				that.hotKeywordList.push(res.data.result.hots[i].first);
+				// 			}
+				// 			console.log(this.hotKeywordList);
+				// 		}
+				// 	});
 			}, 
 			//监听输入
 			inputChange(event) {
@@ -453,6 +458,47 @@
 		background-image: linear-gradient(147deg,#8e004c 0%,#51004d 100%);
 		border-radius: 1vw;
 		color: #FFFFFF;
+	}
+	.spinner {
+	  margin: 100px auto 0;
+	  width: 70px;
+	  text-align: center;
+	}
+	
+	.spinner > view {
+	  width: 30rpx;
+	  height: 30rpx;
+	  background-color: #FFFFFF;
+	
+	  border-radius: 100%;
+	  display: inline-block;
+	  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+	  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+	}
+	
+	.spinner .bounce1 {
+	  -webkit-animation-delay: -0.32s;
+	  animation-delay: -0.32s;
+	}
+	
+	.spinner .bounce2 {
+	  -webkit-animation-delay: -0.16s;
+	  animation-delay: -0.16s;
+	}
+	
+	@-webkit-keyframes sk-bouncedelay {
+	  0%, 80%, 100% { -webkit-transform: scale(0) }
+	  40% { -webkit-transform: scale(1.0) }
+	}
+	
+	@keyframes sk-bouncedelay {
+	  0%, 80%, 100% { 
+	    -webkit-transform: scale(0);
+	    transform: scale(0);
+	  } 40% { 
+	    -webkit-transform: scale(1.0);
+	    transform: scale(1.0);
+	  }
 	}
 	.show-log {
 		width: 100%;

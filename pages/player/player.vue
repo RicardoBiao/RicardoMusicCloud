@@ -59,8 +59,8 @@
 		
 		<view class="py-msg-box" v-else @tap="this.lookLyric = !this.lookLyric">
 			<!-- <bing-lyric :lyrics="lyric.lines"></bing-lyric> -->
-			<scroll-view class="py-msg-box" scroll-y="true" >
-				<view class="lyric" :class="line.txt === currentLyric.txt ? 'current-lyric' : ''" v-for="(line, index) in lyric.lines" :key="line.key">
+			<scroll-view class="py-msg-box" scroll-y="true" ref="lyricList" >
+				<view class="lyric" :class="index === currentLyric.lineNum ? 'current-lyric' : ''" v-for="(line, index) in lyric.lines" :key="line.key">
 					{{line.txt}}
 				</view>
 			</scroll-view>
@@ -344,6 +344,7 @@
 			handleLyric(e) {
 				console.log('handleLyric===>',e)
 				this.setCurrentLyric(e);
+				// this.$refs.lyricList.scrollTo(0, 0, 1000)
 			}
 					
 		}

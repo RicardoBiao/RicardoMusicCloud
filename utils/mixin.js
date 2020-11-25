@@ -8,7 +8,8 @@ export const playListMixin = {
 			current: 0,
 			duration2: '00:00',
 			current2: '00:00',
-			lyric: []
+			lyric: [],
+			progressWidth: ''
 		}
 	},
 	computed: {
@@ -97,6 +98,11 @@ export const playListMixin = {
 		initMusic() {
 			this.innerAudioContext.onEnded(() => {
 				this.nextSong();
+				if (this.playList.length == 1) {
+					this.musicPlay();
+					this.playList[this.currentIndex].lyric.play();
+				}
+				
 				// this.playList[this.currentIndex].lyric.seek(0);
 			});
 			
@@ -110,6 +116,8 @@ export const playListMixin = {
 				this.current = this.innerAudioContext.currentTime;
 				// this.playList[this.currentIndex].lyric.seek(this.current * 1000);
 				this.duration = this.innerAudioContext.duration;
+				this.progressWidth =  (this.innerAudioContext.currentTime/this.innerAudioContext.duration) * 100;
+				console.log('this.progressWidth==>',this.progressWidth)
 			});
 		}
 	}
