@@ -117,7 +117,7 @@ export const playListMixin = {
 				// this.playList[this.currentIndex].lyric.seek(this.current * 1000);
 				this.duration = this.innerAudioContext.duration;
 				this.progressWidth =  (this.innerAudioContext.currentTime/this.innerAudioContext.duration) * 100;
-				console.log('this.progressWidth==>',this.progressWidth)
+				// console.log('this.progressWidth==>',this.progressWidth)
 			});
 		}
 	}

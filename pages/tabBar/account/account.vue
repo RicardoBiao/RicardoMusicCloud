@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="title-box">
 			<view class="title">{{ nickname == '' ? "Account" : nickname }}</view>
-			<image v-if="nickname != ''" class="setting" src="../../../static/setting.png" mode=""></image>
+			<image v-if="nickname != ''" @click="getWxUserInfo()" class="setting" src="../../../static/setting.png" mode=""></image>
 		</view>
 		<view class="user-info">
 			<image class="user-image" :src="userInfo.avatarUrl" mode="aspectFill"></image>
@@ -19,7 +19,7 @@
 						<view class="text"> Following </view>
 					</view>
 				</view>
-				<button v-show="nickname" class="edit" @click="getWxUserInfo()">Edit</button>
+				<button v-show="nickname" class="edit" @click="goToEdit()">Edit</button>
 				<button v-show="!nickname" class="edit" @click="goToLogin()">login</button>
 			</view>
 		</view>
@@ -76,10 +76,15 @@
 			}
 		},
 		methods: {
+			goToEdit() {
+				uni.navigateTo({
+					url:'/pages/tabBar/account/edit'
+				});
+			},
 			goToLogin() {
 				if (this.nickname == undefined) {
 					uni.navigateTo({
-						url:'../../login/login'
+						url:'/pages/login/login'
 					});
 				};
 			},

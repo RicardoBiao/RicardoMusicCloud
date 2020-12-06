@@ -48,6 +48,12 @@
 			"style": {
 				"navigationBarTitleText": "mv"
 			}
+		},
+		{
+			"path": "pages/tabBar/account/edit",
+			"style": {
+				"navigationBarTitleText": "edit"
+			}
 		}
     ],
 	"globalStyle": {

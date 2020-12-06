@@ -1,6 +1,6 @@
 <template>
 	<view class="player-box" v-if="playList.length > 0">
-		<view class="progress" :style="{'width': (this.innerAudioContext.currentTime/this.innerAudioContext.duration) * 100 + '%'}">
+		<view class="progress" :style="{'width': (innerAudioContext.currentTime/innerAudioContext.duration) * 100 + '%'}">
 			
 		</view>
 		<view class="box-left" @click="goPlayer(playList[currentIndex].id)">

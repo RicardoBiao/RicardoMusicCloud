@@ -89,7 +89,7 @@
 						});
 						console.log('this.$store.state.userInfo:',this.$store.state.userInfo);
 						uni.switchTab({
-							url:'../tabBar/account/account'
+							url:'/pages/tabBar/account/account'
 						});
 					}
 				});
