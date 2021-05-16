@@ -27,10 +27,10 @@
 			</swiper-item>
 		</swiper> -->
 		
-		<view class="py-msg-box" v-if="!lookLyric" @tap="this.lookLyric = !this.lookLyric">
+		<view class="py-msg-box" v-if="!lookLyric" >
 			<image class="play-bar-support" src="../../static/play-bar-support.png" mode="aspectFit"></image>
 			<image class="play-bar" :class="{bar: !isPlay}" src="../../static/play-bar.png" mode="aspectFit"></image>
-			<view class="img-box">
+			<view class="img-box" @click="handleLook">
 				<image class="img turn" :style=" isPlay == true ? 'animation-play-state: running;' : 'animation-play-state: paused;' " :src="playList[currentIndex].pic" mode="aspectFit"></image>
 			</view>
 			<text class="song-name"> {{playList[currentIndex].title == undefined ? '' : playList[currentIndex].title}} </text>
@@ -39,7 +39,7 @@
 			<text class="song-content">{{currentLyric.txt}}</text>
 			
 			<view class="btn-box">
-				<button class="icon-btn" open-type="share" type="default">
+				<button class="icon-btn" type="default" @click.stop="share()">
 					<image class="btn-icon" src="../../static/Shape.png" mode="aspectFit"></image>
 				</button>
 				<button class="icon-btn" type="default">
@@ -57,7 +57,7 @@
 			</view>
 		</view>
 		
-		<view class="py-msg-box" v-else @tap="this.lookLyric = !this.lookLyric">
+		<view class="py-msg-box" v-else @tap="handleLook">
 			<!-- <bing-lyric :lyrics="lyric.lines"></bing-lyric> -->
 			<scroll-view class="py-msg-box" scroll-y="true" ref="lyricList" >
 				<view class="lyric" :class="index === currentLyric.lineNum ? 'current-lyric' : ''" v-for="(line, index) in lyric.lines" :key="line.key">
@@ -125,6 +125,10 @@
 			<image style="width: 34rpx; height: 34rpx;" class="py-icon" src="../../static/changetype.png" mode="aspectFit"></image>
 		</view>
 		
+		<uni-popup ref="sharePopup" type="bottom">
+			<uni-popup-share></uni-popup-share>
+		</uni-popup>
+		
 	</view>
 	
 </template>
@@ -136,6 +140,8 @@
 	import bingProgress from '@/components/bing-progress/bing-progress.vue';
 	import bingLyric from '@/components/bing-lyric/bing-lyric.vue';
 	import Lyric from 'lyric-parser';
+	import uniPopupShare from '@/components/uni-popup/uni-popup-share.vue'
+	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	export default {
 		mixins: [playListMixin],
 		data() {
@@ -152,7 +158,7 @@
 					// console.log(this);
 					this.currentSwiper = e.detail.current;
 				},
-				lookLyric: 0
+				lookLyric: false
 			}
 		},
 		computed: {
@@ -167,7 +173,9 @@
 		},
 		components: {
 			bingProgress,
-			bingLyric
+			bingLyric,
+			uniPopup,
+			uniPopupShare
 		},
 		onLoad(option) {
 			
@@ -345,6 +353,12 @@
 				console.log('handleLyric===>',e)
 				this.setCurrentLyric(e);
 				// this.$refs.lyricList.scrollTo(0, 0, 1000)
+			},
+			share() {
+				this.$refs.sharePopup.open()
+			},
+			handleLook() {
+				this.lookLyric = !this.lookLyric
 			}
 					
 		}
@@ -392,7 +406,7 @@
 			height: 5vw;
 			left: calc(50% - 3.2vw);
 			top: -1vw;
-			z-index: 2;
+			z-index: 20;
 		}
 		.play-bar {
 		  width: 22vw;
@@ -400,7 +414,7 @@
 		  position: absolute;
 		  left: calc(50% - 1.7vw);
 		  top: -5rpx;
-		  z-index: 1;
+		  z-index: 15;
 		}
 		.bar {
 		  top: -5rpx;
@@ -418,7 +432,7 @@
 			border-radius: 50%;
 			box-shadow: 0 0 10px #fff;
 			margin: 22vw auto 6vw;
-			z-index: -1;
+			z-index: 10;
 			.img {
 				width: 43.4vw;
 				height: 43.4vw;
@@ -506,21 +520,22 @@
 				justify-content: space-around;
 				flex-direction: column;
 				width: 100%;
+				z-index: 15;
 				.play-bar-support {
 					position: absolute;
 					width: 5vw;
 					height: 5vw;
 					left: calc(50% - 3.2vw);
 					top: -1vw;
-					z-index: 2;
+					z-index: 20;
 				}
 				.play-bar {
 				  width: 22vw;
 				  height: 40vw;
 				  position: absolute;
-				  left: calc(50% - 1.7vw);
-				  top: -5rpx;
-				  z-index: 1;
+				  left: calc(50% - 2.5vw);
+				  top: -3rpx;
+				  z-index: 15;
 				}
 				.bar {
 				  top: -5rpx;
