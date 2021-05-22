@@ -324,7 +324,7 @@
 		}
 	}
 </script>
-<style lang="less">
+<style lang="less" scoped>
 	view{display:block;}
 	.search-box {
 		width: 95%;

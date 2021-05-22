@@ -17,7 +17,7 @@
 			Forgot Password ?
 		</view>
 		
-		<button @click="emailLogin(email,password)" class="sign-in">SIGN IN</button>
+		<button @click="emailLogin(email,password)" class="big-btn" style="margin-top: 33vw; margin-bottom: 25vw;">SIGN IN</button>
 		
 		<view class="bl-box">
 			<view class="bl"></view>
@@ -122,7 +122,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	page {
 		background-color: #0e0b1f;
 	}
@@ -180,21 +180,6 @@
 		font-stretch: normal;
 		letter-spacing: 0vw;
 		color: #eeeeee;
-	}
-	.sign-in {
-		width: 79vw;
-		height: 12vw;
-		margin-top: 33vw;
-		margin-bottom: 25vw;
-		line-height: 12vw;
-		border-radius: 1vw;
-		font-family: Helvetica;
-		font-size: 4vw;
-		font-weight: normal;
-		font-stretch: normal;
-		letter-spacing: 0vw;
-		color: #eeeeee;
-		background-color: #ef01a0;
 	}
 	.bg-image {
 		width: 100%;

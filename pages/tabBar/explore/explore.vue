@@ -79,7 +79,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	.swiper {
 		background-color: #007AFF;
 	}

@@ -86,7 +86,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	page {
 		background-color: #0e0b1f;
 		height: 100%;

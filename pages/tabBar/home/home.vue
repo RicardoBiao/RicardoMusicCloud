@@ -9,35 +9,29 @@
 			<text style="font-size: 24rpx;" > View all </text>
 		</view>
 		<albums-view :img-urls="imgUrls"></albums-view>
-		<text> Rling Weekly {{ wwww }}</text>
+		<text> Rling Weekly</text>
+		
 		<!-- video组件 -->
 		<video 
-		src="https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/video/6c974701358444789711847f5e5ebce7.mp4" 
-		controls
-		:enable-play-gesture = "true"
-		:vslide-gesture-in-fullscreen = "true"
-		
-		>
-		<cover-view style="position: absolute; top: 80%; right: 2%; height: 20rpx; width: 160rpx; line-height: 20rpx; font-size: 28rpx; color: white;"> Ricardo </cover-view>
+			src="https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/video/6c974701358444789711847f5e5ebce7.mp4" 
+			controls
+			:enable-play-gesture = "true"
+			:vslide-gesture-in-fullscreen = "true"
+			style="border-radius: 16rpx;"
+			>
+			<cover-view style="position: absolute; top: 5%; right: 2%; height: 20rpx; width: 160rpx; line-height: 20rpx; font-size: 28rpx; color: white;"> Ricardo </cover-view>
 		</video>
-		<text> Recently Music </text>
-		<!-- mini-music组件 -->
-		<recently-music></recently-music>
-		<recently-music></recently-music>
 		
-		<!-- <view class="mini-music2">
-			
-		</view> -->
+		<text> Recently Music </text>
+		
+		<!-- mini-music组件 -->
+		<!-- <recently-music></recently-music>
+		<recently-music></recently-music> -->
+		
 		<!-- music-play组件 -->
 		<view v-if="playList.length > 0" style="width: 100vw; height: 150rpx;"></view>
 		<player-box ref="player" @click="this.$refs.player.goPlayer()" style="position: fixed; bottom: 0;"></player-box>
-		<!-- <view class="music-play">
-			
-		</view>
-		<view class="music-play-bottom">
 		
-			
-		</view> -->
 	</view>
 </template>
 
@@ -127,7 +121,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	page {
 		width: 100%;
 		height: 100%;

@@ -65,7 +65,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	.player-box {
 		width: 100vw;
 		height: 150rpx;

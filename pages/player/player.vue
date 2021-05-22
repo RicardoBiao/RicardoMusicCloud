@@ -386,7 +386,7 @@
 	
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	page {
 		width: 100%;
 		height: 100%;

@@ -24,7 +24,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	.content {
 		display: flex;
 		width: 646rpx;
