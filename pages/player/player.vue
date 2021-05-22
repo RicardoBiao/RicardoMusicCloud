@@ -49,7 +49,7 @@
 					<image class="btn-icon" src="../../static/like.png" mode="aspectFit"></image>
 				</button>
 				<button v-else @click="unlike()" class="icon-btn" type="default">
-					<image class="btn-icon" src="../../static/islike.png" mode="aspectFit"></image>
+					<image class="btn-icon" src="../../static/islike.svg" mode="aspectFit"></image>
 				</button>
 				<button class="icon-btn" type="default">
 					<image class="btn-icon" src="../../static/download.png" mode="aspectFit"></image>
