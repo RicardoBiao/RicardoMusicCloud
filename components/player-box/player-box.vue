@@ -1,6 +1,6 @@
 <template>
 	<view class="player-box" v-if="playList.length > 0">
-		<view class="progress" :style="{'width': (innerAudioContext.currentTime/innerAudioContext.duration) * 100 + '%'}">
+		<view class="progress" :style="{'width': playProgress + 'vw'}">
 			
 		</view>
 		<view class="box-left" @click="goPlayer(playList[currentIndex].id)">
@@ -39,11 +39,9 @@
 				'isPlay',
 				'playList',
 				'currentIndex',
-				'innerAudioContext'
+				'innerAudioContext',
+				'playProgress',
 			])
-		},
-		onLoad() {
-			console.log('box-playList===>',this.playList)
 		},
 		methods: {
 			onPause() {

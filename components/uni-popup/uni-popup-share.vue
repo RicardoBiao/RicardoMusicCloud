@@ -3,16 +3,24 @@
 		<view class="uni-share-title"><text class="uni-share-title-text">{{title}}</text></view>
 		<view class="uni-share-content">
 			<view class="uni-share-content-box">
-				<view class="uni-share-content-item" v-for="(item,index) in bottomData" :key="index" @click.stop="select(item,index)">
-					<image class="uni-share-image" :src="item.icon" mode="aspectFill"></image>
-					<text class="uni-share-text">{{item.text}}</text>
-				</view>
+				<block v-for="(item,index) in bottomData" :key="index">
+					<button class="uni-share-content-item" style="border: none; margin: 0 0 0 24rpx; line-height: 28rpx;" plain open-type="share" v-if="index==0">
+						<image class="uni-share-image" :src="item.icon" mode="aspectFill"></image>
+						<text class="uni-share-text">{{item.text}}</text>
+					</button>
+					<view class="uni-share-content-item" @click.stop="select(item,index)" v-else>
+						<image class="uni-share-image" :src="item.icon" mode="aspectFill"></image>
+						<text class="uni-share-text">{{item.text}}</text>
+					</view>
+				</block>
+				
+				
 
 			</view>
 		</view>
-		<view class="uni-share-button-box">
+		<!-- <view class="uni-share-button-box">
 			<button class="uni-share-button" @click="close">取消</button>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -22,36 +30,22 @@
 		props: {
 			title: {
 				type: String,
-				default: '分享到'
+				default: 'SHARE TO'
 			}
 		},
 		inject: ['popup'],
 		data() {
 			return {
-				bottomData: [{
+				bottomData: [
+					{
 						text: '微信',
 						icon: 'https://img-cdn-qiniu.dcloud.net.cn/uni-ui/grid-2.png',
-						name: 'wx'
-					},
-					{
-						text: '支付宝',
-						icon: 'https://img-cdn-qiniu.dcloud.net.cn/uni-ui/grid-8.png',
 						name: 'wx'
 					},
 					{
 						text: 'QQ',
 						icon: 'https://img-cdn-qiniu.dcloud.net.cn/uni-ui/gird-3.png',
 						name: 'qq'
-					},
-					{
-						text: '新浪',
-						icon: 'https://img-cdn-qiniu.dcloud.net.cn/uni-ui/grid-1.png',
-						name: 'sina'
-					},
-					{
-						text: '百度',
-						icon: 'https://img-cdn-qiniu.dcloud.net.cn/uni-ui/grid-7.png',
-						name: 'copy'
 					},
 					{
 						text: '其他',
@@ -85,7 +79,12 @@
 </script>
 <style lang="scss" scoped>
 	.uni-popup-share {
-		background-color: #fff;
+		background-image: linear-gradient(96deg, 
+			rgba(221, 19, 127, 0.9) 0%, 
+			rgba(81, 0, 77, 0.9) 100%);
+		border-top-left-radius: 60rpx;
+		border-top-right-radius: 60rpx;
+		padding: 18rpx 0 60rpx 0;
 	}
 	.uni-share-title {
 		/* #ifndef APP-NVUE */
@@ -93,12 +92,13 @@
 		/* #endif */
 		flex-direction: row;
 		align-items: center;
-		justify-content: center;
+		justify-content: left;
+		margin-left: 48rpx;
 		height: 40px;
 	}
 	.uni-share-title-text {
 		font-size: 14px;
-		color: #666;
+		color: #eeeeee;
 	}
 	.uni-share-content {
 		/* #ifndef APP-NVUE */
@@ -113,35 +113,38 @@
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
-		flex-direction: row;
+		flex-direction: column;
 		flex-wrap: wrap;
-		width: 360px;
+		width: 100vw;
 	}
 	
 	.uni-share-content-item {
-		width: 90px;
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
-		flex-direction: column;
-		justify-content: center;
-		padding: 10px 0;
+		flex-direction: row;
+		justify-content: left;
+		padding: 10px 24rpx;
 		align-items: center;
+		margin: 0 24rpx;
 	}
 	
 	.uni-share-content-item:active {
-		background-color: #f5f5f5;
+		background-color: #0e0b1f;
+		opacity: 0.2;
+		border-radius: 12rpx;
 	}
 	
 	.uni-share-image {
-		width: 30px;
-		height: 30px;
+		width: 48rpx;
+		height: 48rpx;
 	}
 	
 	.uni-share-text {
-		margin-top: 10px;
-		font-size: 14px;
-		color: #3B4144;
+		font-family: Helvetica;
+		font-size: 28rpx;
+		color: #eeeeee;
+		margin-left: 44rpx;
 	}
 	
 	.uni-share-button-box {

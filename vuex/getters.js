@@ -6,6 +6,7 @@ const getters = {
 	cookie: state => state.cookie,
 	innerAudioContext: state => state.innerAudioContext,
 	currentIndex: state => state.currentIndex,
-	currentLyric: state => state.currentLyric
+	currentLyric: state => state.currentLyric,
+	playProgress: state => state.playProgress,
 }
 export default getters

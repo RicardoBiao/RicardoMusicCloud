@@ -9,7 +9,6 @@ export const playListMixin = {
 			duration2: '00:00',
 			current2: '00:00',
 			lyric: [],
-			progressWidth: ''
 		}
 	},
 	computed: {
@@ -19,7 +18,8 @@ export const playListMixin = {
 			'likeList',
 			'currentIndex',
 			'currentLyric',
-			'innerAudioContext'
+			'innerAudioContext',
+			'playProgress',
 		])
 	},
 	methods: {
@@ -29,7 +29,8 @@ export const playListMixin = {
 			'setPlayList',
 			'setCurrentIndex',
 			'setCurrentTime',
-			'setCurrentLyric'
+			'setCurrentLyric',
+			'setPlayProgress',
 		]),
 		musicPause() {
 			console.log('music-onPause')
@@ -39,6 +40,7 @@ export const playListMixin = {
 		},
 		musicPlay() {
 			console.log('music-onPlay')
+			console.log('this==>', this)
 			this.innerAudioContext.play();
 			this.playList[this.currentIndex].lyric.togglePlay();
 			this.setIsPlay(true);
@@ -116,8 +118,8 @@ export const playListMixin = {
 				this.current = this.innerAudioContext.currentTime;
 				// this.playList[this.currentIndex].lyric.seek(this.current * 1000);
 				this.duration = this.innerAudioContext.duration;
-				this.progressWidth =  (this.innerAudioContext.currentTime/this.innerAudioContext.duration) * 100;
-				// console.log('this.progressWidth==>',this.progressWidth)
+				let progressWidth =  (this.innerAudioContext.currentTime/this.innerAudioContext.duration) * 100;
+				this.setPlayProgress(progressWidth);
 			});
 		}
 	}

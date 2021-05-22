@@ -9,7 +9,7 @@
 			<text style="font-size: 24rpx;" > View all </text>
 		</view>
 		<albums-view :img-urls="imgUrls"></albums-view>
-		<text> Rling Weekly </text>
+		<text> Rling Weekly {{ wwww }}</text>
 		<!-- video组件 -->
 		<video 
 		src="https://ricardo-bucket.oss-cn-hangzhou.aliyuncs.com/RicardoMusicCloud/video/6c974701358444789711847f5e5ebce7.mp4" 
@@ -46,7 +46,9 @@
 	import albumsView from '@/components/albums-view/albums-view.vue';
 	import playerBox from '@/components/player-box/player-box.vue';
 	import { mapGetters, mapActions } from 'vuex';
+	import {playListMixin} from '@/utils/mixin.js';
 	export default {
+		mixins: [playListMixin],
 		data() {
 			return {
 				title: 'Radio',
@@ -67,7 +69,21 @@
 				'isPlay',
 				'playList',
 				'innerAudioContext'
-			])
+			]),
+			
+			wwww() {
+				return this.innerAudioContext.currentTime
+			}
+		},
+		watch: {
+			wwww(newVal, oldVal) {
+				console.log('newVal1===>', newVal)
+				console.log('oldVal1===>', oldVal)
+			},
+			'innerAudioContext.currentTime'(newVal, oldVal) {
+				console.log('newVal2===>', newVal)
+				console.log('oldVal2===>', oldVal)
+			}
 		},
 		components: {
 			recentlyMusic,

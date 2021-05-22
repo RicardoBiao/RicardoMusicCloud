@@ -1,64 +1,68 @@
 <template>
-	<view class="content">
-		<view class="title-box">
-			<view class="title">{{ nickname == '' ? "Account" : nickname }}</view>
-			<image v-if="nickname != ''" @click="getWxUserInfo()" class="setting" src="../../../static/setting.png" mode=""></image>
-		</view>
-		<view class="user-info">
-			<image class="user-image" :src="userInfo.avatarUrl" mode="aspectFill"></image>
-			<view class="info-right">
-				<view>
-					<view class="text-box" style="color: #FFFFFF">
-						<view class="text"> {{ playlist == '' ? 0 : playlist }} </view>
-						<view class="text"> {{ follower == '' ? 0 : follower }} </view>
-						<view class="text"> {{ following == '' ? 0 : following }} </view>
+	<view>
+		<!-- <image class="bgImg" v-if="userInfo.backgroundUrl" :src="userInfo.backgroundUrl" mode="aspectFill"></image> -->
+		<view class="content">
+
+			<view class="title-box">
+				<view class="title">{{ nickname == '' ? "Account" : nickname }}</view>
+				<image v-if="nickname != ''" @click="getWxUserInfo()" class="setting" src="../../../static/setting.png" mode=""></image>
+			</view>
+			<view class="user-info">
+				<image class="user-image" :src="userInfo.avatarUrl" mode="aspectFill"></image>
+				<view class="info-right">
+					<view>
+						<view class="text-box" style="color: #FFFFFF">
+							<view class="text"> {{ playlist == '' ? 0 : playlist }} </view>
+							<view class="text"> {{ follower == '' ? 0 : follower }} </view>
+							<view class="text"> {{ following == '' ? 0 : following }} </view>
+						</view>
+						<view class="text-box" style="color: #eeeeee">
+							<view class="text"> Playlist </view>
+							<view class="text"> Follower </view>
+							<view class="text"> Following </view>
+						</view>
 					</view>
-					<view class="text-box" style="color: #eeeeee">
-						<view class="text"> Playlist </view>
-						<view class="text"> Follower </view>
-						<view class="text"> Following </view>
+					<button v-show="nickname" class="edit" @click="goToEdit()">Edit</button>
+					<button v-show="!nickname" class="edit" @click="goToLogin()">login</button>
+				</view>
+			</view>
+			<view class="library-box">
+				<view style="margin: 60rpx 0 40rpx">Library</view>
+				<view class="library-item">
+					<view class="library-left">
+						<image class="library-img" src="../../../static/Myplaylist.png" mode="aspectFit"></image>
+						<view class="library-txt">My playlist</view>
 					</view>
+					<image class="library-right" src="../../../static/right.png" mode="aspectFit"></image>
 				</view>
-				<button v-show="nickname" class="edit" @click="goToEdit()">Edit</button>
-				<button v-show="!nickname" class="edit" @click="goToLogin()">login</button>
-			</view>
-		</view>
-		<view class="library-box">
-			<view style="margin: 60rpx 0 40rpx">Library</view>
-			<view class="library-item">
-				<view class="library-left">
-					<image class="library-img" src="../../../static/Myplaylist.png" mode="aspectFit"></image>
-					<view class="library-txt">My playlist</view>
+				<view class="library-item">
+					<view class="library-left">
+						<image class="library-img" src="../../../static/Album.png" mode="aspectFit"></image>
+						<view class="library-txt">Album</view>
+					</view>
+					<image class="library-right" src="../../../static/right.png" mode="aspectFit"></image>
 				</view>
-				<image class="library-right" src="../../../static/right.png" mode="aspectFit"></image>
-			</view>
-			<view class="library-item">
-				<view class="library-left">
-					<image class="library-img" src="../../../static/Album.png" mode="aspectFit"></image>
-					<view class="library-txt">Album</view>
+				<view class="library-item">
+					<view class="library-left">
+						<image class="library-img" src="../../../static/MV.png" mode="aspectFit"></image>
+						<view class="library-txt">MV</view>
+					</view>
+					<image class="library-right" src="../../../static/right.png" mode="aspectFit"></image>
 				</view>
-				<image class="library-right" src="../../../static/right.png" mode="aspectFit"></image>
-			</view>
-			<view class="library-item">
-				<view class="library-left">
-					<image class="library-img" src="../../../static/MV.png" mode="aspectFit"></image>
-					<view class="library-txt">MV</view>
+				<view class="library-item">
+					<view class="library-left">
+						<image class="library-img" src="../../../static/Artist.png" mode="aspectFit"></image>
+						<view class="library-txt">Artist</view>
+					</view>
+					<image class="library-right" src="../../../static/right.png" mode="aspectFit"></image>
 				</view>
-				<image class="library-right" src="../../../static/right.png" mode="aspectFit"></image>
-			</view>
-			<view class="library-item">
-				<view class="library-left">
-					<image class="library-img" src="../../../static/Artist.png" mode="aspectFit"></image>
-					<view class="library-txt">Artist</view>
+				<view class="library-item">
+					<view class="library-left">
+						<image class="library-img" src="../../../static/Download2.png" mode="aspectFit"></image>
+						<view class="library-txt">Download</view>
+					</view>
+					<image class="library-right" src="../../../static/right.png" mode="aspectFit"></image>
 				</view>
-				<image class="library-right" src="../../../static/right.png" mode="aspectFit"></image>
-			</view>
-			<view class="library-item">
-				<view class="library-left">
-					<image class="library-img" src="../../../static/Download2.png" mode="aspectFit"></image>
-					<view class="library-txt">Download</view>
-				</view>
-				<image class="library-right" src="../../../static/right.png" mode="aspectFit"></image>
 			</view>
 		</view>
 	</view>
@@ -140,14 +144,21 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="scss" scoped>
 	page {
 		background-color: #0e0b1f;
-		// background-image: url('http://p1.music.126.net/9FRYTIkifMlk9q1EbvJGoQ==/109951164006503857.jpg');
+		// background-image: url('https://p4.music.126.net/9FRYTIkifMlk9q1EbvJGoQ==/109951164006503857.jpg');
 	}
 	.content {
-		margin: 0 6vw;
+		padding: 0 6vw;
 	}
+	.bgImg {
+		position: fixed;
+		z-index: -10;
+		width: 100vw;
+		height: 100vh;
+	}
+
 	.title-box {
 		display: flex;
 		justify-content: space-between;

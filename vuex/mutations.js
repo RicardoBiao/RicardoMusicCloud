@@ -6,6 +6,7 @@ const SET_COOKIE = 'SET_COOKIE'
 const SET_AUDIOURL = 'SET_AUDIOURL'
 const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX'
 const SET_CURRENT_LYRIC = 'SET_CURRENT_LYRIC'
+const SET_PLAY_PROGRESS = 'SET_PLAY_PROGRESS'
 
 export default {
 	[SET_ISPLAY](state, data) {
@@ -32,4 +33,7 @@ export default {
 	[SET_CURRENT_LYRIC](state, data) {
 		state.currentLyric = data
 	},
+	[SET_PLAY_PROGRESS](state, data) {
+		state.playProgress = data
+	}
 }

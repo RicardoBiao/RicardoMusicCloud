@@ -126,7 +126,7 @@
 		</view>
 		
 		<uni-popup ref="sharePopup" type="bottom">
-			<uni-popup-share></uni-popup-share>
+			<uni-popup-share @select="shareSelect()"></uni-popup-share>
 		</uni-popup>
 		
 	</view>
@@ -196,7 +196,7 @@
 			});
 		},
 		methods: {
-			getSongDetail() {
+			async getSongDetail() {
 				let that = this;
 				this.$api.getSongDetail({
 					ids: this.ids
@@ -206,15 +206,25 @@
 						// console.log('song:',song);
 					}
 				});
-				this.$api.getLyric({
+				let getLyricRes = await this.$utils.promisify(this.$api.getLyric, {
 					id: this.ids
-				}).then( res => {
-					if (res.data.code === 200) {
-						console.log('getLyric-res===>',res.data.lrc);
-						this.lyric = new Lyric(res.data.lrc.lyric, that.handleLyric);
-						console.log('this.lyric===>',this.lyric);
-					}
-				});
+				})
+				console.log('promisify===>', getLyricRes)
+				if (getLyricRes.data.code === 200) {
+					console.log('getLyric-getLyricRes===>',getLyricRes.data.lrc);
+					this.lyric = new Lyric(getLyricRes.data.lrc.lyric, that.handleLyric);
+					console.log('this.lyric===>',this.lyric);
+				}
+				
+				// this.$api.getLyric({
+				// 	id: this.ids
+				// }).then( res => {
+				// 	if (res.data.code === 200) {
+				// 		console.log('getLyric-res===>',res.data.lrc);
+				// 		this.lyric = new Lyric(res.data.lrc.lyric, that.handleLyric);
+				// 		console.log('this.lyric===>',this.lyric);
+				// 	}
+				// });
 				this.getMusicUrl();
 				this.initMusic();
 			},
@@ -356,6 +366,15 @@
 			},
 			share() {
 				this.$refs.sharePopup.open()
+			},
+			shareSelect(e) {
+				console.log('shareSelect===>', e)
+				switch(e.item.name) {
+					case 'aliPay': 
+					break;
+					default: 
+					break;
+				}
 			},
 			handleLook() {
 				this.lookLyric = !this.lookLyric

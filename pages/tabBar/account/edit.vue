@@ -1,11 +1,12 @@
 <template>
 	<view>
+		<!-- <image class="bgImg" v-if="userInfo.profile.backgroundUrl" :src="userInfo.profile.backgroundUrl" mode="aspectFill"></image> -->
 		<view class="user-image">
 			<view class="img">
 				<image :src="userImg" mode="aspectFill"></image>
 			</view>
 			<view class="edit-img">
-				<image src="../../../static/edit-img.png" mode=""></image>
+				<image src="../../../static/edit-img.svg" mode="aspectFit"></image>
 			</view>
 		</view>
 		<view class="user-info">
@@ -100,14 +101,18 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	page {
 		display: flex;
 		justify-content: center;
 	}
-	input {
-		text-align: right;
+	.bgImg {
+		position: fixed;
+		z-index: -10;
+		width: 100vw;
+		height: 100vh;
 	}
+	
 	.user-image {
 		width: 38vw;
 		height: 38vw;
@@ -146,6 +151,12 @@
 		position: relative;
 		top: -21vw;
 		z-index: 50;
+		margin: 0 auto;
+		
+		input {
+			text-align: right;
+		}
+		
 		.form-item {
 			margin: 12vw 4vw;
 			display: flex;

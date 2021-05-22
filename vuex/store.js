@@ -31,7 +31,9 @@ const state = {
 	innerAudioContext: uni.createInnerAudioContext(),
 	//当前播放index
 	currentIndex: 0,
-	currentLyric: {}
+	currentLyric: {},
+	//当前播放进度百分比
+	playProgress: 0
 }
 
 export default new Vuex.Store({  

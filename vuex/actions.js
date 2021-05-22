@@ -57,4 +57,11 @@ export default {
 			resolve(data)
 		})
 	},
+	setPlayProgress({ commit }, data) {
+		return new Promise((resolve, reject) => {
+			commit('SET_PLAY_PROGRESS', data) 
+			
+			resolve(data)
+		})
+	}
 }
